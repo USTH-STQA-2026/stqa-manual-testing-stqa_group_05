@@ -1,96 +1,34 @@
 # Bug Reports — Báo cáo lỗi
 
-> **Hướng dẫn**: Tạo 1 mục bug cho mỗi TC có kết quả **Fail**.
-> Xem [examples/sample-bug-report.md](../examples/sample-bug-report.md) để hiểu cách viết bug report tốt.
-> Mỗi bug cần: tiêu đề mô tả hành vi lỗi, bước tái hiện, expected vs actual, severity + giải thích.
-
-| Thông tin | |
-|---|---|
-| **Nhóm** | `<!-- Tên nhóm -->` |
-| **Ngày báo cáo** | `<!-- DD/MM/YYYY -->` |
+> **Hướng dẫn**: Với mỗi TC bị **Fail** ở bước thực thi, hãy viết một Bug Report hoàn chỉnh vào file này. Xem [examples/sample-bug-report.md](../examples/sample-bug-report.md) để biết cách viết.
 
 ---
 
-## BUG-01
+## BUG-001: Thành viên có thể mượn quá giới hạn 3 cuốn sách cùng lúc
 
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-01 |
-| **TC liên quan** | `<!-- TC-xx -->` |
-| **REQ liên quan** | `<!-- REQ-xx -->` |
-| **Mức độ** | `<!-- High / Medium / Low -->` |
-| **Người phát hiện** | `<!-- Họ tên thành viên -->` |
-| **Ngày phát hiện** | `<!-- DD/MM/YYYY -->` |
-| **Trạng thái** | `<!-- Open / Closed -->` |
+**1. Thông tin chung**
+- **Test Case bị Fail**: TC-17
+- **Yêu cầu (REQ) liên quan**: REQ-04 (Giới hạn mượn sách)
+- **Mức độ nghiêm trọng (Severity)**: High
+  *(Giải thích: Lỗi này vi phạm trực tiếp luồng nghiệp vụ cốt lõi, khiến thành viên có thể gom hết sách của thư viện, ảnh hưởng nghiêm trọng đến vận hành)*
+- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
 
-**Tiêu đề:**
-`<!-- Mô tả hành vi lỗi cụ thể -->`
+**2. Các bước tái hiện (Steps to Reproduce)**
+1. Mở trình duyệt và truy cập hệ thống tại `https://stqa.rbc.vn`.
+2. Đăng nhập bằng tài khoản Thành viên `ba.nguyen@email.com` (mật khẩu: `password123`).
+3. Xác nhận ở Tab "Mượn/Trả" rằng thành viên này đã có sẵn một vài cuốn sách đang mượn (VD: 2 cuốn).
+4. Chuyển sang Tab "Sách", mượn thêm sách cho đến khi đạt mức 3 cuốn.
+5. Tiếp tục nhấn nút (+) để mượn thêm cuốn thứ 4 (Ví dụ: `BOOK005`).
 
-**Môi trường:**
-- Trình duyệt: Chrome `<!-- version -->`
-- Hệ điều hành: `<!-- OS -->`
-- Ngôn ngữ giao diện: Tiếng Việt
+**3. Kết quả thực tế (Actual Result)**
+Hệ thống hiển thị thông báo mượn thành công và thêm cuốn sách thứ 4 vào danh sách đang mượn của thành viên. 
 
-**Điều kiện tiên quyết:**
-`<!-- VD: Trang đăng nhập đã mở, dữ liệu đã reset -->`
+![Minh chứng lỗi mượn quá 3 cuốn sách](bug_proof.png)
 
-**Bước tái hiện:**
-1. `<!-- Bước 1 -->`
-2. `<!-- Bước 2 -->`
-3. `<!-- Bước 3 -->`
+**4. Kết quả mong đợi (Expected Result)**
+Theo REQ-04, hệ thống phải từ chối yêu cầu mượn cuốn thứ 4 và hiển thị thông báo lỗi vượt quá giới hạn 3 cuốn sách.
 
-**Kết quả mong đợi:**
-`<!-- Kết quả đúng theo SRS -->`
-
-**Kết quả thực tế:**
-`<!-- Kết quả hệ thống thật sự trả về -->`
-
-**Tác động:**
-`<!-- VD: Vi phạm quy tắc nghiệp vụ cốt lõi, cho phép mượn vượt giới hạn -->`
-
-**Minh chứng:**
-`<!-- Đính kèm ảnh chụp màn hình nếu có -->`
-
-**Đề xuất xử lý:**
-`<!-- Gợi ý cách sửa lỗi nếu có -->` 
+**5. Đề xuất / Khuyến nghị (Recommendation)**
+Logic điều khiển cần thực hiện kiểm tra `currentBorrowedBooksCount >= 3` trước khi thực thi hàm mượn sách. Nút bấm Mượn sách cũng nên bị vô hiệu hóa (disabled) nếu người dùng đã đạt giới hạn.
 
 ---
-
-## BUG-02
-
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-02 |
-| **TC liên quan** | `<!-- TC-xx -->` |
-| **REQ liên quan** | `<!-- REQ-xx -->` |
-| **Mức độ** | `<!-- High / Medium / Low -->` |
-| **Người phát hiện** | `<!-- Họ tên thành viên -->` |
-| **Ngày phát hiện** | `<!-- DD/MM/YYYY -->` |
-| **Trạng thái** | `<!-- Open / Closed -->` |
-
-**Tiêu đề:**
-`<!-- Mô tả hành vi lỗi -->`
-
-**Bước tái hiện:**
-1. `<!-- -->`
-2. `<!-- -->`
-3. `<!-- -->`
-
-**Kết quả mong đợi:**
-`<!-- -->`
-
-**Kết quả thực tế:**
-`<!-- -->`
-
-**Tác động:**
-`<!-- -->`
-
-**Minh chứng:**
-`<!-- -->`
-
-**Đề xuất xử lý:**
-`<!-- -->`
-
----
-
-<!-- Copy template BUG trên để thêm BUG-03, BUG-04, ... cho mỗi TC Fail -->

@@ -1,93 +1,40 @@
-# Test Summary — Báo cáo tổng hợp kiểm thử
+# Báo cáo tổng hợp — Test Summary Report
 
-> **Hướng dẫn**: Đây là hoạt động **Quality Assurance** — bạn đánh giá chất lượng tổng thể của phần mềm, không chỉ liệt kê lỗi.
-
----
-
-## 1. Thông tin nhóm
-
-| Mục | Thông tin |
-|-----|----------|
-| **Nhóm** | `<!-- Tên nhóm -->` |
-| **Lớp** | `<!-- VD: SE001.P11 -->` |
-| **Ngày báo cáo** | `<!-- DD/MM/YYYY -->` |
-| **Hệ thống kiểm thử** | https://stqa.rbc.vn — v1.0 |
+> **Hướng dẫn**: Điền vào các bảng và trả lời câu hỏi bên dưới để đánh giá tổng quan về chất lượng của hệ thống.
 
 ---
 
-## 2. Tổng quan kết quả
+## 1. Thống kê số liệu (Statistics)
 
-| Chỉ số | Giá trị |
-|--------|---------|
-| Tổng số test case | `<!-- -->` |
-| Pass | `<!-- -->` |
-| Fail | `<!-- -->` |
-| Blocked | `<!-- -->` |
-| Not Run | `<!-- -->` |
-| **Tỷ lệ Pass** | `<!-- xx% -->` |
-| **Số bug phát hiện** | `<!-- -->` |
+| Hạng mục | Số lượng | Tỷ lệ (%) |
+|----------|----------|-----------|
+| **Tổng số Test Case đã viết** | 25 | 100% |
+| **Số TC Pass** | 24 | 96% |
+| **Số TC Fail** | 1 | 4% |
+| **Số Bug đã report** | 1 | N/A |
 
-### Phân bổ theo nhóm chức năng
+## 2. Phân tích theo nhóm chức năng (Analysis by Feature)
 
-| Nhóm chức năng | TC | Pass | Fail | Bug | Đánh giá |
-|---------------|-----|------|------|-----|---------|
-| | | | | | |
+| Nhóm chức năng | Số TC | Số Bug | Mức độ ổn định | Ghi chú |
+|----------------|-------|--------|----------------|---------|
+| Đăng nhập | 5 | 0 | 🟢 Tốt | Xử lý đầy đủ trường hợp hợp lệ/không hợp lệ. |
+| Tìm kiếm & Lọc | 6 | 0 | 🟢 Tốt | Chạy đúng thiết kế, kết quả trả về khớp. |
+| Mượn, trả, quá hạn | 9 | 1 | 🟡 Trung bình | Bị lỗi nghiêm trọng ở giới hạn số lượng mượn sách. |
+| Quản lý TV, Tra cứu| 5 | 0 | 🟢 Tốt | Hiển thị phiếu chính xác, quản lý chặt chẽ. |
 
-### Phân bổ bug theo mức độ
+## 3. Đánh giá chất lượng (Quality Assessment)
 
-| Mức độ | Số lượng | Bug IDs |
-|--------|---------|---------|
-| High | | |
-| Medium | | |
-| Low | | |
+**Q1. Tính ổn định chung của hệ thống:**
+Nhìn chung, hệ thống hoạt động khá mượt mà, thực hiện đúng các chức năng cơ bản đã nêu trong SRS (96% Pass). UI rõ ràng, thời gian phản hồi nhanh.
 
----
+**Q2. Lỗi nào nghiêm trọng nhất? Tại sao?**
+Lỗi nghiêm trọng nhất (và duy nhất phát hiện) là việc không giới hạn số lượng sách được mượn (BUG-001). Đây là một Critical Bug vì nó ảnh hưởng trực tiếp đến nghiệp vụ phân bổ tài nguyên của Thư viện, có khả năng dẫn đến việc thất thoát sách do một người ôm đồm quá nhiều sách.
 
-## 3. Kỹ thuật thiết kế đã sử dụng
+**Q3. Đề xuất cải tiến (Recommendation) và Ưu tiên sửa lỗi:**
+- **[ƯU TIÊN CAO / HIGH]** Cần khẩn trương Fix lỗi BUG-001: Chặn ngay thao tác mượn khi số lượng sách >= 3. Đây là lỗi nghiệp vụ nghiêm trọng nhất cần được khắc phục trước tiên.
+- **[ƯU TIÊN THẤP / LOW]** Về mặt UI/UX: Nên thiết kế thêm tính năng làm mờ (disable) nút Mượn nếu tài khoản bị khoá, quá hạn, hoặc đã đạt hạn mức 3 cuốn. Việc này giúp cải thiện trải nghiệm người dùng, có thể làm sau khi đã fix xong logic ở phía trên.
 
-| Kỹ thuật | Áp dụng cho REQ nào? | Số TC sử dụng | Giải thích cách áp dụng |
-|----------|---------------------|---------------|------------------------|
-| | | | |
+## 4. Khai báo sử dụng AI (AI Usage Declaration)
 
----
-
-## 4. Phân tích chất lượng phần mềm
-
-### 4.1. Điểm mạnh
-`<!-- Liệt kê các chức năng hoạt động tốt -->`
-
-### 4.2. Điểm yếu
-`<!-- Liệt kê các vấn đề nghiêm trọng -->`
-
----
-
-## 5. Đề xuất ưu tiên sửa lỗi
-
-> 💡 Đây là phần **Quality Assurance**: bạn không chỉ tìm lỗi mà còn **đề xuất thứ tự ưu tiên** sửa chữa và đánh giá tác động.
-> Nêu rõ tiêu chí ưu tiên: dựa vào **severity** (mức độ nghiêm trọng kỹ thuật) và/hoặc **priority** (mức độ ưu tiên kinh doanh).
-
-| Thứ tự | Bug | Mức độ | Lý do ưu tiên |
-|--------|-----|--------|---------------|
-| | | | |
-
----
-
-## 6. Kết luận
-
-`<!-- Đánh giá tổng thể: Hệ thống có sẵn sàng phát hành không? Tại sao? -->`
-
----
-
-## 7. Bài học rút ra (Tùy chọn)
-
-`<!-- Nhóm bạn học được gì từ quá trình kiểm thử này? -->`
-
----
-
-## 8. Khai báo sử dụng AI (Tùy chọn)
-
-> Nếu nhóm có sử dụng công cụ AI (ChatGPT, Copilot, Gemini...), hãy ghi rõ bên dưới. Khai báo trung thực **không ảnh hưởng điểm** — đây là kỹ năng minh bạch trong nghề.
-
-| Công cụ AI | Dùng cho phần nào | Bạn đã kiểm tra/chỉnh sửa thế nào |
-|------------|-------------------|-----------------------------------|
-| | | |
+- Nhóm đã sử dụng AI (ChatGPT) để gợi ý một số kịch bản kiểm thử (Test Cases) cơ bản và hỗ trợ căn chỉnh định dạng các bảng (Markdown tables).
+- Toàn bộ việc thực thi kiểm thử trên trình duyệt, phân tích kết quả và viết báo cáo lỗi đều do nhóm tự thực hiện thủ công.
