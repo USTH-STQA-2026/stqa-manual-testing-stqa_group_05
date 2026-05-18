@@ -9,8 +9,8 @@
 | Hạng mục | Số lượng | Tỷ lệ (%) |
 |----------|----------|-----------
 | **Tổng số Test Case đã viết** | 26 | 100% |
-| **Số TC Pass** | 23 | 88.5% |
-| **Số TC Fail** | 3 | 11.5% |
+| **Số TC Pass** | 22 | 84.6% |
+| **Số TC Fail** | 4 | 15.4% |
 | **Số Bug đã report** | 3 | N/A |
 
 ## 2. Phân tích theo nhóm chức năng (Analysis by Feature)
@@ -21,7 +21,7 @@
 | Xem danh sách sách | 2 | 0 | 🟢 Tốt | Hiển thị đúy đủ thông tin, cập nhật real-time đúng theo thiết kế. |
 | Tìm kiếm & Lọc | 5 | 0 | 🟢 Tốt | Chạy đúng thiết kế, kết quả trả về khớp. |
 | Mượn, trả, quá hạn | 9 | 2 | 🔴 Kém | BUG-001: Vượt giới hạn 3 sách không bị chặn. BUG-002: Thông báo lỗi sai cho tài khoản Tạm ngưng. |
-| Quản lý thành viên, Tra cứu | 5 | 1 | 🔴 Kém | BUG-003: Toàn bộ chức năng Thêm thành viên bị hỏng. |
+| Quản lý thành viên, Tra cứu | 5 | 1 (BUG-003 — 2 biểu hiện, cùng 1 root cause) | 🔴 Kém | BUG-003: Logic email validation bị đảo ngược — từ chối email hợp lệ (TC-21) và chấp nhận email không hợp lệ (TC-22). |
 
 ## 3. Danh sách Bug phát hiện (Bug Summary)
 

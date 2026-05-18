@@ -111,7 +111,7 @@
 | TC-19 | Trả sách quá hạn hiển thị cảnh báo | Đăng nhập MEM002 | 1. Vào Tab Mượn/Trả<br>2. Tìm phiếu quá hạn<br>3. Nhấn Trả | Phiếu quá hạn | Sách trả thành công nhưng có cảnh báo quá hạn. | REQ-05 | BVA |
 | TC-20 | Thủ thư cập nhật trạng thái Quá hạn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả<br>2. Nhấn "Kiểm tra quá hạn" | N/A | Phiếu BR001 chuyển từ Đang mượn sang Quá hạn. | REQ-06 | DT |
 | TC-21 | Thủ thư thêm thành viên hợp lệ | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhấn Thêm mới<br>3. Nhập dữ liệu | Email: `newuser@gmail.com`<br>Tên, SDT | Thành viên mới được thêm vào danh sách. | REQ-07 | EP |
-| TC-22 | Thủ thư thêm thành viên thất bại do sai định dạng | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhập Email không hợp lệ | Email: `new@gmail` | Hiển thị lỗi định dạng email. | REQ-07 | EP |
+| TC-22 | Thủ thư thêm thành viên thất bại do sai định dạng | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhập Email không hợp lệ | Email: `new@gmail` (thiếu dấu `.` trong domain) | Hệ thống **phải từ chối** và hiển thị lỗi định dạng email. Thành viên **không được tạo**. | REQ-07 | EP |
 | TC-23 | Thủ thư thêm thành viên thất bại do trùng Email | Đăng nhập Thủ thư | 1. Nhập Email đã tồn tại | Email: `librarian@library.com` | Hiển thị lỗi email đã tồn tại. | REQ-07 | EP |
 | TC-24 | Thành viên chỉ xem được phiếu mượn của mình | Đăng nhập MEM002 | 1. Vào Mượn/Trả | N/A | Chỉ thấy các phiếu BR001, BR004. Không thấy BR002. | REQ-08 | EP |
 | TC-25 | Thủ thư xem được tất cả phiếu mượn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả | N/A | Hiển thị danh sách tất cả phiếu mượn của các thành viên. | REQ-08 | EP |
@@ -126,5 +126,5 @@
 | Đăng nhập | 5 | 0 | REQ-01 | EP, BVA |
 | Xem danh sách & Tìm kiếm, lọc | 7 | 0 | REQ-02, REQ-03 | EP |
 | Mượn, trả, quá hạn | 9 | 2 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
-| Quản lý thành viên, Tra cứu| 5 | 1 | REQ-07, REQ-08 | EP |
-| **Tổng** | **26** | **3** | **8 REQ** | **EP, BVA, Decision Table** |
+| Quản lý thành viên, Tra cứu | 5 | 2 | REQ-07, REQ-08 | EP |
+| **Tổng** | **26** | **4** | **8 REQ** | **EP, BVA, Decision Table** |

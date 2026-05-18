@@ -68,38 +68,52 @@ Kiểm tra lại logic hiển thị thông báo lỗi cho chức năng mượn s
 
 ---
 
-## BUG-003: Thủ thư không thể thêm thành viên mới do validation email bị lỗi
+## BUG-003: Logic xác thực email (email validation) bị lỗi — chức năng Thêm thành viên hoạt động sai hoàn toàn
 
 **1. Thông tin chung**
-- **Test Case bị Fail**: TC-21
+- **Test Case bị Fail**: TC-21, TC-22
 - **Yêu cầu (REQ) liên quan**: REQ-07 (Quản lý thành viên — Thêm thành viên mới)
 - **Mức độ nghiêm trọng (Severity)**: Critical
-  *(Giải thích: Lỗi này hoàn toàn chặn chức năng "Thêm thành viên mới" — chức năng cốt lõi của Thủ thư. Không có thành viên mới nào có thể được đăng ký vào hệ thống, ảnh hưởng trực tiếp đến hoạt động của thư viện.)*
+  *(Giải thích: Logic validation email bị đảo ngược hoàn toàn — từ chối email hợp lệ trong khi chấp nhận email không hợp lệ. Chức năng thêm thành viên không thể dùng đúng mục đích, ảnh hưởng nghiêm trọng đến chất lượng dữ liệu và hoạt động thư viện.)*
 - **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
 
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Mở trình duyệt và truy cập hệ thống tại `https://stqa.rbc.vn`.
-2. Đăng nhập bằng tài khoản Thủ thư: `librarian@library.com` (mật khẩu: `admin123`).
-3. Chuyển sang Tab **"Thành viên"**.
-4. Nhấn nút **"+"** (Thêm thành viên) ở góc trên bên phải.
-5. Hộp thoại "Thêm thành viên mới" xuất hiện. Điền đầy đủ thông tin:
-   - Họ và tên: `Nguyễn Test`
-   - Email: `testnewuser99@gmail.com`
-   - Số điện thoại: `0901234567`
-6. Nhấn nút **"Thêm thành viên"** (Submit).
+**2. Biểu hiện lỗi (2 trường hợp cùng một root cause)**
 
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống **từ chối** yêu cầu và hiển thị thông báo lỗi màu đỏ ngay dưới ô nhập email:
-> **"Email không hợp lệ."**
+**Trường hợp A — TC-21: Email hợp lệ bị từ chối**
 
-Địa chỉ email `testnewuser99@gmail.com` hoàn toàn hợp lệ theo mọi tiêu chuẩn (có `@`, có dấu `.` trong phần domain). Lỗi này tái hiện với **mọi địa chỉ email hợp lệ** được nhập vào form, khiến chức năng thêm thành viên **hoàn toàn không thể sử dụng được**.
+Các bước tái hiện:
+1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
+2. Điền: Tên=`Nguyễn Test`, Email=`testnewuser99@gmail.com`, SĐT=`0901234567`.
+3. Nhấn **"Thêm thành viên"**.
 
-![Minh chứng BUG-003: Email hợp lệ nhưng bị báo lỗi "Email không hợp lệ"](bug003_proof.png)
+Kết quả thực tế: Hệ thống báo lỗi **"Email không hợp lệ."** (màu đỏ) — trong khi email hoàn toàn hợp lệ theo SRS (có `@` và có `.` trong domain).
+
+![Minh chứng TC-21: Email hợp lệ bị báo "Email không hợp lệ"](bug003_proof.png)
+
+---
+
+**Trường hợp B — TC-22: Email không hợp lệ được chấp nhận**
+
+Các bước tái hiện:
+1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
+2. Điền: Tên=`Test Invalid Email`, Email=`new@gmail` *(thiếu `.` trong domain — không hợp lệ theo SRS)*, SĐT=`0901234567`.
+3. Nhấn **"Thêm thành viên"**.
+
+Kết quả thực tế: Hệ thống **chấp nhận** và hiển thị **"Thêm thành viên thành công! Mã: MEM007"** — thành viên mới được tạo với email không hợp lệ.
+
+![Minh chứng TC-22: Email không hợp lệ `new@gmail` vẫn tạo thành viên thành công](bug004_proof.png)
+
+**3. Phân tích root cause**
+Hai biểu hiện trên cùng một nguyên nhân: **logic regex/validator email bị đảo ngược** — điều kiện `isValid` và `isInvalid` bị nhầm lẫn, dẫn đến:
+- Email đúng chuẩn → bị coi là sai → từ chối
+- Email sai chuẩn → bị coi là đúng → chấp nhận
 
 **4. Kết quả mong đợi (Expected Result)**
-Theo SRS REQ-07, email hợp lệ (có `@` VÀ có dấu `.` trong phần domain, ví dụ `user@domain.com`) phải được chấp nhận. Thành viên mới phải được tạo thành công và xuất hiện trong danh sách thành viên.
+Theo SRS REQ-07:
+- Email **hợp lệ** (có `@` VÀ có `.` trong domain, VD: `user@domain.com`) → **Tạo thành viên thành công**.
+- Email **không hợp lệ** (thiếu `@` hoặc thiếu `.` trong domain, VD: `new@gmail`) → **Từ chối, hiển thị lỗi định dạng**.
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra lại biểu thức chính quy (regex) hoặc hàm xác thực email trong form "Thêm thành viên". Regex hiện tại bị cấu hình sai (quá nghiêm ngặt hoặc logic bị đảo ngược), dẫn đến việc từ chối mọi đầu vào. Nên sử dụng regex chuẩn RFC 5322 hoặc package kiểm tra email được cập nhật đúng phiên bản.
+Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên dùng regex chuẩn: `^[^\s@]+@[^\s@]+\.[^\s@]+$` hoặc package `email_validator` được cấu hình đúng. Cần test lại cả trường hợp hợp lệ và không hợp lệ sau khi fix.
 
 ---

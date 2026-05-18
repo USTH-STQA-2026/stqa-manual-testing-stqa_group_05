@@ -25,7 +25,7 @@
 | TC-19 | Pass | Trả sách thành công, có thông báo cảnh báo quá hạn | |
 | TC-20 | Pass | Hệ thống quét và tự cập nhật phiếu BR001 sang trạng thái Quá hạn | |
 | TC-21 | **Fail** | **Nhập email hợp lệ `testnewuser99@gmail.com` nhưng hệ thống báo "Email không hợp lệ." — Không thể thêm thành viên mới với bất kỳ email nào.** | [BUG-003] |
-| TC-22 | Pass | Báo lỗi định dạng email khi thiếu dấu `.` (lỗi này đúng theo SRS) | |
+| TC-22 | **Fail** | **Hệ thống chấp nhận email `new@gmail` (thiếu `.` trong domain) và tạo thành viên thành công với mã MEM007. Không có cảnh báo lỗi nào.** | [BUG-003] |
 | TC-23 | Pass | Báo lỗi trùng email khi dùng email của Thủ thư | |
 | TC-24 | Pass | Thành viên chỉ nhìn thấy phiếu mượn của chính mình | |
 | TC-25 | Pass | Thủ thư nhìn thấy toàn bộ phiếu mượn của hệ thống | |
