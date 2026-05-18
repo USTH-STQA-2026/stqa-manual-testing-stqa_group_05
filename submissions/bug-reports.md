@@ -114,6 +114,19 @@ Theo SRS REQ-07:
 - Email **không hợp lệ** (thiếu `@` hoặc thiếu `.` trong domain, VD: `new@gmail`) → **Từ chối, hiển thị lỗi định dạng**.
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên sử dụng thư viện kiểm tra email chuẩn (ví dụ: package `email_validator`) hoặc một biểu thức chính quy (regex) cơ bản để kiểm tra sự tồn tại của ký tự `@` và dấu `.` trong phần domain. Cần test lại cả trường hợp hợp lệ và không hợp lệ sau khi fix.
+Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên dùng biểu thức chính quy (Regex) chuẩn để kiểm tra định dạng email:
+
+```regex
+^[^\s@]+@[^\s@]+\.[^\s@]+$
+```
+
+*Giải thích chuỗi ký tự trên (đây là mã Regex, không phải lỗi font):*
+- `^[^\s@]+`: Bắt đầu bằng các ký tự không phải khoảng trắng và không chứa ký tự `@`.
+- `@`: Phải có ký tự `@` ở giữa.
+- `[^\s@]+`: Tiếp theo là tên miền (domain) không chứa khoảng trắng và `@`.
+- `\.`: Phải có dấu chấm `.` sau tên miền.
+- `[^\s@]+$`: Kết thúc bằng phần mở rộng domain (như `.com`, `.vn`) không chứa khoảng trắng và `@`.
+
+Hoặc có thể sử dụng package xác thực email tiêu chuẩn (như `email_validator` trong Flutter/Dart) được cấu hình đúng. Cần thực hiện kiểm thử lại cả hai trường hợp (email hợp lệ và không hợp lệ) sau khi sửa đổi.
 
 ---
