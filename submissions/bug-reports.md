@@ -114,6 +114,6 @@ Theo SRS REQ-07:
 - Email **không hợp lệ** (thiếu `@` hoặc thiếu `.` trong domain, VD: `new@gmail`) → **Từ chối, hiển thị lỗi định dạng**.
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên dùng regex chuẩn: `^[^\s@]+@[^\s@]+\.[^\s@]+$` hoặc package `email_validator` được cấu hình đúng. Cần test lại cả trường hợp hợp lệ và không hợp lệ sau khi fix.
+Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên sử dụng thư viện kiểm tra email chuẩn (ví dụ: package `email_validator`) hoặc một biểu thức chính quy (regex) cơ bản để kiểm tra sự tồn tại của ký tự `@` và dấu `.` trong phần domain. Cần test lại cả trường hợp hợp lệ và không hợp lệ sau khi fix.
 
 ---
