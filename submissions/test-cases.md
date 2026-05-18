@@ -25,6 +25,15 @@
 | Ô nhập có rỗng? | Không rỗng | (giá trị bất kỳ) | Xử lý bình thường |
 | | Rỗng | `""` | Thông báo "Vui lòng nhập..." |
 
+### IDM — Xem danh sách sách (REQ-02)
+| Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
+|---|---|---|---|
+| Vai trò người xem? | Thủ thư | `librarian@library.com` | Thấy toàn bộ danh sách sách |
+| | Thành viên | `ba.nguyen@email.com` | Thấy toàn bộ danh sách sách |
+| Trạng thái sách sau khi mượn? | Sách vừa được mượn | `BOOK001` (lúc đầu: Có sẵn) | Trạng thái cập nhật thành "Đã mượn" ngay lập tức (real-time) |
+| Thông tin có đầy đủ? | Đầy đủ | (bất kỳ sách nào) | Hiển thị: tên, tác giả, thể loại, năm XB, trạng thái |
+| | Thiếu trường | N/A | Không được phép ẩn bất kỳ trường nào |
+
 ### IDM — Tìm kiếm sách (REQ-03)
 | Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
 |---|---|---|---|
@@ -95,7 +104,7 @@
 | TC-12 | Mượn sách thành công (Hoạt động, Có sẵn, Mượn < 3) | Đăng nhập MEM006 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Mượn thành công, trạng thái sách chuyển sang "Đã mượn". | REQ-04 | DT |
 | TC-13 | Không cho phép mượn sách đã có người mượn | Đăng nhập Thành viên | 1. Chọn sách Đã mượn<br>2. Nhấn Mượn | Sách: `BOOK003` | Nút mượn bị ẩn hoặc thông báo từ chối. | REQ-04 | EP |
 | TC-14 | Không cho phép mượn sách bị thất lạc | Đăng nhập Thành viên | 1. Tìm sách Thất lạc<br>2. Nhấn Mượn | Sách: `BOOK007` | Nút mượn bị ẩn hoặc thông báo từ chối. | REQ-04 | EP |
-| TC-15 | Thành viên Tạm ngưng không được mượn sách | Đăng nhập MEM004 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Từ chối mượn, thông báo tài khoản bị tạm ngưng. | REQ-04 | DT |
+| TC-15 | Thành viên Tạm ngưng không được mượn sách | Đăng nhập MEM004 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Từ chối mượn, hiển thị thông báo **khác biệt** cho trạng thái tạm ngưng (VD: "Tài khoản đang bị tạm ngưng. Không thể mượn sách."). Theo SRS REQ-04: thông báo tạm ngưng ≠ thông báo hết hạn. | REQ-04 | DT |
 | TC-16 | Thành viên Hết hạn không được mượn sách | Đăng nhập MEM005 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Từ chối mượn, thông báo tài khoản đã hết hạn. | REQ-04 | DT |
 | TC-17 | Không cho mượn quá 3 cuốn sách | Đăng nhập MEM002 | 1. Mượn 3 cuốn sách<br>2. Mượn cuốn thứ 4 | Sách: 3 cuốn hợp lệ, mượn cuốn 4 | Từ chối mượn cuốn thứ 4, thông báo vượt giới hạn mượn. | REQ-04 | BVA |
 | TC-18 | Trả sách đúng hạn thành công | Đăng nhập MEM006 | 1. Vào Tab Mượn/Trả<br>2. Tìm phiếu đang mượn<br>3. Nhấn Trả sách | Phiếu: `BR003` | Sách trả thành công, chuyển về "Có sẵn". Không cảnh báo. | REQ-05 | EP |
@@ -106,15 +115,16 @@
 | TC-23 | Thủ thư thêm thành viên thất bại do trùng Email | Đăng nhập Thủ thư | 1. Nhập Email đã tồn tại | Email: `librarian@library.com` | Hiển thị lỗi email đã tồn tại. | REQ-07 | EP |
 | TC-24 | Thành viên chỉ xem được phiếu mượn của mình | Đăng nhập MEM002 | 1. Vào Mượn/Trả | N/A | Chỉ thấy các phiếu BR001, BR004. Không thấy BR002. | REQ-08 | EP |
 | TC-25 | Thủ thư xem được tất cả phiếu mượn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả | N/A | Hiển thị danh sách tất cả phiếu mượn của các thành viên. | REQ-08 | EP |
+| TC-26 | Trạng thái sách cập nhật real-time sau khi mượn | Đăng nhập MEM003 | 1. Vào Tab Sách, ghi nhận BOOK002 "Được sẵn"<br>2. Nhấn Mượn BOOK002<br>3. Quan sát lại danh sách sách ngay sau đó | Sách: `BOOK002` | BOOK002 phải lập tức đổi trạng thái sang "Đã mượn" trên danh sách mà không cần tải lại trang (real-time update). | REQ-02 | EP |
 
 ---
 
 ## Tổng hợp
 
-| Nhóm chức năng | Số TC | REQ phủ | Kỹ thuật IDM áp dụng |
-|----------------|-------|---------|----------------------|
-| Đăng nhập | 5 | REQ-01 | EP, BVA |
-| Tìm kiếm, lọc | 6 | REQ-02, REQ-03 | EP |
-| Mượn, trả, quá hạn | 9 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
-| Quản lý thành viên, Tra cứu| 5 | REQ-07, REQ-08 | EP |
-| **Tổng** | **25** | **8 REQ** | **EP, BVA, Decision Table** |
+| Nhóm chức năng | Số TC | Số TC Fail | REQ phủ | Kỹ thuật IDM áp dụng |
+|----------------|-------|-----------|---------|----------------------|
+| Đăng nhập | 5 | 0 | REQ-01 | EP, BVA |
+| Xem danh sách & Tìm kiếm, lọc | 7 | 0 | REQ-02, REQ-03 | EP |
+| Mượn, trả, quá hạn | 9 | 2 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
+| Quản lý thành viên, Tra cứu| 5 | 1 | REQ-07, REQ-08 | EP |
+| **Tổng** | **26** | **3** | **8 REQ** | **EP, BVA, Decision Table** |
