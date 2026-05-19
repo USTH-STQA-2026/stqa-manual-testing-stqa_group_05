@@ -34,8 +34,6 @@ Logic điều khiển cần thực hiện kiểm tra `currentBorrowedBooksCount 
 
 ---
 
----
-
 ## BUG-002: Thông báo lỗi sai khi tài khoản "Tạm ngưng" cố gắng mượn sách
 
 **1. Thông tin chung**
@@ -67,8 +65,6 @@ Hệ thống phải hiển thị thông báo phân biệt rõ trạng thái, ví
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
 Kiểm tra lại logic hiển thị thông báo lỗi cho chức năng mượn sách. Cần phân tách điều kiện kiểm tra `status == "suspended"` (tạm ngưng) và `status == "expired"` (hết hạn) để trả về đúng nội dung thông báo tương ứng.
-
----
 
 ---
 
@@ -133,7 +129,7 @@ Theo SRS REQ-07:
 - Email **đã tồn tại** (VD: `librarian@library.com`) → **Từ chối, hiển thị lỗi email đã tồn tại**.
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên dùng biểu thức chính quy (Regex) chuẩn để kiểm tra định dạng email:
+Sửa lại hàm xác thực email theo đúng quy tắc trong SRS, sau đó mới kiểm tra email trùng trong dữ liệu hiện có. Nên dùng biểu thức chính quy (Regex) chuẩn để kiểm tra định dạng email:
 
 ```regex
 ^[^\s@]+@[^\s@]+\.[^\s@]+$
@@ -146,9 +142,7 @@ Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email
 - `\.`: Phải có dấu chấm `.` sau tên miền.
 - `[^\s@]+$`: Kết thúc bằng phần mở rộng domain (như `.com`, `.vn`) không chứa khoảng trắng và `@`.
 
-Hoặc có thể sử dụng package xác thực email tiêu chuẩn (như `email_validator` trong Flutter/Dart) được cấu hình đúng. Cần thực hiện kiểm thử lại cả hai trường hợp (email hợp lệ và không hợp lệ) sau khi sửa đổi.
-
----
+Hoặc có thể sử dụng package xác thực email tiêu chuẩn (như `email_validator` trong Flutter/Dart) được cấu hình đúng. Cần áp dụng thêm hàm `trim()` để loại bỏ khoảng trắng thừa ở đầu/cuối chuỗi email trước khi validate, tránh việc người dùng vô tình copy dư khoảng trắng dẫn đến lỗi. Cần thực hiện kiểm thử lại cả ba nhóm: email hợp lệ, email thiếu dấu `.` trong domain, và email đã tồn tại.
 
 ---
 
@@ -183,15 +177,13 @@ Kiểm tra quyền truy cập khi tra cứu phiếu mượn. Nếu người dùn
 
 ---
 
----
-
 ## BUG-005: Thành viên trả được phiếu mượn của thành viên khác
 
 **1. Thông tin chung**
 - **Test Case bị Fail**: TC-28
 - **Yêu cầu (REQ) liên quan**: REQ-08 (phân quyền xem phiếu), REQ-05 (chỉ trả sách mà thành viên đang mượn)
 - **Mức độ nghiêm trọng (Severity)**: Critical
-  *(Giải thích: Thành viên không chỉ xem được phiếu của người khác mà còn thay đổi trạng thái phiếu/sách trong phiên hiện tại. Điều này làm sai dữ liệu mượn/trả và ảnh hưởng trực tiếp đến nghiệp vụ thư viện.)*
+  *(Giải thích: Thành viên không chỉ xem được phiếu của người khác mà còn thay đổi trạng thái phiếu/sách trong phiên hiện tại. Điều này không chỉ làm sai lệch lịch sử mượn trả, mà còn tạo ra kẽ hở để một người dùng cố ý 'giải phóng' những cuốn sách đang hot bị người khác giữ, biến nó thành 'Có sẵn' để bản thân họ có thể mượn ngay lập tức. Lỗi này ảnh hưởng trực tiếp và nghiêm trọng đến nghiệp vụ thư viện.)*
 - **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
 - **Liên quan**: BUG-004 (lỗi tra cứu phiếu người khác là điều kiện dẫn tới lỗi trả hộ)
 
