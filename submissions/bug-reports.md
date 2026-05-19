@@ -71,13 +71,13 @@ Kiểm tra lại logic hiển thị thông báo lỗi cho chức năng mượn s
 ## BUG-003: Logic xác thực email (email validation) bị lỗi — chức năng Thêm thành viên hoạt động sai hoàn toàn
 
 **1. Thông tin chung**
-- **Test Case bị Fail**: TC-21, TC-22
+- **Test Case bị Fail**: TC-21, TC-22, TC-23
 - **Yêu cầu (REQ) liên quan**: REQ-07 (Quản lý thành viên — Thêm thành viên mới)
 - **Mức độ nghiêm trọng (Severity)**: Critical
   *(Giải thích: Logic validation email bị đảo ngược hoàn toàn — từ chối email hợp lệ trong khi chấp nhận email không hợp lệ. Chức năng thêm thành viên không thể dùng đúng mục đích, ảnh hưởng nghiêm trọng đến chất lượng dữ liệu và hoạt động thư viện.)*
 - **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
 
-**2. Biểu hiện lỗi (2 trường hợp cùng một root cause)**
+**2. Biểu hiện lỗi (3 trường hợp cùng một root cause)**
 
 **Trường hợp A — TC-21: Email hợp lệ bị từ chối**
 
@@ -103,15 +103,30 @@ Kết quả thực tế: Hệ thống **chấp nhận** và hiển thị **"Thê
 
 ![Minh chứng TC-22: Email không hợp lệ `new@gmail` vẫn tạo thành viên thành công](bug004_proof.png)
 
+---
+
+**Trường hợp C — TC-23: Email đã tồn tại bị báo sai lỗi**
+
+Các bước tái hiện:
+1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
+2. Điền: Tên=`Nguyễn Trùng Email`, Email=`librarian@library.com`, SĐT=`0901234567`.
+3. Nhấn **"Thêm thành viên"**.
+
+Kết quả thực tế: Hệ thống báo lỗi **"Email không hợp lệ."** thay vì báo email đã tồn tại. Email `librarian@library.com` là email hợp lệ theo SRS và đã tồn tại trong seed data, nên lỗi đúng phải là lỗi trùng email.
+
+![Minh chứng TC-23: Email đã tồn tại `librarian@library.com` bị báo "Email không hợp lệ"](bug005_proof.png)
+
 **3. Phân tích root cause**
-Hai biểu hiện trên cùng một nguyên nhân: **logic regex/validator email bị đảo ngược** — điều kiện `isValid` và `isInvalid` bị nhầm lẫn, dẫn đến:
+Ba biểu hiện trên cùng một nguyên nhân: **logic regex/validator email bị sai** — điều kiện kiểm tra định dạng email không đúng với SRS và được chạy trước kiểm tra trùng email, dẫn đến:
 - Email đúng chuẩn → bị coi là sai → từ chối
 - Email sai chuẩn → bị coi là đúng → chấp nhận
+- Email đã tồn tại nhưng có dấu `.` trong domain → bị báo "Email không hợp lệ" trước khi hệ thống kiểm tra trùng email
 
 **4. Kết quả mong đợi (Expected Result)**
 Theo SRS REQ-07:
 - Email **hợp lệ** (có `@` VÀ có `.` trong domain, VD: `user@domain.com`) → **Tạo thành viên thành công**.
 - Email **không hợp lệ** (thiếu `@` hoặc thiếu `.` trong domain, VD: `new@gmail`) → **Từ chối, hiển thị lỗi định dạng**.
+- Email **đã tồn tại** (VD: `librarian@library.com`) → **Từ chối, hiển thị lỗi email đã tồn tại**.
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
 Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email. Nên dùng biểu thức chính quy (Regex) chuẩn để kiểm tra định dạng email:

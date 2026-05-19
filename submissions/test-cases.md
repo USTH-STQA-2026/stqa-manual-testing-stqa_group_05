@@ -100,22 +100,22 @@
 | TC-08 | Tìm kiếm sách theo tên tác giả | Đã đăng nhập | 1. Nhập tên tác giả vào ô tìm kiếm | Từ khóa: `Trần Văn Hùng` | Hiển thị cuốn sách `BOOK002`. | REQ-03 | EP |
 | TC-09 | Tìm kiếm sách không phân biệt HOA/thường | Đã đăng nhập | 1. Nhập từ khóa viết thường/viết HOA | Từ khóa: `flutter` | Hiển thị cuốn sách `BOOK001` (giống TC-07). | REQ-03 | EP |
 | TC-10 | Tìm kiếm sách không có kết quả | Đã đăng nhập | 1. Nhập từ khóa không tồn tại | Từ khóa: `XYZ123` | Hiển thị thông báo "Không tìm thấy sách". | REQ-03 | EP |
-| TC-11 | Lọc sách theo thể loại | Đã đăng nhập | 1. Chọn thể loại "Quản trị" từ dropdown | Thể loại: `Quản trị` | Danh sách hiển thị BOOK004, BOOK012. | REQ-03 | EP |
+| TC-11 | Lọc sách theo thể loại | Đã đăng nhập | 1. Nhập thể loại "Quản trị" vào ô lọc thể loại | Thể loại: `Quản trị` | Danh sách hiển thị BOOK004, BOOK012, BOOK013. | REQ-03 | EP |
 | TC-12 | Mượn sách thành công (Hoạt động, Có sẵn, Mượn < 3) | Đăng nhập MEM006 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Mượn thành công, trạng thái sách chuyển sang "Đã mượn". | REQ-04 | DT |
 | TC-13 | Không cho phép mượn sách đã có người mượn | Đăng nhập Thành viên | 1. Chọn sách Đã mượn<br>2. Nhấn Mượn | Sách: `BOOK003` | Nút mượn bị ẩn hoặc thông báo từ chối. | REQ-04 | EP |
 | TC-14 | Không cho phép mượn sách bị thất lạc | Đăng nhập Thành viên | 1. Tìm sách Thất lạc<br>2. Nhấn Mượn | Sách: `BOOK007` | Nút mượn bị ẩn hoặc thông báo từ chối. | REQ-04 | EP |
 | TC-15 | Thành viên Tạm ngưng không được mượn sách | Đăng nhập MEM004 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Từ chối mượn, hiển thị thông báo **khác biệt** cho trạng thái tạm ngưng (VD: "Tài khoản đang bị tạm ngưng. Không thể mượn sách."). Theo SRS REQ-04: thông báo tạm ngưng ≠ thông báo hết hạn. | REQ-04 | DT |
 | TC-16 | Thành viên Hết hạn không được mượn sách | Đăng nhập MEM005 | 1. Chọn sách Có sẵn<br>2. Nhấn Mượn | Sách: `BOOK001` | Từ chối mượn, thông báo tài khoản đã hết hạn. | REQ-04 | DT |
-| TC-17 | Không cho mượn quá 3 cuốn sách | Đăng nhập MEM002 | 1. Mượn 3 cuốn sách<br>2. Mượn cuốn thứ 4 | Sách: 3 cuốn hợp lệ, mượn cuốn 4 | Từ chối mượn cuốn thứ 4, thông báo vượt giới hạn mượn. | REQ-04 | BVA |
-| TC-18 | Trả sách đúng hạn thành công | Đăng nhập MEM006 | 1. Vào Tab Mượn/Trả<br>2. Tìm phiếu đang mượn<br>3. Nhấn Trả sách | Phiếu: `BR003` | Sách trả thành công, chuyển về "Có sẵn". Không cảnh báo. | REQ-05 | EP |
-| TC-19 | Trả sách quá hạn hiển thị cảnh báo | Đăng nhập MEM002 | 1. Vào Tab Mượn/Trả<br>2. Tìm phiếu quá hạn<br>3. Nhấn Trả | Phiếu quá hạn | Sách trả thành công nhưng có cảnh báo quá hạn. | REQ-05 | BVA |
-| TC-20 | Thủ thư cập nhật trạng thái Quá hạn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả<br>2. Nhấn "Kiểm tra quá hạn" | N/A | Phiếu BR001 chuyển từ Đang mượn sang Quá hạn. | REQ-06 | DT |
-| TC-21 | Thủ thư thêm thành viên hợp lệ | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhấn Thêm mới<br>3. Nhập dữ liệu | Email: `newuser@gmail.com`<br>Tên, SDT | Thành viên mới được thêm vào danh sách. | REQ-07 | EP |
-| TC-22 | Thủ thư thêm thành viên thất bại do sai định dạng | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhập Email không hợp lệ | Email: `new@gmail` (thiếu dấu `.` trong domain) | Hệ thống **phải từ chối** và hiển thị lỗi định dạng email. Thành viên **không được tạo**. | REQ-07 | EP |
-| TC-23 | Thủ thư thêm thành viên thất bại do trùng Email | Đăng nhập Thủ thư | 1. Nhập Email đã tồn tại | Email: `librarian@library.com` | Hiển thị lỗi email đã tồn tại. | REQ-07 | EP |
+| TC-17 | Không cho mượn quá 3 cuốn sách | Reset dữ liệu, đăng nhập MEM002 | 1. Xác nhận MEM002 đang có 1 phiếu đang mượn (`BR001` - `BOOK003`)<br>2. Mượn thêm 2 sách có sẵn để đạt tổng 3 sách đang mượn<br>3. Tiếp tục mượn cuốn thứ 4 | Sách mượn thêm: `BOOK001`, `BOOK002`<br>Sách thứ 4: `BOOK004` | Từ chối mượn cuốn thứ 4, hiển thị thông báo vượt giới hạn mượn tối đa 3 sách. | REQ-04 | BVA |
+| TC-18 | Trả sách đúng hạn thành công | Reset dữ liệu, đăng nhập MEM006 | 1. Vào Tab Sách<br>2. Mượn một sách có trạng thái "Có sẵn"<br>3. Vào Tab Mượn/Trả<br>4. Tìm phiếu mượn vừa tạo<br>5. Nhấn Trả sách | Sách: `BOOK001` | Sách trả thành công, chuyển về "Có sẵn". Không hiển thị cảnh báo quá hạn. | REQ-05 | EP |
+| TC-19 | Trả sách quá hạn hiển thị cảnh báo | Reset dữ liệu, đăng nhập MEM002 | 1. Vào Tab Mượn/Trả<br>2. Tìm phiếu `BR001` đang mượn nhưng đã quá hạn<br>3. Nhấn Trả sách | Phiếu: `BR001` (`BOOK003`, hạn trả `15/09/2024`) | Sách trả thành công nhưng có cảnh báo quá hạn. | REQ-05 | BVA |
+| TC-20 | Thủ thư cập nhật trạng thái Quá hạn | Reset dữ liệu, đăng nhập Thủ thư | 1. Vào Mượn/Trả<br>2. Nhấn "Kiểm tra quá hạn" | N/A | Các phiếu đang mượn có ngày hết hạn ≤ ngày hiện tại được chuyển sang "Quá hạn", tối thiểu gồm `BR001` và `BR003`. | REQ-06 | DT |
+| TC-21 | Thủ thư thêm thành viên hợp lệ | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhấn Thêm mới<br>3. Nhập đầy đủ họ tên, email, số điện thoại<br>4. Nhấn Thêm thành viên | Tên: `Nguyễn Test`<br>Email: `testnewuser99@gmail.com`<br>SDT: `0901234567` | Thành viên mới được thêm vào danh sách và hiển thị mã thành viên mới. | REQ-07 | EP |
+| TC-22 | Thủ thư thêm thành viên thất bại do sai định dạng | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhấn Thêm mới<br>3. Nhập họ tên và số điện thoại hợp lệ<br>4. Nhập Email không hợp lệ<br>5. Nhấn Thêm thành viên | Tên: `Test Invalid Email`<br>Email: `new@gmail` (thiếu dấu `.` trong domain)<br>SDT: `0901234567` | Hệ thống **phải từ chối** và hiển thị lỗi định dạng email. Thành viên **không được tạo**. | REQ-07 | EP |
+| TC-23 | Thủ thư thêm thành viên thất bại do trùng Email | Đăng nhập Thủ thư | 1. Tab Thành viên<br>2. Nhấn Thêm mới<br>3. Nhập họ tên và số điện thoại hợp lệ<br>4. Nhập Email đã tồn tại<br>5. Nhấn Thêm thành viên | Tên: `Nguyễn Trùng Email`<br>Email: `librarian@library.com`<br>SDT: `0901234567` | Hệ thống từ chối tạo thành viên và hiển thị lỗi email đã tồn tại. | REQ-07 | EP |
 | TC-24 | Thành viên chỉ xem được phiếu mượn của mình | Đăng nhập MEM002 | 1. Vào Mượn/Trả | N/A | Chỉ thấy các phiếu BR001, BR004. Không thấy BR002. | REQ-08 | EP |
 | TC-25 | Thủ thư xem được tất cả phiếu mượn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả | N/A | Hiển thị danh sách tất cả phiếu mượn của các thành viên. | REQ-08 | EP |
-| TC-26 | Trạng thái sách cập nhật real-time sau khi mượn | Đăng nhập MEM003 | 1. Vào Tab Sách, ghi nhận BOOK002 "Được sẵn"<br>2. Nhấn Mượn BOOK002<br>3. Quan sát lại danh sách sách ngay sau đó | Sách: `BOOK002` | BOOK002 phải lập tức đổi trạng thái sang "Đã mượn" trên danh sách mà không cần tải lại trang (real-time update). | REQ-02 | EP |
+| TC-26 | Trạng thái sách cập nhật real-time sau khi mượn | Đăng nhập MEM003 | 1. Vào Tab Sách, ghi nhận BOOK002 "Có sẵn"<br>2. Nhấn Mượn BOOK002<br>3. Quan sát lại danh sách sách ngay sau đó | Sách: `BOOK002` | BOOK002 phải lập tức đổi trạng thái sang "Đã mượn" trên danh sách mà không cần tải lại trang (real-time update). | REQ-02 | EP |
 
 ---
 
@@ -126,5 +126,5 @@
 | Đăng nhập | 5 | 0 | REQ-01 | EP, BVA |
 | Xem danh sách & Tìm kiếm, lọc | 7 | 0 | REQ-02, REQ-03 | EP |
 | Mượn, trả, quá hạn | 9 | 2 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
-| Quản lý thành viên, Tra cứu | 5 | 2 | REQ-07, REQ-08 | EP |
-| **Tổng** | **26** | **4** | **8 REQ** | **EP, BVA, Decision Table** |
+| Quản lý thành viên, Tra cứu | 5 | 3 | REQ-07, REQ-08 | EP |
+| **Tổng** | **26** | **5** | **8 REQ** | **EP, BVA, Decision Table** |

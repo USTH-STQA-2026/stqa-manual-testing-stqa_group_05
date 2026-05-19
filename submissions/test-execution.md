@@ -23,10 +23,10 @@
 | TC-17 | **Fail** | **Hệ thống vẫn cho phép mượn cuốn sách thứ 4 dù đã đạt giới hạn 3 cuốn. Hiển thị "Mượn sách thành công!"** | [BUG-001] |
 | TC-18 | Pass | Trả sách thành công, sách chuyển về trạng thái Có sẵn | |
 | TC-19 | Pass | Trả sách thành công, có thông báo cảnh báo quá hạn | |
-| TC-20 | Pass | Hệ thống quét và tự cập nhật phiếu BR001 sang trạng thái Quá hạn | |
+| TC-20 | Pass | Hệ thống quét và tự cập nhật các phiếu đang mượn đã quá hạn, gồm BR001 và BR003, sang trạng thái Quá hạn | |
 | TC-21 | **Fail** | **Nhập email hợp lệ `testnewuser99@gmail.com` nhưng hệ thống báo "Email không hợp lệ." — Không thể thêm thành viên mới với bất kỳ email nào.** | [BUG-003] |
 | TC-22 | **Fail** | **Hệ thống chấp nhận email `new@gmail` (thiếu `.` trong domain) và tạo thành viên thành công với mã MEM007. Không có cảnh báo lỗi nào.** | [BUG-003] |
-| TC-23 | Pass | Báo lỗi trùng email khi dùng email của Thủ thư | |
+| TC-23 | **Fail** | **Nhập email đã tồn tại `librarian@library.com` nhưng hệ thống báo "Email không hợp lệ." thay vì báo lỗi email đã tồn tại.** | [BUG-003] |
 | TC-24 | Pass | Thành viên chỉ nhìn thấy phiếu mượn của chính mình | |
 | TC-25 | Pass | Thủ thư nhìn thấy toàn bộ phiếu mượn của hệ thống | |
 | TC-26 | Pass | Sau khi MEM003 mượn BOOK002, trạng thái sách chuyển sang "Đã mượn" ngay lập tức trên danh sách mà không cần tải lại trang. | |
