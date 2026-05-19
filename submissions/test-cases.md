@@ -138,6 +138,6 @@
 |----------------|-------|-----------|---------|----------------------|
 | Đăng nhập | 5 | 0 | REQ-01 | EP, BVA |
 | Xem danh sách & Tìm kiếm, lọc | 7 | 0 | REQ-02, REQ-03 | EP |
-| Mượn, trả, quá hạn | 9 | 2 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
+| Mượn, trả, quá hạn | 9 | 3 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
 | Quản lý thành viên, Tra cứu | 7 | 5 | REQ-07, REQ-08 | EP |
-| **Tổng** | **28** | **7** | **8 REQ** | **EP, BVA, Decision Table** |
+| **Tổng** | **28** | **8** | **8 REQ** | **EP, BVA, Decision Table** |

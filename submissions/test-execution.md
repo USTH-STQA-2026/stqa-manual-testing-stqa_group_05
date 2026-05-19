@@ -22,7 +22,7 @@
 | TC-16 | Pass | Bị từ chối mượn, có thông báo lỗi "Thành viên đã hết hạn. Không thể mượn sách." | |
 | TC-17 | **Fail** | **Hệ thống vẫn cho phép mượn cuốn sách thứ 4 dù đã đạt giới hạn 3 cuốn. Hiển thị "Mượn sách thành công!"** | [BUG-001] |
 | TC-18 | Pass | Trả sách thành công, sách chuyển về trạng thái Có sẵn | |
-| TC-19 | Pass | Trả sách thành công, có thông báo cảnh báo quá hạn | |
+| TC-19 | **Fail** | **Trả phiếu quá hạn BR001 thành công nhưng hệ thống chỉ hiển thị "Trả sách thành công.", không có cảnh báo quá hạn như REQ-05 yêu cầu.** | [BUG-006] |
 | TC-20 | Pass | Hệ thống quét và tự cập nhật các phiếu đang mượn đã quá hạn, gồm BR001 và BR003, sang trạng thái Quá hạn | |
 | TC-21 | **Fail** | **Nhập email hợp lệ `testnewuser99@gmail.com` nhưng hệ thống báo "Email không hợp lệ." — Không thể thêm thành viên mới với bất kỳ email nào.** | [BUG-003] |
 | TC-22 | **Fail** | **Hệ thống chấp nhận email `new@gmail` (thiếu `.` trong domain) và tạo thành viên thành công với mã MEM007. Không có cảnh báo lỗi nào.** | [BUG-003] |

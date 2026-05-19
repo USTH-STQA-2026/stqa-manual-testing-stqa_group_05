@@ -9,9 +9,9 @@
 | Hạng mục | Số lượng | Tỷ lệ (%) |
 |----------|----------|-----------
 | **Tổng số Test Case đã viết** | 28 | 100% |
-| **Số TC Pass** | 21 | 75.0% |
-| **Số TC Fail** | 7 | 25.0% |
-| **Số Bug đã report** | 5 | N/A |
+| **Số TC Pass** | 20 | 71.4% |
+| **Số TC Fail** | 8 | 28.6% |
+| **Số Bug đã report** | 6 | N/A |
 
 ## 2. Phân tích theo nhóm chức năng (Analysis by Feature)
 
@@ -20,7 +20,7 @@
 | Đăng nhập | 5 | 0 | 🟢 Tốt | Xử lý đầy đủ trường hợp hợp lệ/không hợp lệ. |
 | Xem danh sách sách | 2 | 0 | 🟢 Tốt | Hiển thị đúy đủ thông tin, cập nhật real-time đúng theo thiết kế. |
 | Tìm kiếm & Lọc | 5 | 0 | 🟢 Tốt | Chạy đúng thiết kế, kết quả trả về khớp. |
-| Mượn, trả, quá hạn | 9 | 2 | 🔴 Kém | BUG-001: Vượt giới hạn 3 sách không bị chặn. BUG-002: Thông báo lỗi sai cho tài khoản Tạm ngưng. |
+| Mượn, trả, quá hạn | 9 | 3 | 🔴 Kém | BUG-001: Vượt giới hạn 3 sách không bị chặn. BUG-002: Thông báo lỗi sai cho tài khoản Tạm ngưng. BUG-006: Trả sách quá hạn không có cảnh báo. |
 | Quản lý thành viên, Tra cứu | 7 | 3 | 🔴 Kém | BUG-003: Logic email validation bị lỗi. BUG-004/BUG-005: Thành viên xem và trả được phiếu mượn của thành viên khác. |
 
 ## 3. Danh sách Bug phát hiện (Bug Summary)
@@ -32,11 +32,12 @@
 | BUG-003 | Logic xác thực email bị lỗi, gồm cả trường hợp email trùng bị báo sai lỗi | REQ-07 | Critical | Mở |
 | BUG-004 | Thành viên tra cứu được phiếu mượn của thành viên khác | REQ-08 | High | Mở |
 | BUG-005 | Thành viên trả được phiếu mượn của thành viên khác | REQ-05, REQ-08 | Critical | Mở |
+| BUG-006 | Trả sách quá hạn không hiển thị cảnh báo quá hạn | REQ-05 | Medium | Mở |
 
 ## 4. Đánh giá chất lượng (Quality Assessment)
 
 **Q1. Tính ổn định chung của hệ thống:**
-Hệ thống hoạt động ổn định ở các chức năng đọc cơ bản (xem sách, tìm kiếm, đăng nhập), chiếm 12/28 TC (42.9% test cases). Tuy nhiên, có 5 lỗi được phát hiện trong các luồng nghiệp vụ quan trọng, trong đó có lỗi Critical ở chức năng thêm thành viên và phân quyền trả phiếu mượn.
+Hệ thống hoạt động ổn định ở các chức năng đọc cơ bản (xem sách, tìm kiếm, đăng nhập), chiếm 12/28 TC (42.9% test cases). Tuy nhiên, có 6 lỗi được phát hiện trong các luồng nghiệp vụ quan trọng, trong đó có lỗi Critical ở chức năng thêm thành viên và phân quyền trả phiếu mượn.
 
 **Q2. Lỗi nào nghiêm trọng nhất? Tại sao?**
 **BUG-003** (Critical) — Thủ thư không thể thêm thành viên mới. Đây là lỗi nghiêm trọng nhất vì nó **hoàn toàn vô hiệu hóa** một chức năng cốt lõi của Thủ thư. Mọi email hợp lệ đều bị hệ thống báo là "không hợp lệ", khiến thư viện không thể mở rộng danh sách thành viên trong suốt thời gian lỗi tồn tại.
@@ -51,6 +52,7 @@ Hệ thống hoạt động ổn định ở các chức năng đọc cơ bản 
 - **[ƯU TIÊN CAO / HIGH]** Sửa BUG-001: Thêm kiểm tra `currentBorrowedBooksCount >= 3` trước khi cho phép mượn sách. Cần khóa nút mượn khi đã đạt giới hạn.
 - **[ƯU TIÊN CAO / HIGH]** Sửa BUG-004: Chặn thành viên tra cứu phiếu mượn của người khác, chỉ Thủ thư được xem toàn bộ phiếu.
 - **[ƯU TIÊN TRUNG BÌNH / MEDIUM]** Sửa BUG-002: Phân tách logic thông báo lỗi cho trạng thái "Tạm ngưng" và "Hết hạn" để hiển thị đúng lý do từ chối theo từng trường hợp.
+- **[ƯU TIÊN TRUNG BÌNH / MEDIUM]** Sửa BUG-006: Khi trả sách quá hạn, thông báo kết quả phải kèm cảnh báo quá hạn theo REQ-05.
 - **[ƯU TIÊN THẤP / LOW]** Về mặt UI/UX: Nên thiết kế thêm tính năng làm mờ (disable) nút Mượn nếu tài khoản bị khoá, quá hạn, hoặc đã đạt hạn mức 3 cuốn, nhằm cải thiện trải nghiệm người dùng.
 
 ## 5. Khai báo sử dụng AI (AI Usage Declaration)
