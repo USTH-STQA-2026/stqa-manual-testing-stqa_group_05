@@ -31,6 +31,7 @@
 | Vai trò người xem? | Thủ thư | `librarian@library.com` | Thấy toàn bộ danh sách sách |
 | | Thành viên | `ba.nguyen@email.com` | Thấy toàn bộ danh sách sách |
 | Trạng thái sách sau khi mượn? | Sách vừa được mượn | `BOOK001` (lúc đầu: Có sẵn) | Trạng thái cập nhật thành "Đã mượn" ngay lập tức (real-time) |
+| Trạng thái sách sau khi trả? | Sách vừa được trả | Phiếu mượn vừa trả | Trạng thái sách cập nhật về "Có sẵn" ngay lập tức (real-time) |
 | Thông tin có đầy đủ? | Đầy đủ | (bất kỳ sách nào) | Hiển thị: tên, tác giả, thể loại, năm XB, trạng thái |
 | | Thiếu trường | N/A | Không được phép ẩn bất kỳ trường nào |
 
@@ -42,6 +43,8 @@
 | | Không | `"XYZ123"` | Danh sách rỗng |
 | Phân biệt HOA/thường? | Chữ thường | `"flutter"` | Kết quả giống "Flutter" |
 | | Chữ HOA | `"FLUTTER"` | Kết quả giống "Flutter" |
+| Thể loại lọc có tồn tại trong DB? | Có | `"Quản trị"` | Hiển thị các sách thuộc thể loại Quản trị: BOOK004, BOOK012, BOOK013 |
+| | Không | `"Không tồn tại"` | Danh sách rỗng, hiển thị thông báo "Không tìm thấy sách" |
 
 ### IDM & Bảng Quyết Định (Decision Table) — Mượn sách (REQ-04)
 
@@ -68,21 +71,29 @@
 | Trạng thái thành viên? | Hoạt động | MEM002 | Cho phép mượn |
 | | Tạm ngưng | MEM004 | Từ chối, thông báo lỗi |
 | | Hết hạn | MEM005 | Từ chối, thông báo lỗi |
-| Số sách đang mượn? | < 3 (BVA: 0, 1, 2) | MEM006 (0 sách) | Cho phép mượn |
-| | = 3 (BVA: giới hạn) | MEM đã mượn 3 sách | Từ chối, thông báo vượt giới hạn |
+| Số sách đang mượn? | < 3 (BVA: 0, 1, 2) | MEM003 (0 sách) / MEM002 (1 sách) | Cho phép mượn |
+| | = 3 (BVA: giới hạn) | MEM002 sau khi mượn thêm 2 sách | Từ chối, thông báo vượt giới hạn |
 
 ### IDM — Trả sách, Xử lý quá hạn, Quản lý thành viên, Tra cứu (REQ-05 đến REQ-08)
 | Đặc tính (Characteristic) | Phân vùng (Block) | Giá trị đại diện (Value) | Kết quả mong đợi |
 |---|---|---|---|
 | Sách trả có quá hạn? (REQ-05) | Chưa/Đúng hạn | Trả trước hạn | Trả thành công, không cảnh báo |
 | | Quá hạn | Trả sau hạn | Trả thành công, có cảnh báo |
-| Nhấn "Kiểm tra quá hạn" (REQ-06) | Ngày hiện tại > dueDate | Quét phiếu BR001 | Cập nhật thành "Quá hạn" |
+| Phiếu trả có đang ở trạng thái "Đang mượn"? (REQ-05) | Có | Trả BR001 | Cho phép trả sách |
+| | Không | Trả lại BR004 đã trả | Từ chối hoặc không hiển thị nút Trả sách |
+| Nhấn "Kiểm tra quá hạn" (REQ-06) | Ngày hiện tại >= dueDate | Quét phiếu BR001, BR003 | Cập nhật các phiếu đang mượn quá hạn thành "Quá hạn" |
 | Định dạng Email mới (REQ-07) | Hợp lệ | `new@gmail.com` | Thêm thành công |
 | | Thiếu `@` | `newgmail.com` | Báo lỗi định dạng |
 | | Thiếu `.` domain | `new@gmail` | Báo lỗi định dạng |
 | Email trùng lặp (REQ-07) | Có | `librarian@library.com` | Báo lỗi đã tồn tại |
+| | Không | `newuser@gmail.com` | Cho phép thêm nếu các thông tin khác hợp lệ |
+| Quyền thêm thành viên (REQ-07) | Thủ thư | LIB001 thêm thành viên mới | Cho phép thêm thành viên |
+| | Thành viên | MEM002 truy cập chức năng thêm thành viên | Từ chối hoặc không hiển thị chức năng |
 | Quyền xem phiếu mượn (REQ-08)| Thành viên xem phiếu mình | MEM002 xem BR001 | Xem thành công |
+| | Thành viên xem phiếu người khác | MEM002 tra cứu MEM006/BR003 | Từ chối hoặc không hiển thị dữ liệu |
 | | Thủ thư xem tất cả | LIB001 xem mọi phiếu | Xem thành công |
+| Phiếu trả có thuộc thành viên đang đăng nhập? (REQ-05/REQ-08) | Có | MEM002 trả BR001 | Cho phép trả sách |
+| | Không | MEM002 trả BR003 của MEM006 | Từ chối trả sách |
 
 ---
 
@@ -116,6 +127,8 @@
 | TC-24 | Thành viên chỉ xem được phiếu mượn của mình | Đăng nhập MEM002 | 1. Vào Mượn/Trả | N/A | Chỉ thấy các phiếu BR001, BR004. Không thấy BR002. | REQ-08 | EP |
 | TC-25 | Thủ thư xem được tất cả phiếu mượn | Đăng nhập Thủ thư | 1. Vào Mượn/Trả | N/A | Hiển thị danh sách tất cả phiếu mượn của các thành viên. | REQ-08 | EP |
 | TC-26 | Trạng thái sách cập nhật real-time sau khi mượn | Đăng nhập MEM003 | 1. Vào Tab Sách, ghi nhận BOOK002 "Có sẵn"<br>2. Nhấn Mượn BOOK002<br>3. Quan sát lại danh sách sách ngay sau đó | Sách: `BOOK002` | BOOK002 phải lập tức đổi trạng thái sang "Đã mượn" trên danh sách mà không cần tải lại trang (real-time update). | REQ-02 | EP |
+| TC-27 | Thành viên không được tra cứu phiếu mượn của thành viên khác | Reset dữ liệu, đăng nhập MEM002 | 1. Vào Tab Mượn/Trả<br>2. Chọn mục Tra cứu phiếu mượn<br>3. Nhập mã thành viên khác<br>4. Nhấn Tra cứu | Mã thành viên: `MEM006` | Hệ thống từ chối hoặc không hiển thị phiếu mượn của MEM006/BR003. Thành viên MEM002 chỉ được xem phiếu của chính mình. | REQ-08 | EP |
+| TC-28 | Thành viên không được trả sách/phiếu mượn của thành viên khác | Reset dữ liệu, đăng nhập MEM002 | 1. Vào Tab Mượn/Trả<br>2. Tra cứu mã `MEM006`<br>3. Nếu phiếu `BR003` hiển thị, nhấn Trả sách | Phiếu: `BR003` của `MEM006` | Hệ thống từ chối thao tác trả sách, phiếu BR003 vẫn ở trạng thái "Đang mượn" và không có ngày trả. | REQ-05, REQ-08 | EP |
 
 ---
 
@@ -126,5 +139,5 @@
 | Đăng nhập | 5 | 0 | REQ-01 | EP, BVA |
 | Xem danh sách & Tìm kiếm, lọc | 7 | 0 | REQ-02, REQ-03 | EP |
 | Mượn, trả, quá hạn | 9 | 2 | REQ-04, REQ-05, REQ-06| EP, BVA, Decision Table (DT) |
-| Quản lý thành viên, Tra cứu | 5 | 3 | REQ-07, REQ-08 | EP |
-| **Tổng** | **26** | **5** | **8 REQ** | **EP, BVA, Decision Table** |
+| Quản lý thành viên, Tra cứu | 7 | 5 | REQ-07, REQ-08 | EP |
+| **Tổng** | **28** | **7** | **8 REQ** | **EP, BVA, Decision Table** |

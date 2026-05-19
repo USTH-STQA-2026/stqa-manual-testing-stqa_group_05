@@ -30,3 +30,5 @@
 | TC-24 | Pass | Thành viên chỉ nhìn thấy phiếu mượn của chính mình | |
 | TC-25 | Pass | Thủ thư nhìn thấy toàn bộ phiếu mượn của hệ thống | |
 | TC-26 | Pass | Sau khi MEM003 mượn BOOK002, trạng thái sách chuyển sang "Đã mượn" ngay lập tức trên danh sách mà không cần tải lại trang. | |
+| TC-27 | **Fail** | **Thành viên MEM002 tra cứu mã MEM006 và hệ thống hiển thị phiếu BR003 của MEM006, gồm thông tin sách, ngày mượn, hạn trả và nút Trả sách.** | [BUG-004] |
+| TC-28 | **Fail** | **Thành viên MEM002 trả được phiếu BR003 của MEM006. Hệ thống báo "Trả sách thành công", phiếu chuyển sang "Đã trả" và có ngày trả 19/05/2026.** | [BUG-005] |

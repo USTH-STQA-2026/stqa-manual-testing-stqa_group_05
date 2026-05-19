@@ -34,6 +34,8 @@ Logic điều khiển cần thực hiện kiểm tra `currentBorrowedBooksCount 
 
 ---
 
+---
+
 ## BUG-002: Thông báo lỗi sai khi tài khoản "Tạm ngưng" cố gắng mượn sách
 
 **1. Thông tin chung**
@@ -65,6 +67,8 @@ Hệ thống phải hiển thị thông báo phân biệt rõ trạng thái, ví
 
 **5. Đề xuất / Khuyến nghị (Recommendation)**
 Kiểm tra lại logic hiển thị thông báo lỗi cho chức năng mượn sách. Cần phân tách điều kiện kiểm tra `status == "suspended"` (tạm ngưng) và `status == "expired"` (hết hạn) để trả về đúng nội dung thông báo tương ứng.
+
+---
 
 ---
 
@@ -143,5 +147,71 @@ Kiểm tra và đảo ngược lại điều kiện trong hàm xác thực email
 - `[^\s@]+$`: Kết thúc bằng phần mở rộng domain (như `.com`, `.vn`) không chứa khoảng trắng và `@`.
 
 Hoặc có thể sử dụng package xác thực email tiêu chuẩn (như `email_validator` trong Flutter/Dart) được cấu hình đúng. Cần thực hiện kiểm thử lại cả hai trường hợp (email hợp lệ và không hợp lệ) sau khi sửa đổi.
+
+---
+
+---
+
+## BUG-004: Thành viên tra cứu được phiếu mượn của thành viên khác
+
+**1. Thông tin chung**
+- **Test Case bị Fail**: TC-27
+- **Yêu cầu (REQ) liên quan**: REQ-08 (Thành viên chỉ xem phiếu mượn của chính mình)
+- **Mức độ nghiêm trọng (Severity)**: High
+  *(Giải thích: Lỗi làm lộ thông tin lịch sử mượn sách của thành viên khác, vi phạm trực tiếp yêu cầu phân quyền trong SRS.)*
+- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
+- **Liên quan**: BUG-005 (từ việc xem được phiếu người khác, thành viên có thể trả hộ phiếu đó)
+
+**2. Các bước tái hiện (Steps to Reproduce)**
+1. Reset dữ liệu bằng cách refresh trang.
+2. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com` (MEM002), mật khẩu `password123`.
+3. Vào tab **Mượn / Trả**.
+4. Chọn mục **Tra cứu phiếu mượn**.
+5. Nhập mã thành viên khác: `MEM006`.
+6. Nhấn **Tra cứu**.
+
+**3. Kết quả thực tế (Actual Result)**
+Hệ thống hiển thị phiếu `BR003` của thành viên `MEM006` (Hoàng Cá Biệt), gồm thông tin sách `Quản trị nhân sự hiện đại`, ngày mượn, hạn trả, trạng thái và nút **Trả sách**.
+
+![Minh chứng BUG-004: MEM002 tra cứu được phiếu BR003 của MEM006](bug006_proof.png)
+
+**4. Kết quả mong đợi (Expected Result)**
+Theo REQ-08, thành viên chỉ được xem phiếu mượn của chính mình. Hệ thống phải từ chối hoặc không hiển thị dữ liệu khi MEM002 tra cứu phiếu của MEM006.
+
+**5. Đề xuất / Khuyến nghị (Recommendation)**
+Kiểm tra quyền truy cập khi tra cứu phiếu mượn. Nếu người dùng hiện tại là Thành viên, hệ thống chỉ được cho phép xem `memberId` trùng với tài khoản đang đăng nhập. Chỉ Thủ thư mới được tra cứu phiếu của mọi thành viên.
+
+---
+
+---
+
+## BUG-005: Thành viên trả được phiếu mượn của thành viên khác
+
+**1. Thông tin chung**
+- **Test Case bị Fail**: TC-28
+- **Yêu cầu (REQ) liên quan**: REQ-08 (phân quyền xem phiếu), REQ-05 (chỉ trả sách mà thành viên đang mượn)
+- **Mức độ nghiêm trọng (Severity)**: Critical
+  *(Giải thích: Thành viên không chỉ xem được phiếu của người khác mà còn thay đổi trạng thái phiếu/sách trong phiên hiện tại. Điều này làm sai dữ liệu mượn/trả và ảnh hưởng trực tiếp đến nghiệp vụ thư viện.)*
+- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
+- **Liên quan**: BUG-004 (lỗi tra cứu phiếu người khác là điều kiện dẫn tới lỗi trả hộ)
+
+**2. Các bước tái hiện (Steps to Reproduce)**
+1. Reset dữ liệu bằng cách refresh trang.
+2. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com` (MEM002), mật khẩu `password123`.
+3. Vào tab **Mượn / Trả**.
+4. Chọn mục **Tra cứu phiếu mượn**.
+5. Nhập mã thành viên khác: `MEM006`, nhấn **Tra cứu**.
+6. Trên phiếu `BR003` của MEM006, nhấn **Trả sách**.
+
+**3. Kết quả thực tế (Actual Result)**
+Hệ thống cho phép MEM002 trả phiếu `BR003` của MEM006, hiển thị thông báo **"Trả sách thành công."**. Phiếu chuyển sang trạng thái **Đã trả** và có ngày trả `19/05/2026`, chứng tỏ dữ liệu trong phiên hiện tại đã bị cập nhật.
+
+![Minh chứng BUG-005: MEM002 trả được phiếu BR003 của MEM006](bug007_proof.png)
+
+**4. Kết quả mong đợi (Expected Result)**
+Theo REQ-05 và REQ-08, thành viên chỉ được trả sách/phiếu đang mượn của chính mình. Hệ thống phải từ chối thao tác trả phiếu `BR003` vì phiếu này thuộc MEM006, không thuộc MEM002.
+
+**5. Đề xuất / Khuyến nghị (Recommendation)**
+Ẩn hoặc vô hiệu hóa nút **Trả sách** đối với phiếu không thuộc thành viên đang đăng nhập. Đồng thời, hàm xử lý trả sách cần kiểm tra quyền ở tầng nghiệp vụ, không chỉ dựa vào việc ẩn/hiện nút trên giao diện.
 
 ---
