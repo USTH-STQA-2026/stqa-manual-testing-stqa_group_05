@@ -1,9 +1,20 @@
 # Test Execution
 
-> **Instructions**: Run the 20+ TCs written on the system https://stqa.rbc.vn and record the results here.
+> **Instructions**: Run the 30+ TCs written on the system <https://stqa.rbc.vn> and record the results here.
 
-| TC ID | Status (Pass/Fail/Block) | Actual Result | Notes / Bug Link |
-|-------|--------------------------|---------------|------------------|
+| Information | |
+|---|---|
+| **Group** | Group 1 (Merged STQA_GROUP_05) |
+| **Execution Date** | 20/05/2026 |
+| **Browser** | Chrome v120.0 |
+| **OS** | Windows / macOS |
+
+---
+
+## Execution Details
+
+| TC ID | Status (Pass/Fail/Block/Not Run) | Actual Result | Notes / Bug Link |
+|-------|----------------------------------|---------------|------------------|
 | TC-01 | Pass | Login successful as Librarian | |
 | TC-02 | Pass | Login successful as Member | |
 | TC-03 | Pass | Displays error "Member not found." | |
@@ -32,3 +43,28 @@
 | TC-26 | Pass | After MEM003 borrows BOOK002, book status immediately changes to "Borrowed" in the list without needing to reload the page. | |
 | TC-27 | **Fail** | **Member MEM002 looked up ID MEM006 and the system displayed slip BR003 belonging to MEM006, including book information, borrow date, due date, and the Return Book button.** | [BUG-004] |
 | TC-28 | **Fail** | **Member MEM002 successfully returned slip BR003 belonging to MEM006. System shows "Book returned successfully", slip changed to "Returned" with return date 19/05/2026.** | [BUG-005] |
+| TC-29 | Not Run | Newly added from Branch B - Requires execution | |
+| TC-30 | Not Run | Newly added from Branch B - Requires execution | |
+| TC-31 | Not Run | Newly added from Branch B - Requires execution | |
+
+---
+
+## Results Summary (Thống kê tổng hợp)
+
+| Metric | Value |
+|--------|---------|
+| Total Test Cases | 31 |
+| Pass | 20 |
+| Fail | 8 |
+| Blocked | 0 |
+| Not Run | 3 |
+| **Pass Rate (Executed)** | **71.4%** (20/28) |
+
+### Results by Feature Group
+
+| Group | Total TCs | Pass | Fail | Not Run | Pass Rate |
+|------|---------|------|------|---------|------------|
+| Login (REQ-01) | 7 | 5 | 0 | 2 | 100% |
+| View, Search & Filter (REQ-02, 03) | 8 | 7 | 0 | 1 | 100% |
+| Borrow, Return, Overdue (REQ-04, 05, 06) | 9 | 6 | 3 | 0 | 66.7% |
+| Member Mgmt & Lookup (REQ-07, 08) | 7 | 2 | 5 | 0 | 28.6% |
