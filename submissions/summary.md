@@ -1,61 +1,61 @@
-# Báo cáo tổng hợp — Test Summary Report
+# Test Summary Report
 
-> **Hướng dẫn**: Điền vào các bảng và trả lời câu hỏi bên dưới để đánh giá tổng quan về chất lượng của hệ thống.
+> **Instructions**: Fill in the tables and answer the questions below to provide an overall quality assessment of the system.
 
 ---
 
-## 1. Thống kê số liệu (Statistics)
+## 1. Statistics
 
-| Hạng mục | Số lượng | Tỷ lệ (%) |
-|----------|----------|-----------
-| **Tổng số Test Case đã viết** | 28 | 100% |
-| **Số TC Pass** | 20 | 71.4% |
-| **Số TC Fail** | 8 | 28.6% |
-| **Số Bug đã report** | 6 | N/A |
+| Item | Count | Percentage (%) |
+|------|-------|----------------|
+| **Total Test Cases Written** | 28 | 100% |
+| **TC Pass** | 20 | 71.4% |
+| **TC Fail** | 8 | 28.6% |
+| **Bugs Reported** | 6 | N/A |
 
-## 2. Phân tích theo nhóm chức năng (Analysis by Feature)
+## 2. Analysis by Feature
 
-| Nhóm chức năng | Số TC | Số Bug | Mức độ ổn định | Ghi chú |
-|----------------|-------|--------|----------------|---------|
-| Đăng nhập | 5 | 0 | 🟢 Tốt | Xử lý đầy đủ trường hợp hợp lệ/không hợp lệ. |
-| Xem danh sách sách | 2 | 0 | 🟢 Tốt | Hiển thị đúy đủ thông tin, cập nhật real-time đúng theo thiết kế. |
-| Tìm kiếm & Lọc | 5 | 0 | 🟢 Tốt | Chạy đúng thiết kế, kết quả trả về khớp. |
-| Mượn, trả, quá hạn | 9 | 3 | 🔴 Kém | BUG-001: Vượt giới hạn 3 sách không bị chặn. BUG-002: Thông báo lỗi sai cho tài khoản Tạm ngưng. BUG-006: Trả sách quá hạn không có cảnh báo. |
-| Quản lý thành viên, Tra cứu | 7 | 3 | 🔴 Kém | BUG-003: Logic email validation bị lỗi. BUG-004/BUG-005: Thành viên xem và trả được phiếu mượn của thành viên khác. |
+| Feature Group | # TC | # Bugs | Stability | Notes |
+|---------------|------|--------|-----------|-------|
+| Login | 5 | 0 | 🟢 Good | Handles all valid/invalid cases properly. |
+| View Book List | 2 | 0 | 🟢 Good | Displays complete information, real-time updates work as designed. |
+| Search & Filter | 5 | 0 | 🟢 Good | Works as designed, results match expected output. |
+| Borrow, Return, Overdue | 9 | 3 | 🔴 Poor | BUG-001: Exceeding 3-book limit is not blocked. BUG-002: Wrong error message for Suspended accounts. BUG-006: No overdue warning when returning overdue books. |
+| Member Management, Lookup | 7 | 3 | 🔴 Poor | BUG-003: Email validation logic is broken. BUG-004/BUG-005: Members can view and return other members' borrowing slips. |
 
-## 3. Danh sách Bug phát hiện (Bug Summary)
+## 3. Bug Summary
 
-| Mã Bug | Mô tả ngắn | REQ liên quan | Severity | Trạng thái |
-|--------|-----------|---------------|----------|------------|
-| BUG-001 | Thành viên có thể mượn quá 3 cuốn sách | REQ-04 | High | Mở |
-| BUG-002 | Thông báo lỗi sai khi tài khoản Tạm ngưng cố mượn sách | REQ-04 | Medium | Mở |
-| BUG-003 | Logic xác thực email bị lỗi, gồm cả trường hợp email trùng bị báo sai lỗi | REQ-07 | Critical | Mở |
-| BUG-004 | Thành viên tra cứu được phiếu mượn của thành viên khác | REQ-08 | High | Mở |
-| BUG-005 | Thành viên trả được phiếu mượn của thành viên khác | REQ-05, REQ-08 | Critical | Mở |
-| BUG-006 | Trả sách quá hạn không hiển thị cảnh báo quá hạn | REQ-05 | Medium | Mở |
+| Bug ID | Short Description | Related REQ | Severity | Status |
+|--------|-------------------|-------------|----------|--------|
+| BUG-001 | Member can borrow more than 3 books | REQ-04 | High | Open |
+| BUG-002 | Wrong error message when a Suspended account tries to borrow | REQ-04 | Medium | Open |
+| BUG-003 | Email validation logic is broken, including duplicate email being reported with wrong error | REQ-07 | Critical | Open |
+| BUG-004 | Member can look up another member's borrowing slip | REQ-08 | High | Open |
+| BUG-005 | Member can return another member's borrowing slip | REQ-05, REQ-08 | Critical | Open |
+| BUG-006 | No overdue warning displayed when returning an overdue book | REQ-05 | Medium | Open |
 
-## 4. Đánh giá chất lượng (Quality Assessment)
+## 4. Quality Assessment
 
-**Q1. Tính ổn định chung của hệ thống:**
-Hệ thống hoạt động ổn định ở các chức năng đọc cơ bản (xem sách, tìm kiếm, đăng nhập), chiếm 12/28 TC (42.9% test cases). Tuy nhiên, có 6 lỗi được phát hiện trong các luồng nghiệp vụ quan trọng, trong đó có lỗi Critical ở chức năng thêm thành viên và phân quyền trả phiếu mượn.
+**Q1. Overall system stability:**
+The system is stable in basic read-only features (view books, search, login), covering 12/28 TCs (42.9%). However, 6 bugs were found in critical business flows, including Critical-severity bugs in the add member feature and return slip authorization logic.
 
-**Q2. Lỗi nào nghiêm trọng nhất? Tại sao?**
-**BUG-003** (Critical) — Thủ thư không thể thêm thành viên mới. Đây là lỗi nghiêm trọng nhất vì nó **hoàn toàn vô hiệu hóa** một chức năng cốt lõi của Thủ thư. Mọi email hợp lệ đều bị hệ thống báo là "không hợp lệ", khiến thư viện không thể mở rộng danh sách thành viên trong suốt thời gian lỗi tồn tại.
+**Q2. Which bug is the most critical? Why?**
+**BUG-003** (Critical) — The librarian cannot add new members. This is the most severe bug because it **completely disables** a core librarian feature. Every valid email is rejected by the system as "invalid", making it impossible for the library to expand its member list for as long as the bug persists.
 
-**BUG-001** (High) — Thành viên có thể mượn quá 3 cuốn sách cùng lúc. Đây là lỗi nghiêm trọng thứ hai vì vi phạm trực tiếp quy tắc nghiệp vụ, có khả năng gây ra tình trạng thiếu sách cho thành viên khác.
+**BUG-001** (High) — Members can borrow more than 3 books at the same time. This is the second most severe bug because it directly violates the business rule, potentially causing a shortage of books for other members.
 
-**BUG-005** (Critical) — Thành viên có thể trả phiếu mượn của thành viên khác. Đây là lỗi phân quyền nghiêm trọng vì cho phép người dùng thay đổi dữ liệu mượn/trả không thuộc quyền sở hữu của mình.
+**BUG-005** (Critical) — Members can return another member's borrowing slip. This is a critical authorization bug because it allows a user to modify borrow/return data that does not belong to them.
 
-**Q3. Đề xuất cải tiến (Recommendation) và Ưu tiên sửa lỗi:**
-- **[ƯU TIÊN KHẨN CẤP / CRITICAL]** Sửa BUG-003: Kiểm tra và fix logic regex xác thực email trong form "Thêm thành viên". Đây là lỗi chặn toàn bộ chức năng, cần được fix ngay lập tức.
-- **[ƯU TIÊN KHẨN CẤP / CRITICAL]** Sửa BUG-005: Chặn thành viên trả phiếu mượn của người khác ở cả giao diện và logic nghiệp vụ.
-- **[ƯU TIÊN CAO / HIGH]** Sửa BUG-001: Thêm kiểm tra `currentBorrowedBooksCount >= 3` trước khi cho phép mượn sách. Cần khóa nút mượn khi đã đạt giới hạn.
-- **[ƯU TIÊN CAO / HIGH]** Sửa BUG-004: Chặn thành viên tra cứu phiếu mượn của người khác, chỉ Thủ thư được xem toàn bộ phiếu.
-- **[ƯU TIÊN TRUNG BÌNH / MEDIUM]** Sửa BUG-002: Phân tách logic thông báo lỗi cho trạng thái "Tạm ngưng" và "Hết hạn" để hiển thị đúng lý do từ chối theo từng trường hợp.
-- **[ƯU TIÊN TRUNG BÌNH / MEDIUM]** Sửa BUG-006: Khi trả sách quá hạn, thông báo kết quả phải kèm cảnh báo quá hạn theo REQ-05.
-- **[ƯU TIÊN THẤP / LOW]** Về mặt UI/UX: Nên thiết kế thêm tính năng làm mờ (disable) nút Mượn nếu tài khoản bị khoá, quá hạn, hoặc đã đạt hạn mức 3 cuốn, nhằm cải thiện trải nghiệm người dùng.
+**Q3. Recommendations and Bug Fix Priority:**
+- **[CRITICAL PRIORITY]** Fix BUG-003: Review and fix the email regex/validation logic in the "Add Member" form. This bug blocks the entire feature and must be fixed immediately.
+- **[CRITICAL PRIORITY]** Fix BUG-005: Prevent members from returning other members' slips at both the UI and business logic layers.
+- **[HIGH PRIORITY]** Fix BUG-001: Add a `currentBorrowedBooksCount >= 3` check before allowing a borrow action. The borrow button should also be disabled when the limit has been reached.
+- **[HIGH PRIORITY]** Fix BUG-004: Prevent members from looking up other members' borrowing slips; only the librarian should have access to all slips.
+- **[MEDIUM PRIORITY]** Fix BUG-002: Separate error message logic for "Suspended" and "Expired" statuses so that the correct rejection reason is displayed for each case.
+- **[MEDIUM PRIORITY]** Fix BUG-006: When returning an overdue book, the result notification must include a clear overdue warning as required by REQ-05.
+- **[LOW PRIORITY]** UI/UX improvement: Consider disabling (graying out) the Borrow button when an account is locked, expired, or has already reached the 3-book limit, to improve user experience.
 
-## 5. Khai báo sử dụng AI (AI Usage Declaration)
+## 5. AI Usage Declaration
 
-- Nhóm đã sử dụng AI (ChatGPT) để gợi ý một số kịch bản kiểm thử (Test Cases) cơ bản và hỗ trợ căn chỉnh định dạng các bảng (Markdown tables).
-- Toàn bộ việc thực thi kiểm thử trên trình duyệt, phân tích kết quả và viết báo cáo lỗi đều do nhóm tự thực hiện thủ công.
+- The team used AI (ChatGPT) to suggest some basic test case scenarios and to assist with formatting Markdown tables.
+- All test execution on the browser, result analysis, and bug report writing were performed manually by the team.

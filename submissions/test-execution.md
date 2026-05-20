@@ -1,34 +1,34 @@
-# Test Execution — Kết quả thực thi
+# Test Execution
 
-> **Hướng dẫn**: Chạy 20+ TC đã viết trên hệ thống https://stqa.rbc.vn và ghi nhận kết quả vào đây.
+> **Instructions**: Run the 20+ TCs written on the system https://stqa.rbc.vn and record the results here.
 
-| Mã TC | Trạng thái (Pass/Fail/Block) | Kết quả thực tế (Actual Result) | Ghi chú / Link Bug |
-|-------|------------------------------|---------------------------------|--------------------|
-| TC-01 | Pass | Đăng nhập thành công vào vai trò Thủ thư | |
-| TC-02 | Pass | Đăng nhập thành công vào vai trò Thành viên | |
-| TC-03 | Pass | Hiển thị lỗi "Không tìm thấy thành viên." | |
-| TC-04 | Pass | Hiển thị lỗi "Mật khẩu không đúng." | |
-| TC-05 | Pass | Hiển thị lỗi "Vui lòng nhập email và mật khẩu" bên dưới trường nhập | |
-| TC-06 | Pass | Danh sách sách hiển thị đầy đủ thông tin | |
-| TC-07 | Pass | Hiển thị đúng cuốn BOOK001 | |
-| TC-08 | Pass | Hiển thị đúng cuốn BOOK002 | |
-| TC-09 | Pass | Tìm kiếm với từ khóa "FLUTTER" vẫn ra BOOK001 (Không phân biệt HOA/thường) | |
-| TC-10 | Pass | Hiển thị "Không tìm thấy sách" | |
-| TC-11 | Pass | Chỉ hiển thị sách thuộc thể loại Quản trị | |
-| TC-12 | Pass | Mượn thành công, thông báo màu xanh hiển thị dưới màn hình | |
-| TC-13 | Pass | Sách Đã mượn không có nút mượn (hoặc bị disable) | |
-| TC-14 | Pass | Sách Thất lạc không có nút mượn | |
-| TC-15 | **Fail** | **Hệ thống từ chối mượn sách (đúng), nhưng hiển thị thông báo sai: "Thành viên đã hết hạn. Không thể mượn sách." thay vì thông báo về trạng thái Tạm ngưng.** | [BUG-002] |
-| TC-16 | Pass | Bị từ chối mượn, có thông báo lỗi "Thành viên đã hết hạn. Không thể mượn sách." | |
-| TC-17 | **Fail** | **Hệ thống vẫn cho phép mượn cuốn sách thứ 4 dù đã đạt giới hạn 3 cuốn. Hiển thị "Mượn sách thành công!"** | [BUG-001] |
-| TC-18 | Pass | Trả sách thành công, sách chuyển về trạng thái Có sẵn | |
-| TC-19 | **Fail** | **Trả phiếu quá hạn BR001 thành công nhưng hệ thống chỉ hiển thị "Trả sách thành công.", không có cảnh báo quá hạn như REQ-05 yêu cầu.** | [BUG-006] |
-| TC-20 | Pass | Hệ thống quét và tự cập nhật các phiếu đang mượn đã quá hạn, gồm BR001 và BR003, sang trạng thái Quá hạn | |
-| TC-21 | **Fail** | **Nhập email hợp lệ `testnewuser99@gmail.com` nhưng hệ thống báo "Email không hợp lệ." — Không thể thêm thành viên mới với bất kỳ email nào.** | [BUG-003] |
-| TC-22 | **Fail** | **Hệ thống chấp nhận email `new@gmail` (thiếu `.` trong domain) và tạo thành viên thành công với mã MEM007. Không có cảnh báo lỗi nào.** | [BUG-003] |
-| TC-23 | **Fail** | **Nhập email đã tồn tại `librarian@library.com` nhưng hệ thống báo "Email không hợp lệ." thay vì báo lỗi email đã tồn tại.** | [BUG-003] |
-| TC-24 | Pass | Thành viên chỉ nhìn thấy phiếu mượn của chính mình | |
-| TC-25 | Pass | Thủ thư nhìn thấy toàn bộ phiếu mượn của hệ thống | |
-| TC-26 | Pass | Sau khi MEM003 mượn BOOK002, trạng thái sách chuyển sang "Đã mượn" ngay lập tức trên danh sách mà không cần tải lại trang. | |
-| TC-27 | **Fail** | **Thành viên MEM002 tra cứu mã MEM006 và hệ thống hiển thị phiếu BR003 của MEM006, gồm thông tin sách, ngày mượn, hạn trả và nút Trả sách.** | [BUG-004] |
-| TC-28 | **Fail** | **Thành viên MEM002 trả được phiếu BR003 của MEM006. Hệ thống báo "Trả sách thành công", phiếu chuyển sang "Đã trả" và có ngày trả 19/05/2026.** | [BUG-005] |
+| TC ID | Status (Pass/Fail/Block) | Actual Result | Notes / Bug Link |
+|-------|--------------------------|---------------|------------------|
+| TC-01 | Pass | Login successful as Librarian | |
+| TC-02 | Pass | Login successful as Member | |
+| TC-03 | Pass | Displays error "Member not found." | |
+| TC-04 | Pass | Displays error "Incorrect password." | |
+| TC-05 | Pass | Displays error "Please enter email and password" below the input field | |
+| TC-06 | Pass | Book list displays complete information | |
+| TC-07 | Pass | Correctly displays BOOK001 | |
+| TC-08 | Pass | Correctly displays BOOK002 | |
+| TC-09 | Pass | Searching with keyword "FLUTTER" still returns BOOK001 (case-insensitive) | |
+| TC-10 | Pass | Displays "No books found" | |
+| TC-11 | Pass | Only displays books in the Management genre | |
+| TC-12 | Pass | Borrow successful, green notification displayed at the bottom of the screen | |
+| TC-13 | Pass | Borrowed book has no Borrow button (or is disabled) | |
+| TC-14 | Pass | Lost book has no Borrow button | |
+| TC-15 | **Fail** | **System correctly rejects the borrow action, but displays the wrong message: "Member has expired. Cannot borrow book." instead of a message about the Suspended status.** | [BUG-002] |
+| TC-16 | Pass | Borrow rejected with error message "Member has expired. Cannot borrow book." | |
+| TC-17 | **Fail** | **System still allows borrowing the 4th book even after reaching the 3-book limit. Displays "Borrow successful!"** | [BUG-001] |
+| TC-18 | Pass | Book returned successfully, status reverts to Available | |
+| TC-19 | **Fail** | **Returned overdue slip BR001 successfully but system only displays "Book returned successfully.", no overdue warning as required by REQ-05.** | [BUG-006] |
+| TC-20 | Pass | System scans and automatically updates active overdue borrowed slips, including BR001 and BR003, to Overdue status | |
+| TC-21 | **Fail** | **Entered valid email `testnewuser99@gmail.com` but system shows "Invalid email." — Cannot add any new member with any email.** | [BUG-003] |
+| TC-22 | **Fail** | **System accepts email `new@gmail` (missing `.` in domain) and creates member successfully with code MEM007. No error warning displayed.** | [BUG-003] |
+| TC-23 | **Fail** | **Entered already-existing email `librarian@library.com` but system shows "Invalid email." instead of a duplicate email error.** | [BUG-003] |
+| TC-24 | Pass | Member can only see their own borrowing slips | |
+| TC-25 | Pass | Librarian can see all borrowing slips in the system | |
+| TC-26 | Pass | After MEM003 borrows BOOK002, book status immediately changes to "Borrowed" in the list without needing to reload the page. | |
+| TC-27 | **Fail** | **Member MEM002 looked up ID MEM006 and the system displayed slip BR003 belonging to MEM006, including book information, borrow date, due date, and the Return Book button.** | [BUG-004] |
+| TC-28 | **Fail** | **Member MEM002 successfully returned slip BR003 belonging to MEM006. System shows "Book returned successfully", slip changed to "Returned" with return date 19/05/2026.** | [BUG-005] |
