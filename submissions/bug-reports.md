@@ -1,238 +1,238 @@
-# Bug Reports — Báo cáo lỗi
+# Bug Reports
 
-> **Hướng dẫn**: Với mỗi TC bị **Fail** ở bước thực thi, hãy viết một Bug Report hoàn chỉnh vào file này. Xem [examples/sample-bug-report.md](../examples/sample-bug-report.md) để biết cách viết.
-
----
-
-## BUG-001: Thành viên có thể mượn quá giới hạn 3 cuốn sách cùng lúc
-
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-17
-- **Yêu cầu (REQ) liên quan**: REQ-04 (Giới hạn mượn sách)
-- **Mức độ nghiêm trọng (Severity)**: High
-  *(Giải thích: Lỗi này vi phạm trực tiếp luồng nghiệp vụ cốt lõi, khiến thành viên có thể gom hết sách của thư viện, ảnh hưởng nghiêm trọng đến vận hành)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
-
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Mở trình duyệt và truy cập hệ thống tại `https://stqa.rbc.vn`.
-2. Đăng nhập bằng tài khoản Thành viên `ba.nguyen@email.com` (mật khẩu: `password123`).
-3. Xác nhận ở Tab "Mượn/Trả" rằng thành viên này đã có sẵn 1 cuốn sách đang mượn (BR001 — BOOK003).
-4. Chuyển sang Tab "Sách", mượn thêm 2 cuốn sách có sẵn (VD: BOOK001, BOOK002) để đạt tổng 3 cuốn.
-5. Tiếp tục nhấn nút (+) để mượn thêm cuốn thứ 4 (Ví dụ: `BOOK004` hoặc `BOOK005`).
-6. Trong hộp thoại xác nhận, nhấn "Mượn".
-
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống hiển thị thông báo **"Mượn sách thành công!"** (màu xanh) và thêm cuốn sách thứ 4 vào danh sách đang mượn của thành viên. Không có bất kỳ cảnh báo hay ngăn chặn nào từ hệ thống.
-
-![Minh chứng BUG-001: Mượn thành công cuốn sách thứ 4](bug001_proof.png)
-
-**4. Kết quả mong đợi (Expected Result)**
-Theo REQ-04, hệ thống phải từ chối yêu cầu mượn cuốn thứ 4 và hiển thị thông báo lỗi vượt quá giới hạn 3 cuốn sách.
-
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Logic điều khiển cần thực hiện kiểm tra `currentBorrowedBooksCount >= 3` trước khi thực thi hàm mượn sách. Nút bấm Mượn sách cũng nên bị vô hiệu hóa (disabled) nếu người dùng đã đạt giới hạn.
+> **Instructions**: For each TC that **Fails** during execution, write a complete Bug Report in this file. See [examples/sample-bug-report.md](../examples/sample-bug-report.md) for how to write one.
 
 ---
 
-## BUG-002: Thông báo lỗi sai khi tài khoản "Tạm ngưng" cố gắng mượn sách
+## BUG-001: Member Can Borrow More Than the 3-Book Limit at the Same Time
 
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-15
-- **Yêu cầu (REQ) liên quan**: REQ-04 (Thông báo lỗi phải mô tả đúng lý do từ chối: "tạm ngưng ≠ hết hạn")
-- **Mức độ nghiêm trọng (Severity)**: Medium
-  *(Giải thích: Chức năng ngăn chặn mượn sách hoạt động đúng, nhưng thông báo sai gây hiểu lầm cho người dùng về trạng thái tài khoản của họ. Vi phạm yêu cầu cụ thể trong SRS REQ-04.)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
+**1. General Information**
+- **Failed Test Case**: TC-17
+- **Related Requirement (REQ)**: REQ-04 (Borrowing Limit)
+- **Severity**: High
+  *(Explanation: This bug directly violates the core business flow, allowing members to hoard all books in the library, severely impacting library operations.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
 
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Mở trình duyệt và truy cập hệ thống tại `https://stqa.rbc.vn`.
-2. Đăng nhập bằng tài khoản Thành viên **Tạm ngưng**: `cu.le@email.com` (mật khẩu: `password123`).
-3. Xác nhận đăng nhập thành công (vào được trang chính).
-4. Chuyển sang Tab "Sách".
-5. Nhấn nút (+) để mượn một cuốn sách có trạng thái "Có sẵn" (Ví dụ: `BOOK001`).
-6. Trong hộp thoại xác nhận, nhấn "Mượn".
+**2. Steps to Reproduce**
+1. Open the browser and navigate to the system at `https://stqa.rbc.vn`.
+2. Log in with member account `ba.nguyen@email.com` (password: `password123`).
+3. Confirm in the "Borrow/Return" tab that this member already has 1 book currently borrowed (BR001 — BOOK003).
+4. Switch to the "Books" tab and borrow 2 more available books (e.g., BOOK001, BOOK002) to reach a total of 3.
+5. Continue pressing the (+) button to borrow a 4th book (e.g., `BOOK004` or `BOOK005`).
+6. In the confirmation dialog, click "Borrow".
 
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống từ chối mượn sách (đúng), nhưng hiển thị thông báo lỗi:
-> **"Thành viên đã hết hạn. Không thể mượn sách."**
+**3. Actual Result**
+The system displays a **"Borrow successful!"** message (green) and adds the 4th book to the member's active borrow list. No warning or blocking action is triggered by the system.
 
-Đây là thông báo dành cho tài khoản **Hết hạn (MEM005)**, không phải cho tài khoản **Tạm ngưng (MEM004)**. Hai trạng thái này hoàn toàn khác nhau về mặt nghiệp vụ.
+![Evidence BUG-001: Successfully borrowing the 4th book](bug001_proof.png)
 
-![Minh chứng BUG-002: Thông báo "hết hạn" sai khi tài khoản bị "tạm ngưng"](bug002_proof.png)
+**4. Expected Result**
+Per REQ-04, the system must reject the request to borrow the 4th book and display an error message indicating the 3-book borrowing limit has been exceeded.
 
-**4. Kết quả mong đợi (Expected Result)**
-Theo SRS REQ-04: *"Thông báo lỗi phải mô tả **đúng lý do** từ chối (tạm ngưng ≠ hết hạn)"*.
-Hệ thống phải hiển thị thông báo phân biệt rõ trạng thái, ví dụ: **"Tài khoản đang bị tạm ngưng. Không thể mượn sách."**
-
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra lại logic hiển thị thông báo lỗi cho chức năng mượn sách. Cần phân tách điều kiện kiểm tra `status == "suspended"` (tạm ngưng) và `status == "expired"` (hết hạn) để trả về đúng nội dung thông báo tương ứng.
+**5. Recommendation**
+The control logic should implement a `currentBorrowedBooksCount >= 3` check before executing the borrow function. The Borrow button should also be disabled if the user has already reached the limit.
 
 ---
 
-## BUG-003: Logic xác thực email (email validation) bị lỗi — chức năng Thêm thành viên hoạt động sai hoàn toàn
+## BUG-002: Wrong Error Message When a "Suspended" Account Tries to Borrow a Book
 
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-21, TC-22, TC-23
-- **Yêu cầu (REQ) liên quan**: REQ-07 (Quản lý thành viên — Thêm thành viên mới)
-- **Mức độ nghiêm trọng (Severity)**: Critical
-  *(Giải thích: Logic validation email bị đảo ngược hoàn toàn — từ chối email hợp lệ trong khi chấp nhận email không hợp lệ. Chức năng thêm thành viên không thể dùng đúng mục đích, ảnh hưởng nghiêm trọng đến chất lượng dữ liệu và hoạt động thư viện.)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
+**1. General Information**
+- **Failed Test Case**: TC-15
+- **Related Requirement (REQ)**: REQ-04 (Error message must accurately describe the rejection reason: "suspended ≠ expired")
+- **Severity**: Medium
+  *(Explanation: The book-borrowing restriction works correctly, but the wrong message misleads the user about their account status. This violates the specific requirement in SRS REQ-04.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
 
-**2. Biểu hiện lỗi (3 trường hợp cùng một root cause)**
+**2. Steps to Reproduce**
+1. Open the browser and navigate to the system at `https://stqa.rbc.vn`.
+2. Log in with the **Suspended** member account: `cu.le@email.com` (password: `password123`).
+3. Confirm the login is successful (able to reach the main page).
+4. Switch to the "Books" tab.
+5. Press the (+) button to borrow an "Available" book (e.g., `BOOK001`).
+6. In the confirmation dialog, click "Borrow".
 
-**Trường hợp A — TC-21: Email hợp lệ bị từ chối**
+**3. Actual Result**
+The system correctly rejects the borrow action, but displays the following error message:
+> **"Member has expired. Cannot borrow book."**
 
-Các bước tái hiện:
-1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
-2. Điền: Tên=`Nguyễn Test`, Email=`testnewuser99@gmail.com`, SĐT=`0901234567`.
-3. Nhấn **"Thêm thành viên"**.
+This message belongs to an **Expired (MEM005)** account, not a **Suspended (MEM004)** account. These two statuses are entirely different from a business logic perspective.
 
-Kết quả thực tế: Hệ thống báo lỗi **"Email không hợp lệ."** (màu đỏ) — trong khi email hoàn toàn hợp lệ theo SRS (có `@` và có `.` trong domain).
+![Evidence BUG-002: "Expired" message incorrectly shown for a "Suspended" account](bug002_proof.png)
 
-![Minh chứng TC-21: Email hợp lệ bị báo "Email không hợp lệ"](bug003_proof.png)
+**4. Expected Result**
+Per SRS REQ-04: *"Error messages must accurately describe the rejection reason (suspended ≠ expired)"*.
+The system must display a distinguishing message, for example: **"Account is currently suspended. Cannot borrow book."**
 
----
-
-**Trường hợp B — TC-22: Email không hợp lệ được chấp nhận**
-
-Các bước tái hiện:
-1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
-2. Điền: Tên=`Test Invalid Email`, Email=`new@gmail` *(thiếu `.` trong domain — không hợp lệ theo SRS)*, SĐT=`0901234567`.
-3. Nhấn **"Thêm thành viên"**.
-
-Kết quả thực tế: Hệ thống **chấp nhận** và hiển thị **"Thêm thành viên thành công! Mã: MEM007"** — thành viên mới được tạo với email không hợp lệ.
-
-![Minh chứng TC-22: Email không hợp lệ `new@gmail` vẫn tạo thành viên thành công](bug004_proof.png)
+**5. Recommendation**
+Review the error message display logic for the borrow feature. Separate the condition checks for `status == "suspended"` and `status == "expired"` to return the correct corresponding message content.
 
 ---
 
-**Trường hợp C — TC-23: Email đã tồn tại bị báo sai lỗi**
+## BUG-003: Email Validation Logic Is Broken — Add Member Feature Behaves Completely Incorrectly
 
-Các bước tái hiện:
-1. Đăng nhập Thủ thư → Tab "Thành viên" → Nhấn nút "+".
-2. Điền: Tên=`Nguyễn Trùng Email`, Email=`librarian@library.com`, SĐT=`0901234567`.
-3. Nhấn **"Thêm thành viên"**.
+**1. General Information**
+- **Failed Test Cases**: TC-21, TC-22, TC-23
+- **Related Requirement (REQ)**: REQ-07 (Member Management — Add New Member)
+- **Severity**: Critical
+  *(Explanation: The email validation logic is completely reversed — it rejects valid emails while accepting invalid ones. The add member feature cannot be used for its intended purpose, seriously affecting data quality and library operations.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
 
-Kết quả thực tế: Hệ thống báo lỗi **"Email không hợp lệ."** thay vì báo email đã tồn tại. Email `librarian@library.com` là email hợp lệ theo SRS và đã tồn tại trong seed data, nên lỗi đúng phải là lỗi trùng email.
+**2. Bug Manifestations (3 cases sharing the same root cause)**
 
-![Minh chứng TC-23: Email đã tồn tại `librarian@library.com` bị báo "Email không hợp lệ"](bug005_proof.png)
+**Case A — TC-21: Valid email is rejected**
 
-**3. Phân tích root cause**
-Ba biểu hiện trên cùng một nguyên nhân: **logic regex/validator email bị sai** — điều kiện kiểm tra định dạng email không đúng với SRS và được chạy trước kiểm tra trùng email, dẫn đến:
-- Email đúng chuẩn → bị coi là sai → từ chối
-- Email sai chuẩn → bị coi là đúng → chấp nhận
-- Email đã tồn tại nhưng có dấu `.` trong domain → bị báo "Email không hợp lệ" trước khi hệ thống kiểm tra trùng email
+Steps to reproduce:
+1. Log in as Librarian → "Members" tab → Click "+".
+2. Fill in: Name=`Nguyen Test`, Email=`testnewuser99@gmail.com`, Phone=`0901234567`.
+3. Click **"Add Member"**.
 
-**4. Kết quả mong đợi (Expected Result)**
-Theo SRS REQ-07:
-- Email **hợp lệ** (có `@` VÀ có `.` trong domain, VD: `user@domain.com`) → **Tạo thành viên thành công**.
-- Email **không hợp lệ** (thiếu `@` hoặc thiếu `.` trong domain, VD: `new@gmail`) → **Từ chối, hiển thị lỗi định dạng**.
-- Email **đã tồn tại** (VD: `librarian@library.com`) → **Từ chối, hiển thị lỗi email đã tồn tại**.
+Actual result: The system shows **"Invalid email."** (red) — while the email is completely valid per the SRS (contains `@` and `.` in the domain).
 
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Sửa lại hàm xác thực email theo đúng quy tắc trong SRS, sau đó mới kiểm tra email trùng trong dữ liệu hiện có. Nên dùng biểu thức chính quy (Regex) chuẩn để kiểm tra định dạng email:
+![Evidence TC-21: Valid email flagged as "Invalid email"](bug003_proof.png)
+
+---
+
+**Case B — TC-22: Invalid email is accepted**
+
+Steps to reproduce:
+1. Log in as Librarian → "Members" tab → Click "+".
+2. Fill in: Name=`Test Invalid Email`, Email=`new@gmail` *(missing `.` in domain — invalid per SRS)*, Phone=`0901234567`.
+3. Click **"Add Member"**.
+
+Actual result: The system **accepts** and displays **"Member added successfully! Code: MEM007"** — a new member is created with an invalid email.
+
+![Evidence TC-22: Invalid email `new@gmail` still creates member successfully](bug004_proof.png)
+
+---
+
+**Case C — TC-23: Duplicate email reports the wrong error**
+
+Steps to reproduce:
+1. Log in as Librarian → "Members" tab → Click "+".
+2. Fill in: Name=`Nguyen Duplicate Email`, Email=`librarian@library.com`, Phone=`0901234567`.
+3. Click **"Add Member"**.
+
+Actual result: The system shows **"Invalid email."** instead of a duplicate email error. `librarian@library.com` is a valid email per the SRS and already exists in the seed data, so the correct error should be about duplicate email.
+
+![Evidence TC-23: Existing email `librarian@library.com` flagged as "Invalid email"](bug005_proof.png)
+
+**3. Root Cause Analysis**
+All three manifestations share the same root cause: **the email regex/validator logic is incorrect** — the email format validation condition does not match the SRS and runs before the duplicate email check, resulting in:
+- A correctly formatted email → treated as invalid → rejected
+- An incorrectly formatted email → treated as valid → accepted
+- A duplicate email that contains `.` in the domain → reported as "Invalid email" before the system checks for duplication
+
+**4. Expected Result**
+Per SRS REQ-07:
+- **Valid** email (contains `@` AND `.` in domain, e.g., `user@domain.com`) → **Member created successfully**.
+- **Invalid** email (missing `@` or missing `.` in domain, e.g., `new@gmail`) → **Reject, show format error**.
+- **Duplicate** email (e.g., `librarian@library.com`) → **Reject, show duplicate email error**.
+
+**5. Recommendation**
+Fix the email validation function to match the SRS rules, then check for duplicate emails in the existing data. A standard regex should be used to validate the email format:
 
 ```regex
 ^[^\s@]+@[^\s@]+\.[^\s@]+$
 ```
 
-*Giải thích chuỗi ký tự trên (đây là mã Regex, không phải lỗi font):*
-- `^[^\s@]+`: Bắt đầu bằng các ký tự không phải khoảng trắng và không chứa ký tự `@`.
-- `@`: Phải có ký tự `@` ở giữa.
-- `[^\s@]+`: Tiếp theo là tên miền (domain) không chứa khoảng trắng và `@`.
-- `\.`: Phải có dấu chấm `.` sau tên miền.
-- `[^\s@]+$`: Kết thúc bằng phần mở rộng domain (như `.com`, `.vn`) không chứa khoảng trắng và `@`.
+*Explanation of the pattern above (this is Regex code, not a font error):*
+- `^[^\s@]+`: Starts with characters that are not whitespace and do not contain `@`.
+- `@`: Must contain `@` in the middle.
+- `[^\s@]+`: Followed by the domain name without whitespace or `@`.
+- `\.`: Must contain a `.` after the domain name.
+- `[^\s@]+$`: Ends with the domain extension (e.g., `.com`, `.vn`) without whitespace or `@`.
 
-Hoặc có thể sử dụng package xác thực email tiêu chuẩn (như `email_validator` trong Flutter/Dart) được cấu hình đúng. Cần áp dụng thêm hàm `trim()` để loại bỏ khoảng trắng thừa ở đầu/cuối chuỗi email trước khi validate, tránh việc người dùng vô tình copy dư khoảng trắng dẫn đến lỗi. Cần thực hiện kiểm thử lại cả ba nhóm: email hợp lệ, email thiếu dấu `.` trong domain, và email đã tồn tại.
-
----
-
-## BUG-004: Thành viên tra cứu được phiếu mượn của thành viên khác
-
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-27
-- **Yêu cầu (REQ) liên quan**: REQ-08 (Thành viên chỉ xem phiếu mượn của chính mình)
-- **Mức độ nghiêm trọng (Severity)**: High
-  *(Giải thích: Lỗi làm lộ thông tin lịch sử mượn sách của thành viên khác, vi phạm trực tiếp yêu cầu phân quyền trong SRS.)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
-- **Liên quan**: BUG-005 (từ việc xem được phiếu người khác, thành viên có thể trả hộ phiếu đó)
-
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Reset dữ liệu bằng cách refresh trang.
-2. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com` (MEM002), mật khẩu `password123`.
-3. Vào tab **Mượn / Trả**.
-4. Chọn mục **Tra cứu phiếu mượn**.
-5. Nhập mã thành viên khác: `MEM006`.
-6. Nhấn **Tra cứu**.
-
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống hiển thị phiếu `BR003` của thành viên `MEM006` (Hoàng Cá Biệt), gồm thông tin sách `Quản trị nhân sự hiện đại`, ngày mượn, hạn trả, trạng thái và nút **Trả sách**.
-
-![Minh chứng BUG-004: MEM002 tra cứu được phiếu BR003 của MEM006](bug006_proof.png)
-
-**4. Kết quả mong đợi (Expected Result)**
-Theo REQ-08, thành viên chỉ được xem phiếu mượn của chính mình. Hệ thống phải từ chối hoặc không hiển thị dữ liệu khi MEM002 tra cứu phiếu của MEM006.
-
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Kiểm tra quyền truy cập khi tra cứu phiếu mượn. Nếu người dùng hiện tại là Thành viên, hệ thống chỉ được cho phép xem `memberId` trùng với tài khoản đang đăng nhập. Chỉ Thủ thư mới được tra cứu phiếu của mọi thành viên.
+Alternatively, a standard email validation package (such as `email_validator` in Flutter/Dart) configured correctly can be used. A `trim()` function should also be applied to strip leading/trailing whitespace from the email string before validation, to prevent errors caused by users accidentally copying extra spaces. Retesting should cover all three groups: valid emails, emails missing `.` in the domain, and already-existing emails.
 
 ---
 
-## BUG-005: Thành viên trả được phiếu mượn của thành viên khác
+## BUG-004: Member Can Look Up Another Member's Borrowing Slip
 
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-28
-- **Yêu cầu (REQ) liên quan**: REQ-08 (phân quyền xem phiếu), REQ-05 (chỉ trả sách mà thành viên đang mượn)
-- **Mức độ nghiêm trọng (Severity)**: Critical
-  *(Giải thích: Thành viên không chỉ xem được phiếu của người khác mà còn thay đổi trạng thái phiếu/sách trong phiên hiện tại. Điều này không chỉ làm sai lệch lịch sử mượn trả, mà còn tạo ra kẽ hở để một người dùng cố ý 'giải phóng' những cuốn sách đang hot bị người khác giữ, biến nó thành 'Có sẵn' để bản thân họ có thể mượn ngay lập tức. Lỗi này ảnh hưởng trực tiếp và nghiêm trọng đến nghiệp vụ thư viện.)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
-- **Liên quan**: BUG-004 (lỗi tra cứu phiếu người khác là điều kiện dẫn tới lỗi trả hộ)
+**1. General Information**
+- **Failed Test Case**: TC-27
+- **Related Requirement (REQ)**: REQ-08 (Members can only view their own borrowing slips)
+- **Severity**: High
+  *(Explanation: This bug exposes the borrowing history of other members, directly violating the authorization requirement in the SRS.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
+- **Related**: BUG-005 (by viewing another member's slip, a member can proceed to return it on their behalf)
 
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Reset dữ liệu bằng cách refresh trang.
-2. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com` (MEM002), mật khẩu `password123`.
-3. Vào tab **Mượn / Trả**.
-4. Chọn mục **Tra cứu phiếu mượn**.
-5. Nhập mã thành viên khác: `MEM006`, nhấn **Tra cứu**.
-6. Trên phiếu `BR003` của MEM006, nhấn **Trả sách**.
+**2. Steps to Reproduce**
+1. Refresh the page to reset data.
+2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
+3. Go to the **Borrow / Return** tab.
+4. Select **Look Up Borrowing Slip**.
+5. Enter another member's ID: `MEM006`.
+6. Click **Look Up**.
 
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống cho phép MEM002 trả phiếu `BR003` của MEM006, hiển thị thông báo **"Trả sách thành công."**. Phiếu chuyển sang trạng thái **Đã trả** và có ngày trả `19/05/2026`, chứng tỏ dữ liệu trong phiên hiện tại đã bị cập nhật.
+**3. Actual Result**
+The system displays slip `BR003` belonging to member `MEM006` (Hoang Ca Biet), including book information `Modern Human Resource Management`, borrow date, due date, status, and a **Return Book** button.
 
-![Minh chứng BUG-005: MEM002 trả được phiếu BR003 của MEM006](bug007_proof.png)
+![Evidence BUG-004: MEM002 successfully looks up BR003 belonging to MEM006](bug006_proof.png)
 
-**4. Kết quả mong đợi (Expected Result)**
-Theo REQ-05 và REQ-08, thành viên chỉ được trả sách/phiếu đang mượn của chính mình. Hệ thống phải từ chối thao tác trả phiếu `BR003` vì phiếu này thuộc MEM006, không thuộc MEM002.
+**4. Expected Result**
+Per REQ-08, members may only view their own borrowing slips. The system must reject or not display any data when MEM002 looks up MEM006's slip.
 
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Ẩn hoặc vô hiệu hóa nút **Trả sách** đối với phiếu không thuộc thành viên đang đăng nhập. Đồng thời, hàm xử lý trả sách cần kiểm tra quyền ở tầng nghiệp vụ, không chỉ dựa vào việc ẩn/hiện nút trên giao diện.
+**5. Recommendation**
+Implement an access control check when looking up borrowing slips. If the current user is a Member, the system should only allow viewing `memberId` values that match the currently logged-in account. Only the Librarian should be able to look up slips for all members.
 
 ---
 
-## BUG-006: Trả sách quá hạn không hiển thị cảnh báo quá hạn
+## BUG-005: Member Can Return Another Member's Borrowing Slip
 
-**1. Thông tin chung**
-- **Test Case bị Fail**: TC-19
-- **Yêu cầu (REQ) liên quan**: REQ-05 (Nếu trả quá hạn → hệ thống phải hiển thị cảnh báo quá hạn)
-- **Mức độ nghiêm trọng (Severity)**: Medium
-  *(Giải thích: Hệ thống vẫn trả sách thành công, nhưng không cảnh báo quá hạn như SRS yêu cầu, làm người dùng/thủ thư không nhận biết được vi phạm hạn trả.)*
-- **Môi trường**: Chrome / Windows (https://stqa.rbc.vn)
+**1. General Information**
+- **Failed Test Case**: TC-28
+- **Related Requirement (REQ)**: REQ-08 (authorization to view slips), REQ-05 (members can only return books they are currently borrowing)
+- **Severity**: Critical
+  *(Explanation: The member not only views another member's slip but also changes the slip/book status in the current session. This does not merely corrupt borrowing history — it creates a loophole where a user can deliberately "release" a popular book being held by someone else, making it "Available" so they can immediately borrow it. This bug directly and severely impacts library operations.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
+- **Related**: BUG-004 (the slip lookup bug is the prerequisite for the unauthorized return bug)
 
-**2. Các bước tái hiện (Steps to Reproduce)**
-1. Reset dữ liệu bằng cách refresh trang.
-2. Đăng nhập bằng tài khoản thành viên `ba.nguyen@email.com` (MEM002), mật khẩu `password123`.
-3. Vào tab **Mượn / Trả**.
-4. Tìm phiếu `BR001` (`BOOK003`) có hạn trả `15/09/2024`, đã quá hạn so với ngày kiểm thử.
-5. Nhấn **Trả sách**.
+**2. Steps to Reproduce**
+1. Refresh the page to reset data.
+2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
+3. Go to the **Borrow / Return** tab.
+4. Select **Look Up Borrowing Slip**.
+5. Enter another member's ID: `MEM006`, click **Look Up**.
+6. On slip `BR003` belonging to MEM006, click **Return Book**.
 
-**3. Kết quả thực tế (Actual Result)**
-Hệ thống trả sách thành công và chỉ hiển thị thông báo **"Trả sách thành công."**. Không có cảnh báo quá hạn nào được hiển thị dù phiếu `BR001` đã quá hạn.
+**3. Actual Result**
+The system allows MEM002 to return slip `BR003` of MEM006, displaying **"Book returned successfully."**. The slip changes to **Returned** status with return date `19/05/2026`, confirming that data in the current session has been updated.
 
-![Minh chứng BUG-006: Trả phiếu quá hạn BR001 nhưng không có cảnh báo quá hạn](bug008_proof.png)
+![Evidence BUG-005: MEM002 successfully returns BR003 belonging to MEM006](bug007_proof.png)
 
-**4. Kết quả mong đợi (Expected Result)**
-Theo REQ-05, khi trả sách quá hạn, hệ thống vẫn có thể trả sách thành công nhưng **phải hiển thị cảnh báo quá hạn**.
+**4. Expected Result**
+Per REQ-05 and REQ-08, members may only return books/slips they are currently borrowing. The system must reject the return action for slip `BR003` because it belongs to MEM006, not MEM002.
 
-**5. Đề xuất / Khuyến nghị (Recommendation)**
-Khi xử lý trả sách, hệ thống cần so sánh ngày trả với `dueDate`. Nếu ngày trả > ngày hết hạn, thông báo kết quả phải bao gồm cảnh báo quá hạn rõ ràng, ví dụ: **"Trả sách thành công. Phiếu mượn đã quá hạn."**
+**5. Recommendation**
+Hide or disable the **Return Book** button for slips that do not belong to the currently logged-in member. Additionally, the return book handler must enforce an authorization check at the business logic layer, not just relying on hiding/showing the button in the UI.
+
+---
+
+## BUG-006: No Overdue Warning Displayed When Returning an Overdue Book
+
+**1. General Information**
+- **Failed Test Case**: TC-19
+- **Related Requirement (REQ)**: REQ-05 (If returned overdue → the system must display an overdue warning)
+- **Severity**: Medium
+  *(Explanation: The system still returns the book successfully, but does not display an overdue warning as required by the SRS, leaving the user/librarian unaware of the due date violation.)*
+- **Environment**: Chrome / Windows (https://stqa.rbc.vn)
+
+**2. Steps to Reproduce**
+1. Refresh the page to reset data.
+2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
+3. Go to the **Borrow / Return** tab.
+4. Find slip `BR001` (`BOOK003`) with due date `15/09/2024`, which is past the test execution date.
+5. Click **Return Book**.
+
+**3. Actual Result**
+The system returns the book successfully and only displays **"Book returned successfully."**. No overdue warning is shown even though slip `BR001` is past its due date.
+
+![Evidence BUG-006: Returning overdue slip BR001 with no overdue warning displayed](bug008_proof.png)
+
+**4. Expected Result**
+Per REQ-05, when returning an overdue book, the system may still complete the return successfully but **must display an overdue warning**.
+
+**5. Recommendation**
+When processing a book return, the system should compare the return date against `dueDate`. If the return date > due date, the result notification must include a clear overdue warning, for example: **"Book returned successfully. The borrowing slip is overdue."**
 
 ---
