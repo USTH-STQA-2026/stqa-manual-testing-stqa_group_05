@@ -19,8 +19,8 @@
 | TC-03 | Displays message: "Member not found" | Displays message: "Member not found" | Pass | | |
 | TC-04 | Displays message: "Incorrect password" | Displays message: "Incorrect password" | Pass | | |
 | TC-05 | Displays message "Please enter email and password" | Displays message "Please enter email and password" | Pass | | |
-| TC-06 | Displays message: "Please enter email" | Displays message "Please enter email and password" | Fail | | BUG-01 |
-| TC-07 | Displays message: "Please enter password" | Displays message: "Please enter email and password" | Fail | | BUG-02 |
+| TC-06 | Displays message: "Please enter email" | Displays message "Please enter email and password" | Fail | [BUG-01](bug-evidence/bug01.png) | BUG-01 |
+| TC-07 | Displays message: "Please enter password" | Displays message: "Please enter email and password" | Fail | [BUG-02](bug-evidence/bug02.png)| BUG-02 |
 | **REQ-02: View Book List** | | | | | |
 | TC-08 | Book list displays title, author, genre, publication year, status | Book list displays title, author, genre, publication year, status | Pass | | |
 | TC-09 | `BOOK002` immediately changes status to "Borrowed" in the list without needing to reload the page | `BOOK002` immediately changes status from `Available` to `Borrowed` in the list without needing to reload the page | Pass | | |
@@ -34,25 +34,25 @@
 | TC-15 | Borrow successfully, book status changes to "Borrowed" | Book is borrowed successfully and its status changes to "Borrowed" | Pass | | |
 | TC-16 | Borrow button is hidden or rejection message shown | Borrow button is hidden, user cannot borrow the book | Pass | | |
 | TC-17 | Borrow button is hidden or rejection message shown | Borrow button is hidden, user cannot borrow the book | Pass | | |
-| TC-18 | Borrow rejected, displays distinct error message for **suspended account** | Borrow is rejected, but the system displays an **expired account** error message instead of a **suspended account** error message | Fail | | BUG-03 |
+| TC-18 | Borrow rejected, displays distinct error message for **suspended account** | Borrow is rejected, but the system displays an **expired account** error message instead of a **suspended account** error message | Fail | [BUG-03](bug-evidence/bug03.png) | BUG-03 |
 | TC-19 | Borrow rejected, displays distinct error message for **expired** account | Borrow rejected, displays distinct error message for **expired** account | Pass | | |
 | TC-20 | Reject borrowing the 4th book, display borrow limit exceeded error message | System rejects the 4th borrow attempt and displays the borrow limit exceeded error message | Pass | | |
 | **REQ-05 & REQ-06: Return Book & Overdue Handling** | | | | | |
 | TC-21 | Book returned successfully, status reverts to "Available". No warning shown | Book returned successfully, status reverts to "Available" without any warning | Pass | | |
-| TC-22 | Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | | BUG-04 |
-| TC-23 | System rejects the return action; borrow record remains in "Borrowed" status | System displays "Book returned successfully", book's status returned to "Available" | Fail | | BUG-05 |
+| TC-22 | Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-04](bug-evidence/bug04.png) | BUG-04 |
+| TC-23 | System rejects the return action; borrow record remains in "Borrowed" status | System displays "Book returned successfully", book's status returned to "Available" | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
 | TC-24 | Active borrowed records with due dates ≤ today (`BR001`, `BR003`) update to "Overdue" | System displays notification "Updated: 2 overdue records"; borrow records with status "Borrowing" are updated to "Overdue" | Pass | | |
 | **REQ-07: Member Management** | | | | | |
-| TC-25 | New member added successfully, member code is generated and displayed | Add member failed and system displayed "Invalid email" | Fail | | BUG-06 |
-| TC-26 | System rejects creation, displays email format error message | System displays "Member added successfully! ID: MEM007" | Fail | | BUG-07 |
-| TC-27 | System rejects creation, displays duplicate email error message | Add member failed and system displayed "Invalid email" | Fail | | BUG-08 |
+| TC-25 | New member added successfully, member code is generated and displayed | Add member failed and system displayed "Invalid email" | Fail | [BUG-06](bug-evidence/bug06.png) | BUG-06 |
+| TC-26 | System rejects creation, displays email format error message | System displays "Member added successfully! ID: MEM007" | Fail | [BUG-07.1](bug-evidence/bug07-1.png)<br>[BUG-07.2](bug-evidence/bug07-2.png)<br>[BUG-07.3](bug-evidence/bug07-3.png) | BUG-07 |
+| TC-27 | System rejects creation, displays duplicate email error message | Add member failed and system displayed "Invalid email" | Fail | [BUG-08](bug-evidence/bug08.png) | BUG-08 |
 | TC-28 | System rejects action, displays "Full name must not be blank" | Add member failed and system displays "Full name must not be blank" | Pass | | |
-| TC-29 | System rejects action, displays "Phone number must not be blank" | Add member failed and system displayed "Invalid email" | Fail | | BUG-09 |
-| TC-30 | System rejects action, displays "Invalid Phone number" | Add member failed and system displayed "Invalid email" | Fail | | BUG-10 |
+| TC-29 | System rejects action, displays "Phone number must not be blank" | Add member failed and system displayed "Invalid email" | Fail | [BUG-09](bug-evidence/bug09.png) | BUG-09 |
+| TC-30 | System rejects action, displays "Invalid Phone number" | Add member failed and system displayed "Invalid email" | Fail | [BUG-10](bug-evidence/bug10.png) | BUG-10 |
 | **REQ-08: Borrow Record Lookup** | | | | | |
-| TC-31 | Only borrow records `BR001`, `BR004` belonging to MEM002 are visible | When clicking `My borrow records`, the system displays only `BR001` and `BR004` belonging to `MEM002`. However, the member can still use `Search borrow record` to view another member’s records by entering another Member ID | Fail | | BUG-11 |
+| TC-31 | Only borrow records `BR001`, `BR004` belonging to MEM002 are visible | When clicking `My borrow records`, the system displays only `BR001` and `BR004` belonging to `MEM002`. However, the member can still use `Search borrow record` to view another member’s records by entering another Member ID | Fail | [BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png) | BUG-11 |
 | TC-32 | Displays a comprehensive list of all borrow records from all library members | System displays borrow records from all library members | Pass | | |
-| TC-33 | System rejects lookup or does not display `MEM006`'s records | After logging in as `MEM002`, searching with Member ID `MEM006` still displays `MEM006`’s borrow records | Fail | | BUG-11 |
+| TC-33 | System rejects lookup or does not display `MEM006`'s records | After logging in as `MEM002`, searching with Member ID `MEM006` still displays MEM006’s borrow records | Fail | [BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png) | BUG-11 |
 
 
 
