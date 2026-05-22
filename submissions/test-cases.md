@@ -15,7 +15,7 @@
 
 ## Step 1: Input Domain Modeling (IDM)
 
-### IDM — Login (REQ-01)
+## IDM — Login (REQ-01)
 
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
@@ -23,11 +23,14 @@
 | | No | `noone@email.com` | Error message "Member not found" |
 | Is the password correct? | Correct | `admin123` | Login successful |
 | | Incorrect | `wrongpass` | Error message "Incorrect password" |
+| Is the input field empty? | Not empty | (any value) | Processed normally |
 | Input Space / Fields | Both fields empty | Email `""`, Pass `""` | Message "Please enter email and password" |
 | | Email empty, Pass filled | Email `""`, Pass `admin123` | Message "Please enter email" |
 | | Email filled, Pass empty | Email `ba.nguyen@email.com`, Pass `""` | Message "Please enter password" |
 
-### IDM — View Book List (REQ-02)
+---
+
+## IDM — View Book List (REQ-02)
 
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
@@ -38,7 +41,9 @@
 | Book information display | Complete | (any book) | Displays: title, author, category, publish year, code, status |
 | | Missing field | N/A | No field may be hidden |
 
-### IDM — Search for Books (REQ-03)
+---
+
+## IDM — Search for Books (REQ-03)
 
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
@@ -50,25 +55,27 @@
 | Category/Genre filter | Exist | `"Management"` / `"Công nghệ"` / `"Kinh tế"` | Displays books in selected category |
 | | Non-exist | `"Psychology"` / `"Tâm lý học"` | Empty list, displays "No books found" |
 
-### IDM & Decision Table — Borrow Book (REQ-04)
+---
 
-**Decision Table for Borrow Book Feature:**
+## IDM & Decision Table — Borrow Book (REQ-04)
+
+### Decision Table for Borrow Book Feature
 
 | Conditions / Actions | R1 | R2 | R3 | R4 | R5 | R6 |
 |---------------------|----|----|----|----|----|----|
 | **Conditions** | | | | | | |
 | C1: Book status is "Available"? | True | False (Borrowed) | False (Lost) | True | True | True |
 | C2: Account status is "Active"? | True | True | True | False (Suspended) | False (Expired) | True |
-| C3: Number of books borrowed < 3?| True | - | - | - | - | False |
+| C3: Number of books borrowed < 3? | True | - | - | - | - | False |
 | **Actions** | | | | | | |
 | A1: Allow borrow successfully | X | | | | | |
-| A2: Reject — book already borrowed| | X | | | | |
+| A2: Reject — book already borrowed | | X | | | | |
 | A3: Reject — book lost | | | X | | | |
 | A4: Reject — suspended member | | | | X | | |
 | A5: Reject — expired member | | | | | X | |
 | A6: Reject — limit exceeded | | | | | | X |
 
-**Supplementary IDM Table (for other attributes):**
+### Supplementary IDM Table (for other attributes)
 
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
@@ -80,9 +87,11 @@
 | | Expired | `MEM005` | Reject, show expired account error |
 | Number of books borrowed (BVA) | < 3 (BVA: 0, 1, 2) | `MEM003` (0 books) / `MEM002` (1 book) | Allow borrow |
 | | = 3 (BVA: limit) | `MEM002` after borrowing 2 more books | Reject, show limit exceeded message |
-| | > 3 (BVA: above limit)| Attempting a 4th borrow | Reject, show limit exceeded message |
+| | > 3 (BVA: above limit) | Attempting a 4th borrow | Reject, show limit exceeded message |
 
-### IDM — Return, Overdue Handling, Member Management, Lookup (REQ-05 to REQ-08)
+---
+
+## IDM — Return, Overdue Handling, Member Management, Lookup (REQ-05 to REQ-08)
 
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
@@ -125,65 +134,101 @@
 | Record existence | Found | Existing Member ID / Slip ID | Displays detailed borrow records |
 | | Not found | Non-existent ID (`MEM100`) | Show "No borrow records found" |
 | Information display | Full details | Viewing `BR001` | Displays: Record ID, Book title, borrow date, due date, status |
-
 ---
 
 ## Step 2: Test Cases
 
-| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | REQ | Technique |
-|-------|----------------|--------------|-------|------------|-----------------|-----|-----------|
-| **REQ-01: Login** | | | | | | | |
-| TC-01 | Successful login as Librarian | None | 1. Navigate to the website<br>2. Enter Email<br>3. Enter Password<br>4. Click "Login" | Email: `librarian@library.com`<br>Pass: `admin123` | Redirected to home page, displays name "Nguyen Thu Thu" and role Librarian. | REQ-01 | EP |
-| TC-02 | Successful login as Member | None | 1. Navigate to the website<br>2. Enter Email<br>3. Enter Password<br>4. Click "Login" | Email: `ba.nguyen@email.com`<br>Pass: `password123` | Redirected to home page, displays name "Nguyen Hoc Ba" and role Member. | REQ-01 | EP |
-| TC-03 | Failed login — email does not exist | None | 1. Navigate to the website<br>2. Enter Email<br>3. Enter Password<br>4. Click Login | Email: `nobody@test.com`<br>Pass: `admin123` | Displays message: "Member not found". | REQ-01 | EP |
-| TC-04 | Failed login — wrong password | None | 1. Enter valid Email<br>2. Enter wrong Password<br>3. Click Login | Email: `ba.nguyen@email.com`<br>Pass: `wrongpass` | Displays message: "Incorrect password". | REQ-01 | EP |
-| TC-05 | Failed login — empty fields | None | 1. Leave Email and Password empty<br>2. Click Login | Email: `""`<br>Pass: `""` | Displays message "Please enter email and password". | REQ-01 | BVA |
-| TC-06 | Failed login — email empty, password filled | None | 1. Leave Email blank<br>2. Enter Password<br>3. Click Login | Email: `""`<br>Pass: `admin123` | Displays message: "Please enter email". | REQ-01 | EP |
-| TC-07 | Failed login — email filled, password empty | None | 1. Enter Email<br>2. Leave Password blank<br>3. Click Login | Email: `librarian@library.com`<br>Pass: `""` | Displays message: "Please enter password". | REQ-01 | EP |
-| **REQ-02: View Book List** | | | | | | | |
-| TC-08 | Book list displays correct data | Logged in | 1. Switch to "Books" tab | N/A | Book list displays title, author, genre, publication year, status. | REQ-02 | EP |
-| TC-09 | Book status updates real-time after borrowing | Logged in as MEM003 | 1. Go to Books tab, note BOOK002 is "Available"<br>2. Click Borrow BOOK002<br>3. Observe the book list immediately after | Book: `BOOK002` | BOOK002 must immediately change status to "Borrowed" in the list without needing to reload the page. | REQ-02 | EP |
-| **REQ-03: Search & Filter Books** | | | | | | | |
-| TC-10 | Search books by title (with results) | Logged in | 1. Enter keyword in the search box | Keyword: `Flutter` | Displays book `BOOK001`. | REQ-03 | EP |
-| TC-11 | Search books by author name | Logged in | 1. Enter author name in the search box | Keyword: `Tran Van Hung` | Displays book `BOOK002`. | REQ-03 | EP |
-| TC-12 | Search books is case-insensitive | Logged in | 1. Enter keyword in lowercase/UPPERCASE | Keyword: `flutter` | Displays book `BOOK001` (same as TC-10). | REQ-03 | EP |
-| TC-13 | Search books — no results | Logged in | 1. Enter a non-existent keyword | Keyword: `XYZ123` | Displays message "No books found". | REQ-03 | EP |
-| TC-14 | Filter books by genre | Logged in | 1. Enter genre in the filter box | Genre: `Management` / `Kinh tế` | List displays correct books belonging to the filtered category. | REQ-03 | EP |
-| **REQ-04: Borrow Book** | | | | | | | |
-| TC-15 | Borrow book successfully | Logged in as MEM006 | 1. Select an Available book<br>2. Click Borrow | Book: `BOOK001` | Borrow successful, book status changes to "Borrowed". | REQ-04 | DT (R1) |
-| TC-16 | Cannot borrow a book already borrowed | Logged in as Member | 1. Select a Borrowed book<br>2. Click Borrow | Book: `BOOK003` | Borrow button is hidden or rejection message shown. | REQ-04 | EP / DT (R2) |
-| TC-17 | Cannot borrow a lost book | Logged in as Member | 1. Find a Lost book<br>2. Click Borrow | Book: `BOOK007` | Borrow button is hidden or rejection message shown. | REQ-04 | EP / DT (R3) |
-| TC-18 | Suspended member cannot borrow books | Logged in as MEM004 | 1. Select an Available book<br>2. Click Borrow | Book: `BOOK001` | Borrow rejected, displays distinct error message for suspended account. | REQ-04 | DT (R4) |
-| TC-19 | Expired member cannot borrow books | Logged in as MEM005 | 1. Select an Available book<br>2. Click Borrow | Book: `BOOK001` | Borrow rejected, displays message that the account has expired. | REQ-04 | DT (R5) |
-| TC-20 | Cannot borrow more than 3 books | Reset data, logged in as MEM002 | 1. Confirm member has 1 active borrow (`BR001`)<br>2. Borrow 2 more books to reach 3<br>3. Attempt to borrow a 4th book | Additional: `BOOK001`, `BOOK002`<br>4th book: `BOOK004` | Reject borrowing the 4th book, display borrow limit exceeded error message. | REQ-04 | BVA / DT (R6) |
-| **REQ-05 & REQ-06: Return Book & Overdue Handling** | | | | | | | |
-| TC-21 | Return book on time successfully | Reset data, logged in as MEM006 | 1. Borrow an Available book<br>2. Go to Borrow/Return tab<br>3. Click Return Book | Book: `BOOK001` | Book returned successfully, status reverts to "Available". No warning shown. | REQ-05 | EP |
-| TC-22 | Returning an overdue book displays warning | Reset data, logged in as MEM002 | 1. Go to Borrow/Return tab<br>2. Find slip `BR001` (past due date)<br>3. Click Return Book | Slip: `BR001` (due `15/09/2024`) | Book returned successfully but with an overdue warning notification. | REQ-05 | BVA |
-| TC-23 | Member cannot return another member's book | Reset data, logged in as MEM002 | 1. Go to Borrow/Return tab<br>2. Attempt to return another member's slip | Slip: `BR003` of `MEM006` | System rejects the return action; slip remains in "Borrowed" status. | REQ-05, REQ-08 | EP |
-| TC-24 | Librarian updates Overdue status | Reset data, logged in as Librarian | 1. Go to Borrow/Return<br>2. Click "Check Overdue" | N/A | Active borrowed slips with due dates ≤ today (`BR001`, `BR003`) update to "Overdue". | REQ-06 | DT |
-| **REQ-07: Member Management** | | | | | | | |
-| TC-25 | Librarian adds valid member | Logged in as Librarian | 1. Members tab -> Add New<br>2. Enter Name, Email, Phone<br>3. Click Add Member | Name: `Nguyen Test`<br>Email: `testnewuser99@gmail.com`<br>Phone: `0901234567` | New member added successfully, member code is generated and displayed. | REQ-07 | EP |
-| TC-26 | Librarian fails to add member due to invalid format | Logged in as Librarian | 1. Members tab -> Add New<br>2. Enter details with invalid email<br>3. Click Add Member | Name: `Test Invalid`<br>Email: `new@gmail` (missing `.`)<br>Phone: `0901234567` | System rejects creation, displays email format error message. | REQ-07 | EP |
-| TC-27 | Librarian fails to add member due to duplicate Email | Logged in as Librarian | 1. Members tab -> Add New<br>2. Enter details with existing email<br>3. Click Add Member | Name: `Nguyen Duplicate`<br>Email: `librarian@library.com`<br>Phone: `0901234567` | System rejects creation, displays duplicate email error message. | REQ-07 | EP |
-| TC-28 | Librarian fails to add member — empty Full Name | Logged in as Librarian | 1. Members tab -> Add New<br>2. Leave Name empty, fill other fields<br>3. Click Add | Name: `""`<br>Email: `valid@email.com`<br>Phone: `0901234567` | System rejects action, displays "Full name must not be blank". | REQ-07 | EP |
-| TC-29 | Librarian fails to add member — empty Phone Number | Logged in as Librarian | 1. Members tab -> Add New<br>2. Leave Phone empty, fill other fields<br>3. Click Add | Name: `Nguyen Phone`<br>Email: `valid2@email.com`<br>Phone: `""` | System rejects action, displays "Phone number must not be blank". | REQ-07 | EP |
-| TC-30 | Librarian fails to add member — invalid Phone format | Logged in as Librarian | 1. Members tab -> Add New<br>2. Enter Phone with characters<br>3. Click Add | Name: `Nguyen Character`<br>Email: `valid3@email.com`<br>Phone: `09abcde345` | System rejects action, displays "Invalid Phone number". | REQ-07 | EP |
-| **REQ-08: Borrow Record Lookup** | | | | | | | |
-| TC-31 | Member can only view their own borrowing slips | Logged in as MEM002 | 1. Go to Borrow/Return tab | N/A | Only slips `BR001`, `BR004` belonging to MEM002 are visible. | REQ-08 | EP |
-| TC-32 | Librarian can view all borrowing slips | Logged in as Librarian | 1. Go to Borrow/Return tab | N/A | Displays a comprehensive list of all borrowing slips from all library members. | REQ-08 | EP |
-| TC-33 | Member cannot look up another member's slip | Reset data, logged in as MEM002 | 1. Go to Borrow/Return tab<br>2. Search another Member's ID | Member ID: `MEM006` | System rejects lookup or does not display `MEM006`'s records. | REQ-08 | EP |
+## REQ-01: Login
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-01 | Successful login as Librarian | None | 1. Navigate to website<br>2. Enter Email & Password<br>3. Click Login | `librarian@library.com` / `admin123` | Redirect to homepage, display Librarian info | EP |
+| TC-02 | Successful login as Member | None | Same as TC-01 | `ba.nguyen@email.com` / `password123` | Redirect to homepage, display Member info | EP |
+| TC-03 | Failed login — email does not exist | None | Enter invalid email and password | `nobody@test.com` / `admin123` | Display "Member not found" | EP |
+| TC-04 | Failed login — wrong password | None | Enter valid email and wrong password | `ba.nguyen@email.com` / `wrongpass` | Display "Incorrect password" | EP |
+| TC-05 | Failed login — both fields empty | None | Leave Email & Password empty | `""` / `""` | Display "Please enter email and password" | BVA |
+| TC-06 | Failed login — empty email only | None | Leave Email blank | `""` / `admin123` | Display "Please enter email" | EP |
+| TC-07 | Failed login — empty password only | None | Leave Password blank | `librarian@library.com` / `""` | Display "Please enter password" | EP |
 
 ---
 
-## Summary
+## REQ-02: View Book List
 
-| Feature Group             | # TC   | REQ Coverage   | IDM Techniques Applied       |
-|---------------------------|--------|----------------|------------------------------|
-| Login                     | 7      | REQ-01         | EP, BVA                      |
-| View Book List            | 2      | REQ-02         | EP                           |
-| Search & Filter Books     | 5      | REQ-03         | EP                           |
-| Borrow Book               | 6      | REQ-04         | EP, BVA, Decision Table (DT) |
-| Return & Overdue Handling | 4      | REQ-05, REQ-06 | EP, BVA, Decision Table (DT) |
-| Member Management         | 6      | REQ-07         | EP                           |
-| Borrow Record Lookup      | 3      | REQ-08         | EP                           |
-| **Total**                 | **33** | **8 REQ**      | **EP, BVA, Decision Table**  |
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-08 | Book list displays correct information | Logged in | Open Books tab | N/A | Display title, author, genre, year, status | EP |
+| TC-09 | Book status updates immediately after borrowing | Logged in as MEM003 | Borrow available book | `BOOK002` | Status changes to "Borrowed" without reload | EP |
+
+---
+
+## REQ-03: Search & Filter Books
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-10 | Search book by title | Logged in | Enter keyword | `Flutter` | Display `BOOK001` | EP |
+| TC-11 | Search book by author | Logged in | Enter author name | `Tran Van Hung` | Display `BOOK002` | EP |
+| TC-12 | Search is case-insensitive | Logged in | Enter lowercase keyword | `flutter` | Display `BOOK001` | EP |
+| TC-13 | Search with no result | Logged in | Enter non-existing keyword | `XYZ123` | Display "No books found" | EP |
+| TC-14 | Filter books by genre | Logged in | Filter by genre | `Management` / `Kinh tế` | Display correct matching books | EP |
+
+---
+
+## REQ-04: Borrow Book
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-15 | Borrow available book successfully | Logged in as MEM006 | Select available book → Borrow | `BOOK001` | Borrow success, status becomes Borrowed | DT |
+| TC-16 | Cannot borrow already borrowed book | Logged in as Member | Borrow unavailable book | `BOOK003` | Borrow rejected or button hidden | EP |
+| TC-17 | Cannot borrow lost book | Logged in as Member | Borrow lost book | `BOOK007` | Borrow rejected or button hidden | EP |
+| TC-18 | Suspended member cannot borrow | Logged in as MEM004 | Borrow available book | `BOOK001` | Display suspended-account message | DT |
+| TC-19 | Expired member cannot borrow | Logged in as MEM005 | Borrow available book | `BOOK001` | Display expired-account message | DT |
+| TC-20 | Cannot borrow more than 3 books | Reset data, login MEM002 | Borrow until reaching 4th book | `BOOK001`, `BOOK002`, `BOOK004` | Reject 4th borrow request | BVA / DT |
+
+---
+
+## REQ-05 & REQ-06: Return Book & Overdue
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-21 | Return book on time successfully | Reset data, login MEM006 | Borrow then return book | `BOOK001` | Status becomes Available, no warning | EP |
+| TC-22 | Return overdue book | Reset data, login MEM002 | Return overdue slip | `BR001` | Return success with overdue warning | BVA |
+| TC-23 | Member cannot return another member’s book | Reset data, login MEM002 | Attempt to return other member slip | `BR003` | Action rejected | EP |
+| TC-24 | Librarian updates overdue status | Reset data, login Librarian | Click "Check Overdue" | N/A | Overdue slips updated correctly | DT |
+
+---
+
+## REQ-07: Member Management
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-25 | Add valid member successfully | Login as Librarian | Add new member | Valid name/email/phone | Member created successfully | EP |
+| TC-26 | Reject invalid email format | Login as Librarian | Add member with invalid email | `new@gmail` | Display email format error | EP |
+| TC-27 | Reject duplicate email | Login as Librarian | Add member using existing email | `librarian@library.com` | Display duplicate email error | EP |
+| TC-28 | Reject empty full name | Login as Librarian | Leave name blank | `""` | Display fullname required error | EP |
+| TC-29 | Reject empty phone number | Login as Librarian | Leave phone blank | `""` | Display phone required error | EP |
+| TC-30 | Reject invalid phone format | Login as Librarian | Enter invalid phone | `09abcde345` | Display invalid phone error | EP |
+
+---
+
+## REQ-08: Borrow Record Lookup
+
+| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
+|---|---|---|---|---|---|---|
+| TC-31 | Member can view only own borrowing slips | Login as MEM002 | Open Borrow/Return | N/A | Only own slips displayed | EP |
+| TC-32 | Librarian can view all borrowing slips | Login as Librarian | Open Borrow/Return | N/A | Display all slips | EP |
+| TC-33 | Member cannot lookup another member’s slip | Reset data, login MEM002 | Lookup other member ID | `MEM006` | Access denied / no records shown | EP |
+
+---
+
+# Summary
+
+| Feature Group | # TC | REQ Coverage | Techniques |
+|---|---|---|---|
+| Login | 7 | REQ-01 | EP, BVA |
+| View Book List | 2 | REQ-02 | EP |
+| Search & Filter | 5 | REQ-03 | EP |
+| Borrow Book | 6 | REQ-04 | EP, BVA, DT |
+| Return & Overdue | 4 | REQ-05, REQ-06 | EP, BVA, DT |
+| Member Management | 6 | REQ-07 | EP |
+| Borrow Record Lookup | 3 | REQ-08 | EP |
+| **TOTAL** | **33 TC** | **REQ-01 → REQ-08** | **EP, BVA, DT** |
