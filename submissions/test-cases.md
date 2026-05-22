@@ -6,7 +6,7 @@
 
 | Information | |
 |---|---|
-| **Group** | Group 1 (Merged STQA_GROUP_05) |
+| **Group** | STQA_GROUP_05 |
 | **Date Created** | 21/05/2026 |
 | **System** | <https://stqa.rbc.vn> |
 | **Reference** | SRS v1.0 |
