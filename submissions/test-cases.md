@@ -8,7 +8,7 @@
 |---|---|
 | **Group** | Group 1 (Merged STQA_GROUP_05) |
 | **Date Created** | 21/05/2026 |
-| **System** | https://stqa.rbc.vn |
+| **System** | <https://stqa.rbc.vn> |
 | **Reference** | SRS v1.0 |
 
 ---
@@ -16,6 +16,7 @@
 ## Step 1: Input Domain Modeling (IDM)
 
 ### IDM — Login (REQ-01)
+
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
 | Does the email exist in the DB? | Yes | `librarian@library.com` | Login successful |
@@ -27,6 +28,7 @@
 | | Email filled, Pass empty | Email `ba.nguyen@email.com`, Pass `""` | Message "Please enter password" |
 
 ### IDM — View Book List (REQ-02)
+
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
 | Access rights (Role) | Librarian | `librarian@library.com` | Sees the full book list |
@@ -37,6 +39,7 @@
 | | Missing field | N/A | No field may be hidden |
 
 ### IDM — Search for Books (REQ-03)
+
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
 | Does the keyword exist in the DB? | Yes (book title) | `"Flutter"` | Displays books containing "Flutter" |
@@ -66,6 +69,7 @@
 | A6: Reject — limit exceeded | | | | | | X |
 
 **Supplementary IDM Table (for other attributes):**
+
 | Characteristic | Block | Representative Value | Expected Result |
 |---|---|---|---|
 | Book status | Available | `BOOK001` | Allow borrow |
@@ -173,13 +177,13 @@
 
 ## Summary
 
-| Feature Group | # TC | # TC Fail | REQ Coverage | IDM Techniques Applied |
-|---------------|------|-----------|--------------|------------------------|
-| Login | 7 | 0 | REQ-01 | EP, BVA |
-| View Book List | 2 | 0 | REQ-02 | EP |
-| Search & Filter Books | 5 | 0 | REQ-03 | EP |
-| Borrow Book | 6 | 1 | REQ-04 | EP, BVA, Decision Table (DT) |
-| Return & Overdue Handling | 4 | 2 | REQ-05, REQ-06 | EP, BVA, Decision Table (DT) |
-| Member Management | 6 | 3 | REQ-07 | EP |
-| Borrow Record Lookup | 3 | 2 | REQ-08 | EP |
-| **Total** | **33** | **8** | **8 REQ** | **EP, BVA, Decision Table** |
+| Feature Group             | # TC   | REQ Coverage   | IDM Techniques Applied       |
+|---------------------------|--------|----------------|------------------------------|
+| Login                     | 7      | REQ-01         | EP, BVA                      |
+| View Book List            | 2      | REQ-02         | EP                           |
+| Search & Filter Books     | 5      | REQ-03         | EP                           |
+| Borrow Book               | 6      | REQ-04         | EP, BVA, Decision Table (DT) |
+| Return & Overdue Handling | 4      | REQ-05, REQ-06 | EP, BVA, Decision Table (DT) |
+| Member Management         | 6      | REQ-07         | EP                           |
+| Borrow Record Lookup      | 3      | REQ-08         | EP                           |
+| **Total**                 | **33** | **8 REQ**      | **EP, BVA, Decision Table**  |
