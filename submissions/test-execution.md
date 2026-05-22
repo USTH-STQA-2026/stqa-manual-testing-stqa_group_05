@@ -52,7 +52,7 @@
 | **REQ-08: Borrow Record Lookup** | | | | | |
 | TC-31 | Only borrow records `BR001`, `BR004` belonging to MEM002 are visible | When clicking `My borrow records`, the system displays only `BR001` and `BR004` belonging to `MEM002`. However, the member can still use `Search borrow record` to view another member’s records by entering another Member ID | Fail | | BUG-11 |
 | TC-32 | Displays a comprehensive list of all borrow records from all library members | System displays borrow records from all library members | Pass | | |
-| TC-33 | System rejects lookup or does not display `MEM006`'s records | After logging in as MEM002, searching with Member ID MEM006 still displays MEM006’s borrow records | Fail | | BUG-11 |
+| TC-33 | System rejects lookup or does not display `MEM006`'s records | After logging in as `MEM002`, searching with Member ID `MEM006` still displays `MEM006`’s borrow records | Fail | | BUG-11 |
 
 
 
