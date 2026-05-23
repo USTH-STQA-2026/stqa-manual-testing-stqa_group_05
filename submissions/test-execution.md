@@ -1,54 +1,60 @@
-# Test Execution — Test Execution Result
-
-> **Instructions**: Execute each test case on the system https://stqa.rbc.vn and record the actual result.  
-> Conclusion: **Pass** (expected behavior), **Fail** (incorrect behavior → create bug report), **Blocked** (cannot execute due to another blocking issue), **Not Run** (not executed yet).
+# Test Execution
 
 | Information | |
 |---|---|
 | **Group** | STQA_GROUP_05 |
-| **Execution Date** | 22/05/2026 |
-| **Browser** | Chrome |
-| **Operating System** | Windows / macOS |
+| **Date created** | 22/05/2026 |
+| **System** | https://stqa.rbc.vn |
+| **Operation** | Windows/macOS |
 
 ---
 
 ## Detailed Result
 
-| TC ID | Feature Group | Expected Result (Summary) | Actual Result | Status | Evidence | Bug |
-|-------|---------------|---------------------------|-----------------|---------|-----------|----|
-| TC-01 | REQ-01 Login | Login successfully as Librarian | Redirected to homepage and displays Librarian information | Pass | | |
-| TC-02 | REQ-01 Login | Login successfully as Member | Redirected to homepage and displays Member information | Pass | | |
-| TC-03 | REQ-01 Login | Display "Member not found" | Displays "Member not found" | Pass | | |
-| TC-04 | REQ-01 Login | Display "Incorrect password" | Displays "Incorrect password" | Pass | | |
-| TC-05 | REQ-01 Login | Display "Please enter email and password" | Displays "Please enter email and password" | Pass | | |
-| TC-06 | REQ-01 Login | Display "Please enter email" | System displays "Please enter email and password" | Fail | [BUG-01](bug-evidence/bug01.png) | BUG-01 |
-| TC-07 | REQ-01 Login | Display "Please enter password" | System displays "Please enter email and password" | Fail | [BUG-02](bug-evidence/bug02.png) | BUG-02 |
-| TC-08 | REQ-02 View Book List | Display complete book information | Displays title, author, genre, publication year, and status correctly | Pass | | |
-| TC-09 | REQ-02 View Book List | BOOK002 status updates immediately after borrowing | BOOK002 changes from Available to Borrowed immediately | Pass | | |
-| TC-10 | REQ-03 Search & Filter | Display BOOK001 when searching | Search result displays BOOK001 | Pass | | |
-| TC-11 | REQ-03 Search & Filter | Display BOOK002 when searching by author | Search result displays BOOK002 | Pass | | |
-| TC-12 | REQ-03 Search & Filter | Search is case-insensitive | Keyword "flutter"/"FLUTTER" still returns BOOK001 | Pass | | |
-| TC-13 | REQ-03 Search & Filter | Display "No books found" | Displays "No books found" | Pass | | |
-| TC-14 | REQ-03 Search & Filter | Display correct books based on selected genre | Displays correct books belonging to the selected genre | Pass | | |
-| TC-15 | REQ-04 Borrow Book | Borrow book successfully | Borrow successful and status changes to Borrowed | Pass | | |
-| TC-16 | REQ-04 Borrow Book | Cannot borrow already borrowed book | Borrow button is hidden / disabled | Pass | | |
-| TC-17 | REQ-04 Borrow Book | Cannot borrow lost book | Borrow button is hidden | Pass | | |
-| TC-18 | REQ-04 Borrow Book | Suspended member receives suspended-account message | System rejects borrowing but displays expired-account message instead of suspended-account message | Fail | [BUG-03](bug-evidence/bug03.png) | BUG-03 |
-| TC-19 | REQ-04 Borrow Book | Expired member cannot borrow book | Displays "Member has expired. Cannot borrow book." | Pass | | |
-| TC-20 | REQ-04 Borrow Book | Cannot borrow more than 3 books | System still allows borrowing the 4th book and displays "Borrow successful!" | Fail | | BUG-04 |
-| TC-21 | REQ-05 Return Book | Return book successfully on time | Return successful and status changes back to Available | Pass | | |
-| TC-22 | REQ-05 Return Book | Returning overdue book displays warning | Return successful but no overdue warning is displayed | Fail | [BUG-05](bug-evidence/bug04.png) | BUG-05 |
-| TC-23 | REQ-05 Return Book | Cannot return another member’s book | MEM002 successfully returned slip BR003 belonging to MEM006 | Fail | [BUG-06](bug-evidence/bug05.png) | BUG-06 |
-| TC-24 | REQ-06 Overdue Handling | Librarian updates overdue records successfully | Overdue borrow records are updated correctly | Pass | | |
-| TC-25 | REQ-07 Member Management | Add valid member successfully | System displays "Invalid email" even though email is valid | Fail | [BUG-07](bug-evidence/bug06.png) | BUG-07 |
-| TC-26 | REQ-07 Member Management | Reject invalid email format | System still creates member using email `new@gmail` | Fail | [BUG-08](bug-evidence/bug07-1.png) | BUG-08 |
-| TC-27 | REQ-07 Member Management | Reject duplicate email | System displays "Invalid email" instead of duplicate-email error | Fail | [BUG-09](bug-evidence/bug08.png) | BUG-09 |
-| TC-28 | REQ-07 Member Management | Reject empty full name | Displays "Full name must not be blank" | Pass | | |
-| TC-29 | REQ-07 Member Management | Reject empty phone number | System displays "Invalid email" | Fail | [BUG-10](bug-evidence/bug09.png) | BUG-10 |
-| TC-30 | REQ-07 Member Management | Reject invalid phone number format | System displays "Invalid email" | Fail | [BUG-11](bug-evidence/bug10.png) | BUG-11 |
-| TC-31 | REQ-08 Borrow Record Lookup | Member can only view their own borrow records | Member can still search another Member ID and view records | Fail | [BUG-12](bug-evidence/bug11-1.png) | BUG-12 |
-| TC-32 | REQ-08 Borrow Record Lookup | Librarian can view all borrow records | Displays all borrow records correctly | Pass | | |
-| TC-33 | REQ-08 Borrow Record Lookup | Cannot lookup another member’s records | MEM002 searches MEM006 and can still view BR003 details | Fail | [BUG-12](bug-evidence/bug11-2.png) | BUG-12 |
+| TC ID | Expected result (summary) | Actual result | Status | Reference | Bug |
+|------- |---------------------------|-----------------|---------|-----------|----|
+| **REQ-01: Login** | | | | | |
+| TC-01 | Redirected to home page, displays name "Nguyen Thu Thu" and role Librarian | Redirected to home page, displays name "Nguyen Thu Thu" and role Librarian | Pass | | |
+| TC-02 | Redirected to home page, displays name "Nguyen Hoc Ba" and role Member | Redirected to home page, displays name "Nguyen Hoc Ba" and role Member | Pass | | |
+| TC-03 | Displays message: "Member not found" | Displays message: "Member not found" | Pass | | |
+| TC-04 | Displays message: "Incorrect password" | Displays message: "Incorrect password" | Pass | | |
+| TC-05 | Displays message "Please enter email and password" | Displays message "Please enter email and password" | Pass | | |
+| TC-06 | Displays message: "Please enter email" | Displays message "Please enter email and password" | Fail | [BUG-01](bug-evidence/bug01.png) | BUG-01 |
+| TC-07 | Displays message: "Please enter password" | Displays message: "Please enter email and password" | Fail | [BUG-02](bug-evidence/bug02.png)| BUG-02 |
+| **REQ-02: View Book List** | | | | | |
+| TC-08 | Book list displays title, author, genre, publication year, status | Book list displays title, author, genre, publication year, status | Pass | | |
+| TC-09 | `BOOK002` immediately changes status to "Borrowed" in the list without needing to reload the page | `BOOK002` immediately changes status from `Available` to `Borrowed` in the list without needing to reload the page | Pass | | |
+| **REQ-03: Search & Filter Books** | | | | | |
+| TC-10 | Displays book `BOOK001` | Search result displays book `BOOK001` | Pass | | |
+| TC-11 | Displays book `BOOK002` | Search result displays book `BOOK002` | Pass | | |
+| TC-12 | Displays book `BOOK001` | Search result displays book `BOOK001` when using lowercase keyword | Pass | | |
+| TC-13 | Displays message "No books found" | System displays message "No books found" | Pass | | |
+| TC-14 | List displays correct books belonging to the filtered category | Filtered list displays `BOOK007`, `BOOK014`, `BOOK015` | Pass | | |
+| **REQ-04: Borrow Book** | | | | | |
+| TC-15 | Borrow successfully, book status changes to "Borrowed" | Book is borrowed successfully and its status changes to "Borrowed" | Pass | | |
+| TC-16 | Borrow button is hidden or rejection message shown | Borrow button is hidden, user cannot borrow the book | Pass | | |
+| TC-17 | Borrow button is hidden or rejection message shown | Borrow button is hidden, user cannot borrow the book | Pass | | |
+| TC-18 | Borrow rejected, displays distinct error message for **suspended account** | Borrow is rejected, but the system displays an **expired account** error message instead of a **suspended account** error message | Fail | [BUG-03](bug-evidence/bug03.png) | BUG-03 |
+| TC-19 | Borrow rejected, displays distinct error message for **expired** account | Borrow rejected, displays distinct error message for **expired** account | Pass | | |
+| TC-20 | Reject borrowing the 4th book, display borrow limit exceeded error message | System rejects the 4th borrow attempt and displays the borrow limit exceeded error message | Pass | | |
+| **REQ-05 & REQ-06: Return Book & Overdue Handling** | | | | | |
+| TC-21 | Book returned successfully, status reverts to "Available". No warning shown | Book returned successfully, status reverts to "Available" without any warning | Pass | | |
+| TC-22 | Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-04](bug-evidence/bug04.png) | BUG-04 |
+| TC-23 | System rejects the return action; borrow record remains in "Borrowed" status | System displays "Book returned successfully", book's status returned to "Available" | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
+| TC-24 | Active borrowed records with due dates ≤ today (`BR001`, `BR003`) update to "Overdue" | System displays notification "Updated: 2 overdue records"; borrow records with status "Borrowing" are updated to "Overdue" | Pass | | |
+| **REQ-07: Member Management** | | | | | |
+| TC-25 | New member added successfully, member code is generated and displayed | Add member failed and system displayed "Invalid email" | Fail | [BUG-06](bug-evidence/bug06.png) | BUG-06 |
+| TC-26 | System rejects creation, displays email format error message | System displays "Member added successfully! ID: MEM007" | Fail | [BUG-07.1](bug-evidence/bug07-1.png)<br>[BUG-07.2](bug-evidence/bug07-2.png)<br>[BUG-07.3](bug-evidence/bug07-3.png) | BUG-07 |
+| TC-27 | System rejects creation, displays duplicate email error message | Add member failed and system displayed "Invalid email" | Fail | [BUG-08](bug-evidence/bug08.png) | BUG-08 |
+| TC-28 | System rejects action, displays "Full name must not be blank" | Add member failed and system displays "Full name must not be blank" | Pass | | |
+| TC-29 | System rejects action, displays "Phone number must not be blank" | Add member failed and system displayed "Invalid email" | Fail | [BUG-09](bug-evidence/bug09.png) | BUG-09 |
+| TC-30 | System rejects action, displays "Invalid Phone number" | Add member failed and system displayed "Invalid email" | Fail | [BUG-10](bug-evidence/bug10.png) | BUG-10 |
+| **REQ-08: Borrow Record Lookup** | | | | | |
+| TC-31 | Only borrow records `BR001`, `BR004` belonging to MEM002 are visible | When clicking `My borrow records`, the system displays only `BR001` and `BR004` belonging to `MEM002`. However, the member can still use `Search borrow record` to view another member’s records by entering another Member ID | Fail | [BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png) | BUG-11 |
+| TC-32 | Displays a comprehensive list of all borrow records from all library members | System displays borrow records from all library members | Pass | | |
+| TC-33 | System rejects lookup or does not display `MEM006`'s records | After logging in as `MEM002`, searching with Member ID `MEM006` still displays MEM006’s borrow records | Fail | [BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png) | BUG-11 |
+
+
 
 ---
 
@@ -61,17 +67,18 @@
 | Fail | 12 |
 | Blocked | 0 |
 | Not Run | 0 |
-| **Pass Rate** | 63.64% |
+| **Pass rate** | 63.64% |
 
 ### Result by Feature Group
 
-| Feature Group | Total TC | Pass | Fail | Pass Rate |
+| Feature Group | Total TC | Pass | Fail | Pass rate |
 |------|---------|------|------|------------|
-| REQ-01 Login | 7 | 5 | 2 | 71.43% |
-| REQ-02 View Book List | 2 | 2 | 0 | 100% |
-| REQ-03 Search & Filter | 5 | 5 | 0 | 100% |
-| REQ-04 Borrow Book | 6 | 4 | 2 | 66.67% |
-| REQ-05 & REQ-06 Return & Overdue | 4 | 2 | 2 | 50% |
-| REQ-07 Member Management | 6 | 1 | 5 | 16.67% |
-| REQ-08 Borrow Record Lookup | 3 | 1 | 2 | 33.33% |
+| REQ-01 | 7 | 5 | 2 | 71.43% |
+| REQ-02 | 2 | 2 | 0 | 100% |
+| REQ-03 | 5 | 5 | 0 | 100% |
+| REQ-04 | 6 | 5 | 1 | 83.33% |
+| REQ-05 & REQ-06 | 4 | 2 | 2 | 50% |
+| REQ-07 | 6 | 1 | 5 | 16.67% |
+| REQ-08 | 3 | 1 | 2 | 33.33% |
+|------|---------|------|------|------------|
 | **Total** | 33 | 21 | 12 | 63.64% |

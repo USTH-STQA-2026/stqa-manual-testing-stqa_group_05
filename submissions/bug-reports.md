@@ -1,255 +1,560 @@
 # Bug Reports
 
-> **Instructions**: For each TC that **Fails** during execution, write a complete Bug Report in this file. See [examples/sample-bug-report.md](../examples/sample-bug-report.md) for how to write one.
+> **Hướng dẫn**: Tạo 1 mục bug cho mỗi TC có kết quả **Fail**.
+> Xem [examples/sample-bug-report.md](../examples/sample-bug-report.md) để hiểu cách viết bug report tốt.
+> Mỗi bug cần: tiêu đề mô tả hành vi lỗi, bước tái hiện, expected vs actual, severity + giải thích.
+
+| Information | |
+|---|---|
+| **Group** | STQA_GROUP_05 |
+| **Date created** | 23/05/2026 |
 
 ---
 
-## BUG-001: Member Can Borrow More Than the 3-Book Limit at the Same Time
+## BUG-01
 
-**1. General Information**
+| Attribute | Details |
+|-----------|---------|
+| **Bug ID** | BUG-01 |
+| **Related TC** | TC-06 |
+| **Related Requirement** | REQ-01 |
+| **Severity** | Low |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
 
-- **Failed Test Case**: TC-17
-- **Related Requirement (REQ)**: REQ-04 (Borrowing Limit)
-- **Severity**: High
-  *(Explanation: This bug directly violates the core business flow, allowing members to hoard all books in the library, severely impacting library operations.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
+**Title:**
+Login form displays an incorrect validation message when the email field is empty and the password field is filled
 
-**2. Steps to Reproduce**
+**Environment:**
+- Browser: Chrome 
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
 
-1. Open the browser and navigate to the system at `https://stqa.rbc.vn`.
-2. Log in with member account `ba.nguyen@email.com` (password: `password123`).
-3. Confirm in the "Borrow/Return" tab that this member already has 1 book currently borrowed (BR001 — BOOK003).
-4. Switch to the "Books" tab and borrow 2 more available books (e.g., BOOK001, BOOK002) to reach a total of 3.
-5. Continue pressing the (+) button to borrow a 4th book (e.g., `BOOK004` or `BOOK005`).
-6. In the confirmation dialog, click "Borrow".
+**Precondition:**
+- The user is on the Login page.
+- No user is currently logged in.
 
-**3. Actual Result**
-The system displays a **"Borrow successful!"** message (green) and adds the 4th book to the member's active borrow list. No warning or blocking action is triggered by the system.
+**Steps to Reproduce:**
+1. Navigate to the Login page.
+2. Leave the Email field empty.
+3. Enter `admin123` into the Password field.
+4. Click the **Login** button.
 
-![Evidence BUG-001: Successfully borrowing the 4th book](assets/bug001_proof.png)
+**Expected Result:**
+The system should display the validation message: `Please enter email`.
 
-**4. Expected Result**
-Per REQ-04, the system must reject the request to borrow the 4th book and display an error message indicating the 3-book borrowing limit has been exceeded.
+**Actual Result:**
+The system displays the validation message: `Please enter email and password`.
 
-**5. Recommendation**
-The control logic should implement a `currentBorrowedBooksCount >= 3` check before executing the borrow function. The Borrow button should also be disabled if the user has already reached the limit.
+**Impact:**
+The incorrect validation message may confuse users, but the login function still works correctly.
 
----
+**Evidence:**
+- Screenshot: [BUG-01](bug-evidence/bug01.png)
 
-## BUG-002: Wrong Error Message When a "Suspended" Account Tries to Borrow a Book
-
-**1. General Information**
-
-- **Failed Test Case**: TC-15
-- **Related Requirement (REQ)**: REQ-04 (Error message must accurately describe the rejection reason: "suspended ≠ expired")
-- **Severity**: Medium
-  *(Explanation: The book-borrowing restriction works correctly, but the wrong message misleads the user about their account status. This violates the specific requirement in SRS REQ-04.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
-
-**2. Steps to Reproduce**
-
-1. Open the browser and navigate to the system at `https://stqa.rbc.vn`.
-2. Log in with the **Suspended** member account: `cu.le@email.com` (password: `password123`).
-3. Confirm the login is successful (able to reach the main page).
-4. Switch to the "Books" tab.
-5. Press the (+) button to borrow an "Available" book (e.g., `BOOK001`).
-6. In the confirmation dialog, click "Borrow".
-
-**3. Actual Result**
-The system correctly rejects the borrow action, but displays the following error message:
-> **"Member has expired. Cannot borrow book."**
-
-This message belongs to an **Expired (MEM005)** account, not a **Suspended (MEM004)** account. These two statuses are entirely different from a business logic perspective.
-
-![Evidence BUG-002: "Expired" message incorrectly shown for a "Suspended" account](assets/bug002_proof.png)
-
-**4. Expected Result**
-Per SRS REQ-04: *"Error messages must accurately describe the rejection reason (suspended ≠ expired)"*.
-The system must display a distinguishing message, for example: **"Account is currently suspended. Cannot borrow book."**
-
-**5. Recommendation**
-Review the error message display logic for the borrow feature. Separate the condition checks for `status == "suspended"` and `status == "expired"` to return the correct corresponding message content.
+**Suggested Fix:**
+Update the login validation logic to check each empty field separately:
+- If both email and password are empty, display `Please enter email and password`.
+- If only the email field is empty, display `Please enter email`.
+- If only the password field is empty, display `Please enter password`.
 
 ---
+## BUG-02
 
-## BUG-003: Email Validation Logic Is Broken — Add Member Feature Behaves Completely Incorrectly
+| Attribute | Details |
+|-----------|---------|
+| **Bug ID** | BUG-02 |
+| **Related TC** | TC-07 |
+| **Related Requirement** | REQ-01 |
+| **Severity** | Low |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
 
-**1. General Information**
+**Title:**
+Login form displays an incorrect validation message when the password field is empty and the email field is filled
 
-- **Failed Test Cases**: TC-21, TC-22, TC-23
-- **Related Requirement (REQ)**: REQ-07 (Member Management — Add New Member)
-- **Severity**: Critical
-  *(Explanation: The email validation logic is completely reversed — it rejects valid emails while accepting invalid ones. The add member feature cannot be used for its intended purpose, seriously affecting data quality and library operations.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
 
-**2. Bug Manifestations (3 cases sharing the same root cause)**
+**Precondition:**
+- The user is on the Login page.
+- No user is currently logged in.
 
-**Case A — TC-21: Valid email is rejected**
+**Steps to Reproduce:**
+1. Navigate to the Login page.
+2. Enter `librarian@library.com` into the Email field.
+3. Leave the Password field empty
+4. Click the **Login** button.
 
-Steps to reproduce:
+**Expected Result:**
+The system should display the validation message: `Please enter password`.
 
-1. Log in as Librarian → "Members" tab → Click "+".
-2. Fill in: Name=`Nguyen Test`, Email=`testnewuser99@gmail.com`, Phone=`0901234567`.
-3. Click **"Add Member"**.
+**Actual Result:**
+The system displays the validation message: `Please enter email and password`.
 
-Actual result: The system shows **"Invalid email."** (red) — while the email is completely valid per the SRS (contains `@` and `.` in the domain).
+**Impact:**
+The incorrect validation message may confuse users, but the login function still works correctly.
 
-![Evidence TC-21: Valid email flagged as "Invalid email"](assets/bug003_proof.png)
+**Evidence:**
+- Screenshot: [BUG-02](bug-evidence/bug02.png)
 
----
-
-**Case B — TC-22: Invalid email is accepted**
-
-Steps to reproduce:
-
-1. Log in as Librarian → "Members" tab → Click "+".
-2. Fill in: Name=`Test Invalid Email`, Email=`new@gmail` *(missing `.` in domain — invalid per SRS)*, Phone=`0901234567`.
-3. Click **"Add Member"**.
-
-Actual result: The system **accepts** and displays **"Member added successfully! Code: MEM007"** — a new member is created with an invalid email.
-
-![Evidence TC-22: Invalid email `new@gmail` still creates member successfully](assets/bug004_proof.png)
-
----
-
-**Case C — TC-23: Duplicate email reports the wrong error**
-
-Steps to reproduce:
-
-1. Log in as Librarian → "Members" tab → Click "+".
-2. Fill in: Name=`Nguyen Duplicate Email`, Email=`librarian@library.com`, Phone=`0901234567`.
-3. Click **"Add Member"**.
-
-Actual result: The system shows **"Invalid email."** instead of a duplicate email error. `librarian@library.com` is a valid email per the SRS and already exists in the seed data, so the correct error should be about duplicate email.
-
-![Evidence TC-23: Existing email `librarian@library.com` flagged as "Invalid email"](assets/bug005_proof.png)
-
-**3. Root Cause Analysis**
-All three manifestations share the same root cause: **the email regex/validator logic is incorrect** — the email format validation condition does not match the SRS and runs before the duplicate email check, resulting in:
-
-- A correctly formatted email → treated as invalid → rejected
-- An incorrectly formatted email → treated as valid → accepted
-- A duplicate email that contains `.` in the domain → reported as "Invalid email" before the system checks for duplication
-
-**4. Expected Result**
-Per SRS REQ-07:
-
-- **Valid** email (contains `@` AND `.` in domain, e.g., `user@domain.com`) → **Member created successfully**.
-- **Invalid** email (missing `@` or missing `.` in domain, e.g., `new@gmail`) → **Reject, show format error**.
-- **Duplicate** email (e.g., `librarian@library.com`) → **Reject, show duplicate email error**.
-
-**5. Recommendation**
-Fix the email validation function to match the SRS rules, then check for duplicate emails in the existing data. A standard regex should be used to validate the email format:
-
-```regex
-^[^\s@]+@[^\s@]+\.[^\s@]+$
-```
-
-*Explanation of the pattern above (this is Regex code, not a font error):*
-
-- `^[^\s@]+`: Starts with characters that are not whitespace and do not contain `@`.
-- `@`: Must contain `@` in the middle.
-- `[^\s@]+`: Followed by the domain name without whitespace or `@`.
-- `\.`: Must contain a `.` after the domain name.
-- `[^\s@]+$`: Ends with the domain extension (e.g., `.com`, `.vn`) without whitespace or `@`.
-
-Alternatively, a standard email validation package (such as `email_validator` in Flutter/Dart) configured correctly can be used. A `trim()` function should also be applied to strip leading/trailing whitespace from the email string before validation, to prevent errors caused by users accidentally copying extra spaces. Retesting should cover all three groups: valid emails, emails missing `.` in the domain, and already-existing emails.
+**Suggested Fix:**
+Update the login validation logic to check each empty field separately:
+- If both email and password are empty, display `Please enter email and password`.
+- If only the email field is empty, display `Please enter email`.
+- If only the password field is empty, display `Please enter password`.
 
 ---
+## BUG-03
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-03 |
+| **Related TC** | TC-18 |
+| **Related Requirement** | REQ-04 |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
 
-## BUG-004: Member Can Look Up Another Member's Borrowing Slip
+**Title:**
+The system displays an incorrect validation message when the suspended member borrows a book 
 
-**1. General Information**
+**Environment:**
+- Browser: Chrome 
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
 
-- **Failed Test Case**: TC-27
-- **Related Requirement (REQ)**: REQ-08 (Members can only view their own borrowing slips)
-- **Severity**: High
-  *(Explanation: This bug exposes the borrowing history of other members, directly violating the authorization requirement in the SRS.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
-- **Related**: BUG-005 (by viewing another member's slip, a member can proceed to return it on their behalf)
+**Precondition:**
+- The user is logged in as a suspended member
 
-**2. Steps to Reproduce**
+**Steps to Reproduce:**
+1. Navigate the Login page
+2. Enter `cu.le@email.com` into Email field
+3. Enter `password123` into Password field
+4. Click the Login button
+5. Select an `Available` book
+6. Click the Borrow button
 
-1. Refresh the page to reset data.
-2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
-3. Go to the **Borrow / Return** tab.
-4. Select **Look Up Borrowing Slip**.
-5. Enter another member's ID: `MEM006`.
-6. Click **Look Up**.
+**Expected Result:**
+The system rejects the borrow action and displays the error message: "Member suspended. Cannot borrow book".
 
-**3. Actual Result**
-The system displays slip `BR003` belonging to member `MEM006` (Hoang Ca Biet), including book information `Modern Human Resource Management`, borrow date, due date, status, and a **Return Book** button.
+**Actual Result:**
+The system rejects the borrow action but displays the error message: "Member expired. Cannot borrow book".
 
-![Evidence BUG-004: MEM002 successfully looks up BR003 belonging to MEM006](assets/bug006_proof.png)
+**Impact:** 
+The incorrect message may confuse users and librarians about the actual reason why the borrow action is rejected.
 
-**4. Expected Result**
-Per REQ-08, members may only view their own borrowing slips. The system must reject or not display any data when MEM002 looks up MEM006's slip.
+**Evidence:**
+- Screenshot: [BUG-03](bug-evidence/bug03.png)
 
-**5. Recommendation**
-Implement an access control check when looking up borrowing slips. If the current user is a Member, the system should only allow viewing `memberId` values that match the currently logged-in account. Only the Librarian should be able to look up slips for all members.
-
----
-
-## BUG-005: Member Can Return Another Member's Borrowing Slip
-
-**1. General Information**
-
-- **Failed Test Case**: TC-28
-- **Related Requirement (REQ)**: REQ-08 (authorization to view slips), REQ-05 (members can only return books they are currently borrowing)
-- **Severity**: Critical
-  *(Explanation: The member not only views another member's slip but also changes the slip/book status in the current session. This does not merely corrupt borrowing history — it creates a loophole where a user can deliberately "release" a popular book being held by someone else, making it "Available" so they can immediately borrow it. This bug directly and severely impacts library operations.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
-- **Related**: BUG-004 (the slip lookup bug is the prerequisite for the unauthorized return bug)
-
-**2. Steps to Reproduce**
-
-1. Refresh the page to reset data.
-2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
-3. Go to the **Borrow / Return** tab.
-4. Select **Look Up Borrowing Slip**.
-5. Enter another member's ID: `MEM006`, click **Look Up**.
-6. On slip `BR003` belonging to MEM006, click **Return Book**.
-
-**3. Actual Result**
-The system allows MEM002 to return slip `BR003` of MEM006, displaying **"Book returned successfully."**. The slip changes to **Returned** status with return date `19/05/2026`, confirming that data in the current session has been updated.
-
-![Evidence BUG-005: MEM002 successfully returns BR003 belonging to MEM006](assets/bug007_proof.png)
-
-**4. Expected Result**
-Per REQ-05 and REQ-08, members may only return books/slips they are currently borrowing. The system must reject the return action for slip `BR003` because it belongs to MEM006, not MEM002.
-
-**5. Recommendation**
-Hide or disable the **Return Book** button for slips that do not belong to the currently logged-in member. Additionally, the return book handler must enforce an authorization check at the business logic layer, not just relying on hiding/showing the button in the UI.
+**Suggested Fix:**
+Update the borrow book validation logic to check each member status separately:
+- If member is suspended, reject borrowing book and display "Member suspended" 
+- If member is expired, reject borrowing book and display "Member expired"
 
 ---
+## BUG-04
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-04  |
+| **Related TC** | TC-22  |
+| **Related Requirement** | REQ-05  |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
 
-## BUG-006: No Overdue Warning Displayed When Returning an Overdue Book
+**Title:**
+Overdue book is returned successfully without displaying an overdue warning
 
-**1. General Information**
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
 
-- **Failed Test Case**: TC-19
-- **Related Requirement (REQ)**: REQ-05 (If returned overdue → the system must display an overdue warning)
-- **Severity**: Medium
-  *(Explanation: The system still returns the book successfully, but does not display an overdue warning as required by the SRS, leaving the user/librarian unaware of the due date violation.)*
-- **Environment**: Chrome / Windows (<https://stqa.rbc.vn>)
+**Precondition:**
+- The user is logged in as an active member.
+- The member has an active borrow record with a due date earlier than the return date.
+- Borrow record `BR001` exists and is overdue.
 
-**2. Steps to Reproduce**
+**Steps to Reproduce:**
+1. Navigate to the Login page.
+2. Log in with email `ba.nguyen@email.com` and password `password123`.
+3. Open the `Borrow / Return` tab.
+4. Click `Return book` for borrow record `BR001`.
 
-1. Refresh the page to reset data.
-2. Log in with member account `ba.nguyen@email.com` (MEM002), password `password123`.
-3. Go to the **Borrow / Return** tab.
-4. Find slip `BR001` (`BOOK003`) with due date `15/09/2024`, which is past the test execution date.
-5. Click **Return Book**.
+**Expected Result:**
+The book is returned successfully, and the system displays an overdue warning for the borrow record.
 
-**3. Actual Result**
-The system returns the book successfully and only displays **"Book returned successfully."**. No overdue warning is shown even though slip `BR001` is past its due date.
+**Actual Result:**
+The book is returned successfully and the return date is displayed, but no overdue warning is shown.
 
-![Evidence BUG-006: Returning overdue slip BR001 with no overdue warning displayed](assets/bug008_proof.png)
+**Impact:**
+Users may not be informed that the returned book was overdue.
 
-**4. Expected Result**
-Per REQ-05, when returning an overdue book, the system may still complete the return successfully but **must display an overdue warning**.
+**Evidence:**
+- Screenshot: [BUG-04](bug-evidence/bug04.png)
 
-**5. Recommendation**
-When processing a book return, the system should compare the return date against `dueDate`. If the return date > due date, the result notification must include a clear overdue warning, for example: **"Book returned successfully. The borrowing slip is overdue."**
+**Suggested Fix:**
+Update the return book logic to check whether the return date is later than the due date. If `return date > due date`, the system should display an overdue warning after the book is returned.
 
 ---
+## BUG-05
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-05  |
+| **Related TC** | TC-23  |
+| **Related Requirement** | REQ-05, REQ-08  |
+| **Severity** | High |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Member can return another member’s borrowed book successfully
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as member `MEM002`.
+- Borrow record `BR003` belongs to another member, `MEM006`.
+- Borrow record `BR003` is currently in `Borrowed` status.
+
+**Steps to Reproduce:**
+1. Navigate to the Login page.
+2. Log in with email `ba.nguyen@email.com` and password `password123`
+3. Open the `Borrow / Return` tab
+4. Search borrow record of `MEM006`
+5. Click `Return book` for the borrow record `BR003`
+
+**Expected Result:**
+The system rejects the return action, and borrow record `BR003` remains in `Borrowed` status.
+
+**Actual Result:**
+The system displays `Book returned successfully`, and the book status changes to `Available`.
+
+**Impact:**
+This bug allows a member to access and return another member’s borrow records, which violates user privacy and access control rules.
+
+**Evidence:**
+- Screenshot: [BUG-05](bug-evidence/bug05.png)
+
+**Suggested Fix:**
+Update the return book logic to validate record ownership before allowing the return action:
+- If the logged-in member owns the borrow record, allow the return action.
+- If the borrow record belongs to another member, reject the action and display an access-denied message.
+
+---
+## BUG-06
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-06  |
+| **Related TC** | TC-25  |
+| **Related Requirement** | REQ-07  |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Add member failed although all input fields are valid
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as `Librarian`
+- Full name, Email, Phone number are valid and satisfy the requirements
+
+**Steps to Reproduce:**
+1. Navigate to the Login page
+2. Log in with email `librarian@library.com` and password `admin123`
+3. Click the `Add member` button
+4. Enter Full name: `Nguyen Test`, Email: `testnewuser99@gmail.com`, Phone number: `0901234567`
+5. Click `Add member`
+
+**Expected Result:**
+New member added successfully, member code is generated and displayed
+
+**Actual Result:**
+Add member failed and system displayed "Invalid email"
+
+**Impact:**
+Librarians cannot add a valid new member to the system.
+
+**Evidence:**
+- Screenshot: [BUG-06](bug-evidence/bug06.png)
+
+**Suggested Fix:**
+Update the member creation validation logic to correctly accept valid email formats. The email `testnewuser99@gmail.com` should be recognized as valid, and the system should allow the member to be added successfully.
+
+---
+## BUG-07
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-07  |
+| **Related TC** | TC-26 |
+| **Related Requirement** | REQ-07 |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Adding a member successfully although email format is invalid
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as `Librarian`
+- Full name, Phone number are valid and satisfy the requirements
+- Email is invalid, missing `.` in the domain part
+
+**Steps to Reproduce:**
+1. Navigate to the Login page
+2. Log in with email `librarian@library.com` and password `admin123`
+3. Click the `Add member` button
+4. Enter Full name: `Test Invalid`, Email: `new@gmail`, Phone number: `0901234567`
+5. Click `Add member`
+
+**Expected Result:**
+The system rejects member creation and displays email format error message
+
+**Actual Result:**
+The system creates member successfully and displays message: `Member added successfully! ID: MEM007`
+
+**Impact:**
+The system allows invalid member data to be stored
+
+**Evidence:**
+- Screenshot: <br>[BUG-07.1](bug-evidence/bug07-1.png)<br>[BUG-07.2](bug-evidence/bug07-2.png)<br>[BUG-07.3](bug-evidence/bug07-3.png)
+
+**Suggested Fix:**
+Update the member creation validation logic to reject invalid email formats. The email `new@gmail` should be recognized as invalid because the domain part is incomplete, and the system should not allow the member to be added successfully.
+
+---
+## BUG-08
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-08 |
+| **Related TC** | TC-27 |
+| **Related Requirement** | REQ-07 |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Adding member form displays an incorrect validation message when entering duplicate email in existing accounts
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as `Librarian`
+- Full name and Phone number are valid and satisfy the requirements
+- The entered email already exists in the system
+
+**Steps to Reproduce:**
+1. Navigate to the Login page
+2. Log in with email `librarian@library.com` and password `admin123`
+3. Click the `Add member` button
+4. Enter Full name: `Nguyen Duplicate`, Email: `librarian@library.com`, Phone number: `0901234567`
+5. Click `Add member`
+
+**Expected Result:**
+The system rejects member creation and displays a duplicate email error message.
+
+**Actual Result:**
+Member creation fails, but the system displays `Invalid email`
+
+**Impact:**
+The incorrect validation message may confuse librarians about why the member cannot be added.
+
+**Evidence:**
+- Screenshot: [BUG-08](bug-evidence/bug08.png)
+
+**Suggested Fix:**
+Update the member creation validation logic to check email uniqueness separately from email format:
+- If the email format is invalid, display `Invalid email`.
+- If the email already exists, display `Email already exists. Please enter another email`.
+
+---
+## BUG-09
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-09 |
+| **Related TC** | TC-29 |
+| **Related Requirement** | REQ-07  |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Adding member form displays an incorrect validation message when leaving Phone number field empty
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as Librarian
+- Full name and Email are valid and satisfy the requirements
+- Phone number field is left empty
+
+**Steps to Reproduce:**
+1. Navigate to the Login page
+2. Log in with email `librarian@library.com` and password `admin123`
+3. Click the `Add member` button
+4. Enter Full name: `Nguyen Phone`, Email: `valid2@email.com`
+5. Leave Phone number field empty
+6. Click `Add member`
+
+**Expected Result:**
+The system rejects member creation and displays `Phone number must not be blank`
+
+**Actual Result:**
+Member creation fails, but the system displays `Invalid email`
+
+**Impact:**
+The incorrect validation message may confuse librarians about why the member cannot be added.
+
+**Evidence:**
+- Screenshot: [BUG-09](bug-evidence/bug09.png)
+
+**Suggested Fix:**
+Update the member creation validation logic to check empty field separately:
+
+- If only the Full name field is empty, display `Full name must not be blank`.
+- If only the Email field is empty, display `Email must not be blank`.
+- If only the Phone number field is empty, display `Phone number must not be blank`.
+
+---
+## BUG-10
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-10 |
+| **Related TC** | TC-30 |
+| **Related Requirement** | REQ-07 |
+| **Severity** | Medium |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Adding member form displays an incorrect validation message when Phone number format is invalid
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as `Librarian`
+- Full name and Email are valid and satisfy the requirements
+- Phone number contains letters
+
+**Steps to Reproduce:**
+1. Navigate to the Login page
+2. Log in with email `librarian@library.com` and password `admin123`
+3. Click the `Add member` button
+4. Enter Full name: `Nguyen Character`, Email: `valid3@email.com`
+5. Enter Phone number: `09abcde345`
+6. Click Add member
+
+**Expected Result:**
+The system rejects member creation and displays `Invalid phone number`
+
+**Actual Result:**
+Member creation fails, but the system displays `Invalid email`
+
+**Impact:**
+The incorrect validation message may confuse librarians about why the member cannot be added.
+
+**Evidence:**
+- Screenshot: [BUG-10](bug-evidence/bug10.png)
+
+**Suggested Fix:**
+Update the member creation validation logic to validate the phone number separately from the email:
+- If the email format is invalid, display `Invalid email`
+- If the phone number format is invalid, display `Invalid phone number`
+
+---
+## BUG-11
+| **Attribute** | **Details** |
+| --- | --- |
+| **Bug ID** | BUG-11 |
+| **Related TC** | TC-31, TC-33 |
+| **Related Requirement** | REQ-08 |
+| **Severity** | High |
+| **Reported by** | Tran Mai Anh |
+| **Reported date** | 23/05/2026 |
+| **Status** | Open |
+
+**Title:**
+Member can view another's borrow records by using search function
+
+**Environment:**
+- Browser: Chrome
+- Operating System: Windows/macOS
+- Interface Language: English
+- System: https://stqa.rbc.vn
+
+**Precondition:**
+- The user is logged in as member `MEM002`.
+- Member `MEM006` has existing borrow records.
+- A member should only be allowed to view their own borrow records.
+
+**Steps to Reproduce:**
+1. Navigate to the Login page.
+2. Log in with email `ba.nguyen@email.com` and password `password123`.
+3. Open the `Borrow / Return` tab.
+4. Click `My borrow records`.
+5. Observe that only records belonging to `MEM002` are displayed.
+6. Use the `Search borrow record` function.
+7. Enter member ID `MEM006`.
+8. Click `Search` button.
+
+**Expected Result:**
+The system should reject the lookup or hide the records of `MEM006`. Member `MEM002` should only be able to view their own borrow records.
+
+**Actual Result:**
+The system displays borrow records belonging to `MEM006` after member `MEM002` searches for member ID `MEM006`.
+
+**Impact:**
+This bug allows members to access other members’ borrow records without permission, violating access control and user privacy.
+
+**Evidence:**
+- Screenshot:<br>[BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png)
+
+**Suggested Fix:**
+Update the borrow record lookup logic to enforce role-based access control:
+- If the user is a member, only allow them to view borrow records linked to their own member ID.
+- If the user searches for another member’s ID, reject the request or display an access-denied message.
+- If the user is a librarian, allow access to all members’ borrow records.
