@@ -19,8 +19,8 @@
 | **Related TC** | TC-06 |
 | **Related Requirement** | REQ-01 |
 | **Severity** | Low |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -28,8 +28,8 @@ Login form displays an incorrect validation message when the email field is empt
 
 **Environment:**
 - Browser: Chrome 
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -69,8 +69,8 @@ Update the login validation logic to check each empty field separately:
 | **Related TC** | TC-07 |
 | **Related Requirement** | REQ-01 |
 | **Severity** | Low |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -78,8 +78,8 @@ Login form displays an incorrect validation message when the password field is e
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -118,8 +118,8 @@ Update the login validation logic to check each empty field separately:
 | **Related TC** | TC-18 |
 | **Related Requirement** | REQ-04 |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Hoàng Minh |
+| **Reported date** | 20/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -127,8 +127,8 @@ The system displays an incorrect validation message when the suspended member bo
 
 **Environment:**
 - Browser: Chrome 
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Windows
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -167,8 +167,8 @@ Update the borrow book validation logic to check each member status separately:
 | **Related TC** | TC-22  |
 | **Related Requirement** | REQ-05  |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -176,8 +176,8 @@ Overdue book is returned successfully without displaying an overdue warning
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -214,8 +214,8 @@ Update the return book logic to check whether the return date is later than the 
 | **Related TC** | TC-23  |
 | **Related Requirement** | REQ-05, REQ-08  |
 | **Severity** | High |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -223,8 +223,8 @@ Member can return another member’s borrowed book successfully
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux, Windows
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -264,8 +264,8 @@ Update the return book logic to validate record ownership before allowing the re
 | **Related TC** | TC-25  |
 | **Related Requirement** | REQ-07  |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Minh Hoàng, Nguyễn Hoàng Mình |
+| **Reported date** | 18/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -273,8 +273,8 @@ Add member failed although all input fields are valid
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux, Windows
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -311,8 +311,8 @@ Update the member creation validation logic to correctly accept valid email form
 | **Related TC** | TC-26 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -320,8 +320,8 @@ Adding a member successfully although email format is invalid
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux, Windows
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -359,8 +359,8 @@ Update the member creation validation logic to reject invalid email formats. The
 | **Related TC** | TC-27 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Hoàng Minh |
+| **Reported date** | 20/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -368,8 +368,8 @@ Adding member form displays an incorrect validation message when entering duplic
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Windows
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -392,6 +392,7 @@ Member creation fails, but the system displays `Invalid email`
 
 **Impact:**
 The incorrect validation message may confuse librarians about why the member cannot be added.
+_This does not affect the duplicate email checking logic (tested by creating two `newuser@email` accounts and the checking logic works correctly)._
 
 **Evidence:**
 - Screenshot: [BUG-08](bug-evidence/bug08.png)
@@ -409,8 +410,8 @@ Update the member creation validation logic to check email uniqueness separately
 | **Related TC** | TC-29 |
 | **Related Requirement** | REQ-07  |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Vũ Minh Hoàng |
+| **Reported date** | 18/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -418,8 +419,8 @@ Adding member form displays an incorrect validation message when leaving Phone n
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -462,8 +463,8 @@ Update the member creation validation logic to check empty field separately:
 | **Related TC** | TC-30 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Vũ Minh Hoàng |
+| **Reported date** | 18/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -471,8 +472,8 @@ Adding member form displays an incorrect validation message when Phone number fo
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
@@ -513,8 +514,8 @@ Update the member creation validation logic to validate the phone number separat
 | **Related TC** | TC-31, TC-33 |
 | **Related Requirement** | REQ-08 |
 | **Severity** | High |
-| **Reported by** | Tran Mai Anh |
-| **Reported date** | 23/05/2026 |
+| **Reported by** | Nguyễn Quang Vũ Hoàng |
+| **Reported date** | 19/05/2026 |
 | **Status** | Open |
 
 **Title:**
@@ -522,8 +523,8 @@ Member can view another's borrow records by using search function
 
 **Environment:**
 - Browser: Chrome
-- Operating System: Windows/macOS
-- Interface Language: English
+- Operating System: Linux
+- Interface Language: Vietnamese, English
 - System: https://stqa.rbc.vn
 
 **Precondition:**
