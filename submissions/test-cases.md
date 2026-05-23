@@ -199,14 +199,15 @@
 
 ## REQ-07: Member Management
 
-| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
-|---|---|---|---|---|---|---|
-| TC-25 | Add valid member successfully | Login as Librarian | Add new member | Valid name/email/phone | Member created successfully | EP |
-| TC-26 | Reject invalid email format | Login as Librarian | Add member with invalid email | `new@gmail` | Display email format error | EP |
-| TC-27 | Reject duplicate email | Login as Librarian | Add member using existing email | `librarian@library.com` | Display duplicate email error | EP |
-| TC-28 | Reject empty full name | Login as Librarian | Leave name blank | `""` | Display fullname required error | EP |
-| TC-29 | Reject empty phone number | Login as Librarian | Leave phone blank | `""` | Display phone required error | EP |
-| TC-30 | Reject invalid phone format | Login as Librarian | Enter invalid phone | `09abcde345` | Display invalid phone error | EP |
+| TC ID 	| Test Objective                                       	| Precondition                                    	| Steps                                                       	| Input Data                                                                        	| Expected Result                                                       	| Technique 	|    	|
+|-------	|------------------------------------------------------	|-------------------------------------------------	|-------------------------------------------------------------	|-----------------------------------------------------------------------------------	|-----------------------------------------------------------------------	|-----------	|----	|
+| TC-25 	| Librarian adds valid member successfully             	| Logged in as Librarian, in `Add new member` tab 	| 1. Enter Name, Email, Phone<br>2. Click Add Member          	| Name: `Nguyen Test`<br>Email: `testnewuser99@gmail.com`<br>Phone: `0901234567`    	| New member added successfully, member code is generated and displayed 	| EP        	|    	|
+| TC-26 	| Librarian fails to add member due to invalid format  	| Logged in as Librarian, in `Add new member` tab 	| 1. Enter details with invalid email<br>2. Click Add Member  	| Name: `Test Invalid`<br>Email: `new@gmail` (missing `.`)<br>Phone: `0901234567`   	| System rejects creation, displays email format error message.         	| REQ-07    	| EP 	|
+| TC-26 	| Librarian fails to add member due to invalid format  	| Logged in as Librarian, in `Add new member` tab 	| 1. Enter details with invalid email<br>2. Click Add Member  	| Name: `Test Invalid`<br>Email: `new@gmail` (missing `.`)<br>Phone: `0901234567`   	| System rejects creation, displays email format error message.         	| REQ-07    	| EP 	|
+| TC-27 	| Librarian fails to add member due to duplicate Email 	| Logged in as Librarian, in `Add new member` tab 	| 1. Enter details with existing email<br>2. Click Add Member 	| Name: `Nguyen Duplicate`<br>Email: `librarian@library.com`<br>Phone: `0901234567` 	| System rejects creation, displays duplicate email error message.      	| REQ-07    	| EP 	|
+| TC-28 	| Librarian fails to add member — empty Full Name      	| Logged in as Librarian, in `Add new member` tab 	| 1. Leave Name empty, fill other fields<br>2. Click Add      	| Name: `""`<br>Email: `valid@email.com`<br>Phone: `0901234567`                     	| System rejects action, displays "Full name must not be blank".        	| REQ-07    	| EP 	|
+| TC-29 	| Librarian fails to add member — empty Phone Number   	| Logged in as Librarian, in `Add new member` tab 	| 1. Leave Phone empty, fill other fields<br>2. Click Add     	| Name: `Nguyen Phone`<br>Email: `valid2@email.com`<br>Phone: `""`                  	| System rejects action, displays "Phone number must not be blank".     	| REQ-07    	| EP 	|
+| TC-30 	| Librarian fails to add member — invalid Phone format 	| Logged in as Librarian, in `Add new member` tab 	| 1. Enter Phone with characters<br>2. Click Add              	| Name: `Nguyen Character`<br>Email: `valid3@email.com`<br>Phone: `09abcde345`      	| System rejects action, displays "Invalid Phone number".               	| REQ-07    	| EP 	|
 
 ---
 
