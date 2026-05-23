@@ -214,9 +214,9 @@
 
 | TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
 |---|---|---|---|---|---|---|
-| TC-31 | Member can view only own borrowing slips | Login as MEM002 | Open Borrow/Return | N/A | Only own slips displayed | EP |
-| TC-32 | Librarian can view all borrowing slips | Login as Librarian | Open Borrow/Return | N/A | Display all slips | EP |
-| TC-33 | Member cannot lookup another member’s slip | Reset data, login MEM002 | Lookup other member ID | `MEM006` | Access denied / no records shown | EP |
+| TC-31 | Member can view only own borrowing slips | Login as MEM002 | Open Borrow/Return tab | N/A | Only own slips displayed | EP |
+| TC-32 | Librarian can view all borrowing slips | Login as Librarian | Open Borrow/Return tab | N/A | Display all slips | EP |
+| TC-33 | Member cannot lookup another member’s slip | Reset data, login MEM002, in Borrow/Return tab | Lookup other member ID | `MEM006` | Access denied / no records shown | EP |
 
 ---
 
