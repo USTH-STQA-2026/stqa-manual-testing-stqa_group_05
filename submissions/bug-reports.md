@@ -264,7 +264,7 @@ Update the return book logic to validate record ownership before allowing the re
 | **Related TC** | TC-25  |
 | **Related Requirement** | REQ-07  |
 | **Severity** | Medium |
-| **Reported by** | Nguyễn Minh Hoàng, Nguyễn Hoàng Mình |
+| **Reported by** | Vũ Minh Hoàng, Nguyễn Hoàng Mình |
 | **Reported date** | 18/05/2026 |
 | **Status** | Open |
 
