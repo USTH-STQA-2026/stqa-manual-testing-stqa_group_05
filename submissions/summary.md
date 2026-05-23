@@ -75,7 +75,8 @@
 - **REQ-07 Member management**: Multiple validation problems in member creations.
 - **REQ-08 Borrow record lookup**: Serious access control issue exists because members can view, return other members’ borrow records.
 
----
+**Q2. Which bug is the most critical? Why?**
+**BUG-003** (Critical) — The librarian cannot add new members. This is the most severe bug because it **completely disables** a core librarian feature. Every valid email is rejected by the system as "invalid", making it impossible for the library to expand its member list for as long as the bug persists.
 
 ## 5. Recommended Bug Fix Priority
 
