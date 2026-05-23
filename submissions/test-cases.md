@@ -188,12 +188,12 @@
 
 ## REQ-05 & REQ-06: Return Book & Overdue
 
-| TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
-|---|---|---|---|---|---|---|
-| TC-21 | Return book on time successfully | Reset data, login MEM006 | Borrow then return book | `BOOK001` | Status becomes Available, no warning | EP |
-| TC-22 | Return overdue book | Reset data, login MEM002 | Return overdue slip | `BR001` | Return success with overdue warning | BVA |
-| TC-23 | Member cannot return another member’s book | Reset data, login MEM002 | Attempt to return other member slip | `BR003` | Action rejected | EP |
-| TC-24 | Librarian updates overdue status | Reset data, login Librarian | Click "Check Overdue" | N/A | Overdue slips updated correctly | DT |
+| TC ID 	| Test Objective                             	| Precondition                       	| Steps                                                                                      	| Input Data                       	| Expected Result                                                                      	| Technique      	|     	|
+|-------	|--------------------------------------------	|------------------------------------	|--------------------------------------------------------------------------------------------	|----------------------------------	|--------------------------------------------------------------------------------------	|----------------	|-----	|
+| TC-21 	| Return book on time successfully           	| Reset data, logged in as MEM006    	| 1. Borrow an Available book<br>2. Go to Borrow/Return tab<br>3. Click Return Book          	| Book: `BOOK001`                  	| Book returned successfully, status reverts to "Available". No warning shown.         	| REQ-05         	| EP  	|
+| TC-22 	| Returning an overdue book displays warning 	| Reset data, logged in as MEM002    	| 1. Go to Borrow/Return tab<br>2. Find slip `BR001` (past due date)<br>3. Click Return Book 	| Slip: `BR001` (due `15/09/2024`) 	| Book returned successfully but with an overdue warning notification.                 	| REQ-05         	| BVA 	|
+| TC-23 	| Member cannot return another member's book 	| Reset data, logged in as MEM002    	| 1. Go to Borrow/Return tab<br>2. Attempt to return another member's slip                   	| Slip: `BR003` of `MEM006`        	| System rejects the return action; slip remains in "Borrowed" status.                 	| REQ-05, REQ-08 	| EP  	|
+| TC-24 	| Librarian updates Overdue status           	| Reset data, logged in as Librarian 	| 1. Go to Borrow/Return<br>2. Click "Check Overdue"                                         	| N/A                              	| Active borrowed slips with due dates ≤ today (`BR001`, `BR003`) update to "Overdue". 	| REQ-06         	| DT  	|
 
 ---
 
