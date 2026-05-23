@@ -1,61 +1,131 @@
-# Test Summary Report
+# Test Summary — Overall Test Report
 
-> **Instructions**: Fill in the tables and answer the questions below to provide an overall quality assessment of the system.
+> **Instruction**: This is a **Quality Assurance** activity — you evaluate the overall quality of the software, not only list bugs.
 
 ---
 
-## 1. Statistics
+## 1. Group Information
 
-| Item | Count | Percentage (%) |
-|------|-------|----------------|
-| **Total Test Cases Written** | 28 | 100% |
-| **TC Pass** | 20 | 71.4% |
-| **TC Fail** | 8 | 28.6% |
-| **Bugs Reported** | 6 | N/A |
+| Item | Information |
+|---|---|
+| **Group** | STQA_GROUP_05 |
+| **Class** | STQA |
+| **Report Date** | 23/05/2026 |
+| **Tested System** | https://stqa.rbc.vn — v1.0 |
 
-## 2. Analysis by Feature
+---
 
-| Feature Group | # TC | # Bugs | Stability | Notes |
-|---------------|------|--------|-----------|-------|
-| Login | 5 | 0 | 🟢 Good | Handles all valid/invalid cases properly. |
-| View Book List | 2 | 0 | 🟢 Good | Displays complete information, real-time updates work as designed. |
-| Search & Filter | 5 | 0 | 🟢 Good | Works as designed, results match expected output. |
-| Borrow, Return, Overdue | 9 | 3 | 🔴 Poor | BUG-001: Exceeding 3-book limit is not blocked. BUG-002: Wrong error message for Suspended accounts. BUG-006: No overdue warning when returning overdue books. |
-| Member Management, Lookup | 7 | 3 | 🔴 Poor | BUG-003: Email validation logic is broken. BUG-004/BUG-005: Members can view and return other members' borrowing slips. |
+## 2. Result Overview
 
-## 3. Bug Summary
+| Metric | Value |
+|---|---|
+| Total Test Cases | 33 |
+| Pass | 21 |
+| Fail | 12 |
+| Blocked | 0 |
+| Not Run | 0 |
+| **Pass rate** | 63.64% |
+| **Number of bugs detected** | 11 |
 
-| Bug ID | Short Description | Related REQ | Severity | Status |
-|--------|-------------------|-------------|----------|--------|
-| BUG-001 | Member can borrow more than 3 books | REQ-04 | High | Open |
-| BUG-002 | Wrong error message when a Suspended account tries to borrow | REQ-04 | Medium | Open |
-| BUG-003 | Email validation logic is broken, including duplicate email being reported with wrong error | REQ-07 | Critical | Open |
-| BUG-004 | Member can look up another member's borrowing slip | REQ-08 | High | Open |
-| BUG-005 | Member can return another member's borrowing slip | REQ-05, REQ-08 | Critical | Open |
-| BUG-006 | No overdue warning displayed when returning an overdue book | REQ-05 | Medium | Open |
+### Result by Feature Group
 
-## 4. Quality Assessment
+| Feature Group | Total TC | Pass | Fail | Bug | Evaluation |
+|---|---|---|---|---|---|
+| REQ-01 Login | 7 | 5 | 2 | 2 | Login function works but some validation messages are incorrect. |
+| REQ-02 View Book list | 2 | 2 | 0 | 0 | This feature works correctly with no bug found. |
+| REQ-03 Search & Filter book | 5 | 5 | 0 | 0 | This feature works correctly with no bug found. |
+| REQ-04 Borrow book | 6 | 5 | 1 | 1 | Borrowing function mostly works but one validation message issue was found. |
+| REQ-05 & REQ-06 Return & Overdue handling | 4 | 2 | 2 | 2 | Return and overdue handling need improvement due to warning and permission issues. |
+| REQ-07 Member management | 6 | 1 | 5 | 5 | This feature has many validation problems and needs major improvement. |
+| REQ-08 Borrow record lookup | 3 | 1 | 2 | 1 | This feature has a serious access control issue. |
+| **Total** | **33** | **21** | **12** | **11** | **The system has basic functionality, but several validation and access control issues must be fixed.** |
 
-**Q1. Overall system stability:**
-The system is stable in basic read-only features (view books, search, login), covering 12/28 TCs (42.9%). However, 6 bugs were found in critical business flows, including Critical-severity bugs in the add member feature and return slip authorization logic.
+
+### Bug Distribution by Severity
+
+| Severity | Quantity | Bug IDs |
+|---|---|---|
+| High | 2 | BUG-05, BUG-11 |
+| Medium | 7 | BUG-03, BUG-04, BUG-06, BUG-07, BUG-08, BUG-09, BUG-10 |
+| Low | 2 | BUG-01, BUG-02 |
+
+---
+
+## 3. Test Design Techniques Used
+
+| Technique | Applied to which REQ? | Number of TCs used | Explanation of how it was applied |
+|----------|------------------------|--------------------|-----------------------------------|
+| EP | All 8 REQs | 28 | Applied to **discrete partitions** such as `existing/non-existing` email, `correct/incorrect` password, `empty/non-empty` fields, `Librarian/Member` roles, `Available/Borrowed/Lost` book status, `Active/Suspended/Expired` member status, search `result/no result`, `valid/invalid` member information, and `own/other` borrow records. |
+| BVA | REQ-04, REQ-05 | 2 | Applied to **boundary-related rules**: the maximum borrowing `limit of 3 books`, `return date` compared with `due date`, and `overdue checking` based on whether due date is `before/on/after` the current date. |
+| Decision Table | REQ-04, REQ-05 | 9 | Applied where **multiple conditions** determine the system action. For REQ-04, it combines `book status`, `member status`, and `borrow count` to decide whether borrowing is `accepted` or `rejected`. For REQ-05, it combines `book ownership` and `return date` to decide whether returning is `accepted`, `rejected`, or `accepted with an overdue warning`. |
+
+---
+
+## 4. Software Quality Analysis
+
+### 4.1. Strengths
+- **REQ-01 Login**: Core functions work although some validation messages are incorrect.
+- **REQ-02 View Book list**: Book information is displayed correctly and book status updates instantly.
+- **REQ-03 Search & Filter book**: Search and filter functions work as expected.
+- **REQ-04 Borrow book**: Borrowing rules mostly work correctly, except for one incorrect message for suspended members.
+- **REQ-06 Overdue handling**: System can update overdue records correctly.
+
+### 4.2. Weaknesses
+- **REQ-05 Return book**: Return permission and overdue warning handling still have issues.
+- **REQ-07 Member management**: Multiple validation problems in member creations.
+- **REQ-08 Borrow record lookup**: Serious access control issue exists because members can view, return other members’ borrow records.
 
 **Q2. Which bug is the most critical? Why?**
 **BUG-003** (Critical) — The librarian cannot add new members. This is the most severe bug because it **completely disables** a core librarian feature. Every valid email is rejected by the system as "invalid", making it impossible for the library to expand its member list for as long as the bug persists.
 
-**BUG-001** (High) — Members can borrow more than 3 books at the same time. This is the second most severe bug because it directly violates the business rule, potentially causing a shortage of books for other members.
+## 5. Recommended Bug Fix Priority
 
-**BUG-005** (Critical) — Members can return another member's borrowing slip. This is a critical authorization bug because it allows a user to modify borrow/return data that does not belong to them.
+> 💡 This is the **Quality Assurance** part: you do not only find bugs, but also **recommend the priority order** for fixing them and evaluate their impact.
+> Clearly state the prioritization criteria: based on **severity** (technical seriousness) and/or **priority** (business importance).
 
-**Q3. Recommendations and Bug Fix Priority:**
-- **[CRITICAL PRIORITY]** Fix BUG-003: Review and fix the email regex/validation logic in the "Add Member" form. This bug blocks the entire feature and must be fixed immediately.
-- **[CRITICAL PRIORITY]** Fix BUG-005: Prevent members from returning other members' slips at both the UI and business logic layers.
-- **[HIGH PRIORITY]** Fix BUG-001: Add a `currentBorrowedBooksCount >= 3` check before allowing a borrow action. The borrow button should also be disabled when the limit has been reached.
-- **[HIGH PRIORITY]** Fix BUG-004: Prevent members from looking up other members' borrowing slips; only the librarian should have access to all slips.
-- **[MEDIUM PRIORITY]** Fix BUG-002: Separate error message logic for "Suspended" and "Expired" statuses so that the correct rejection reason is displayed for each case.
-- **[MEDIUM PRIORITY]** Fix BUG-006: When returning an overdue book, the result notification must include a clear overdue warning as required by REQ-05.
-- **[LOW PRIORITY]** UI/UX improvement: Consider disabling (graying out) the Borrow button when an account is locked, expired, or has already reached the 3-book limit, to improve user experience.
+| Order | Bug | Severity | Reason for Priority |
+|-------|-----|----------|---------------------|
+| 1 | BUG-11 | High | this affects privacy and business rule |
+| 2 | BUG-05 | High | this affects privacy and business rule |
+| 3 | BUG-07 | Medium | this forces system store invalid member data |
+| 4 | BUG-06 | Medium | Librarian cannot add valid member |
+| 5 | BUG-04 | Medium | this forces system miss Overdue warning displayed |
+| 6 | BUG-03 | Medium | this rejects borrow action but incorrect warning message |
+| 7 | BUG-08 | Medium | this affects UI, user feedback |
+| 8 | BUG-09 | Medium | this affects UI, user feedback |
+| 9 | BUG-10 | Medium | this affects UI, user feedback |
+| 10 | BUG-01 | Low | this affects UI, user feedback |
+| 11 | BUG-02 | Low | this affects UI, user feedback |
 
-## 5. AI Usage Declaration
+---
 
-- The team used AI (ChatGPT) to suggest some basic test case scenarios and to assist with formatting Markdown tables.
-- All test execution on the browser, result analysis, and bug report writing were performed manually by the team.
+## 6. Conclusion
+
+- **Pros:** The system provides the basic functions required for library management: login, viewing books, searching/filtering books, borrowing books, and checking overdue records.
+
+- **Cons:** Several bugs still need to be fixed, including high-severity access control issues and multiple validation problems. The system needs stronger input validation and better permission control to protect user privacy.
+
+### **The system is not yet ready for release.**
+
+---
+
+## 7. Lessons Learned (Optional)
+
+The process of:
+- How to design test cases systematically based on requirements.
+- How to execute manual tests and compare expected results with actual results.
+- How to write clear bug reports with evidence, impact, severity, and suggested fixes.
+
+→ **Testing should also check validation, user permissions, privacy, and system behavior consistency.**
+
+---
+
+## 8. AI Usage Declaration (Optional)
+
+> If the group used AI tools such as ChatGPT, Copilot, Gemini, etc., clearly state it below. Honest declaration **does not affect the grade** — this is a professional transparency skill.
+
+| AI Tool | Used for which part | How you reviewed/edited the output |
+|---|---|---|
+| ChatGPT | Brainstorming IDM | 1. Provide a brief description of Library System<br>2. Use REQ-01 as an example to ask for guidance on how to brainstorm IDM and how to structure a small sample IDM section<br>3. The group wrote the IDM for the remaining REQs by ourselves<br>4. Use ChatGPT to check whether any IDMs were missing or unnecessary, and to help with paraphrasing, grammar, spelling |
+| ChatGPT | Reviewing Test cases | 1. Members created TCs manually based on the completed IDM and REQs version<br>2. Use ChatGPT to review wording, paraphrase some test objectives and some expected results, check grammar and spelling<br>3. Group combined members' work, removed duplicated TCs and finalized the TC list manually |
+| ChatGPT | Reviewing bug reports | 1. Group wrote the bug reports based on the failed test execution results<br>2. Use ChatGPT to check the clarity of descriptions, paraphrase some parts, improve grammar, and make the wording more consistent. |
