@@ -214,7 +214,7 @@
 
 | TC ID | Test Objective | Precondition | Steps | Input Data | Expected Result | Technique |
 |---|---|---|---|---|---|---|
-| TC-31 | Member can view only own borrowing slips | Login as MEM002 | Open Borrow/Return tab | N/A | Only slips `BR001`, `BR004` belonging to `MEM002` are visible. | EP |
+| TC-31 | Member can view only own borrowing slips | Login as `MEM002` | Open Borrow/Return tab | N/A | Only slips `BR001`, `BR004` belonging to `MEM002` are visible. | EP |
 | TC-32 | Librarian can view all borrowing slips | Login as Librarian | Open Borrow/Return tab | N/A | Displays a comprehensive list of all borrowing slips from all library members. | EP |
 | TC-33 | Member cannot lookup another member’s slip | Reset data, login MEM002, in Borrow/Return tab | Lookup other member ID | `MEM006` | System rejects lookup or does not display MEM006's records | EP |
 
