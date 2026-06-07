@@ -52,7 +52,7 @@ The system displays the validation message: `Please enter email and password`.
 The incorrect validation message may confuse users, but the login function still works correctly.
 
 **Evidence:**
-- Screenshot: [BUG-01](bug-evidence/bug01.png)
+- Screenshot:<br><img src="bug-evidence/bug01.png" width="700">
 
 **Suggested Fix:**
 Update the login validation logic to check each empty field separately:
@@ -102,7 +102,7 @@ The system displays the validation message: `Please enter email and password`.
 The incorrect validation message may confuse users, but the login function still works correctly.
 
 **Evidence:**
-- Screenshot: [BUG-02](bug-evidence/bug02.png)
+- Screenshot:<br><img src="bug-evidence/bug02.png" width="700">
 
 **Suggested Fix:**
 Update the login validation logic to check each empty field separately:
@@ -152,7 +152,7 @@ The system rejects the borrow action but displays the error message: "Member exp
 The incorrect message may confuse users and librarians about the actual reason why the borrow action is rejected.
 
 **Evidence:**
-- Screenshot: [BUG-03](bug-evidence/bug03.png)
+- Screenshot:<br><img src="bug-evidence/bug03.png" width="700">
 
 **Suggested Fix:**
 Update the borrow book validation logic to check each member status separately:
@@ -201,7 +201,7 @@ The book is returned successfully and the return date is displayed, but no overd
 Users may not be informed that the returned book was overdue.
 
 **Evidence:**
-- Screenshot: [BUG-04](bug-evidence/bug04.png)
+- Screenshot:<br><img src="bug-evidence/bug04.png" width="700">
 
 **Suggested Fix:**
 Update the return book logic to check whether the return date is later than the due date. If `return date > due date`, the system should display an overdue warning after the book is returned.
@@ -249,7 +249,7 @@ The system displays `Book returned successfully`, and the book status changes to
 This bug allows a member to access and return another member’s borrow records, which violates user privacy and access control rules.
 
 **Evidence:**
-- Screenshot: [BUG-05](bug-evidence/bug05.png)
+- Screenshot:<br><img src="bug-evidence/bug05.png" width="700">
 
 **Suggested Fix:**
 Update the return book logic to validate record ownership before allowing the return action:
@@ -298,7 +298,7 @@ Add member failed and system displayed "Invalid email"
 Librarians cannot add a valid new member to the system.
 
 **Evidence:**
-- Screenshot: [BUG-06](bug-evidence/bug06.png)
+- Screenshot:<br><img src="bug-evidence/bug06.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to correctly accept valid email formats. The email `testnewuser99@gmail.com` should be recognized as valid, and the system should allow the member to be added successfully.
@@ -346,7 +346,7 @@ The system creates member successfully and displays message: `Member added succe
 The system allows invalid member data to be stored
 
 **Evidence:**
-- Screenshot: <br>[BUG-07.1](bug-evidence/bug07-1.png)<br>[BUG-07.2](bug-evidence/bug07-2.png)<br>[BUG-07.3](bug-evidence/bug07-3.png)
+- Screenshot: <br><img src="bug-evidence/bug07-1.png" width="700"><br><img src="bug-evidence/bug07-2.png" width="700"><br><img src="bug-evidence/bug07-3.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to reject invalid email formats. The email `new@gmail` should be recognized as invalid because the domain part is incomplete, and the system should not allow the member to be added successfully.
@@ -395,7 +395,7 @@ The incorrect validation message may confuse librarians about why the member can
 _This does not affect the duplicate email checking logic (tested by creating two `newuser@email` accounts and the checking logic works correctly)._
 
 **Evidence:**
-- Screenshot: [BUG-08](bug-evidence/bug08.png)
+- Screenshot:<br><img src="bug-evidence/bug08.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to check email uniqueness separately from email format:
@@ -446,7 +446,7 @@ Member creation fails, but the system displays `Invalid email`
 The incorrect validation message may confuse librarians about why the member cannot be added.
 
 **Evidence:**
-- Screenshot: [BUG-09](bug-evidence/bug09.png)
+- Screenshot:<br><img src="bug-evidence/bug09.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to check empty field separately:
@@ -499,7 +499,7 @@ Member creation fails, but the system displays `Invalid email`
 The incorrect validation message may confuse librarians about why the member cannot be added.
 
 **Evidence:**
-- Screenshot: [BUG-10](bug-evidence/bug10.png)
+- Screenshot:<br><img src="bug-evidence/bug10.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to validate the phone number separately from the email:
@@ -552,7 +552,7 @@ The system displays borrow records belonging to `MEM006` after member `MEM002` s
 This bug allows members to access other members’ borrow records without permission, violating access control and user privacy.
 
 **Evidence:**
-- Screenshot:<br>[BUG-11.1](bug-evidence/bug11-1.png)<br>[BUG-11.2](bug-evidence/bug11-2.png)
+- Screenshot:<br><img src="bug-evidence/bug11-1.png" width="700"><br><img src="bug-evidence/bug11-2.png" width="700">
 
 **Suggested Fix:**
 Update the borrow record lookup logic to enforce role-based access control:
