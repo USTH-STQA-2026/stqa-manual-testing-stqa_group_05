@@ -210,7 +210,7 @@ The incorrect message may confuse users and librarians about the actual reason w
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug03.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug04.png" width="700">
 
 **Suggested Fix:**
 Update the borrow book validation logic to check each member status separately:
@@ -263,7 +263,7 @@ Users may not be informed that the returned book was overdue.
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug04.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug05.png" width="700">
 
 **Suggested Fix:**
 Update the return book logic to check whether the return date is later than the due date. If `return date > due date`, the system should display an overdue warning after the book is returned.
@@ -314,7 +314,7 @@ This bug allows a member to access and return another member’s borrow records,
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug05.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug06.png" width="700">
 
 **Suggested Fix:**
 Update the return book logic to validate record ownership before allowing the return action:
@@ -367,7 +367,7 @@ Librarians cannot add a valid new member to the system.
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug06.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug07.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to correctly accept valid email formats. The email `testnewuser99@gmail.com` should be recognized as valid, and the system should allow the member to be added successfully.
@@ -418,7 +418,7 @@ The system allows invalid member data to be stored
 
 **Evidence:**
 
-- Screenshot: <br><img src="bug-evidence/bug07-1.png" width="700"><br><img src="bug-evidence/bug07-2.png" width="700"><br><img src="bug-evidence/bug07-3.png" width="700">
+- Screenshot: <br><img src="bug-evidence/bug08-1.png" width="700"><br><img src="bug-evidence/bug08-2.png" width="700"><br><img src="bug-evidence/bug08-3.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to reject invalid email formats. The email `new@gmail` should be recognized as invalid because the domain part is incomplete, and the system should not allow the member to be added successfully.
@@ -470,7 +470,7 @@ _This does not affect the duplicate email checking logic (tested by creating two
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug08.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug09.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to check email uniqueness separately from email format:
@@ -525,7 +525,7 @@ The incorrect validation message may confuse librarians about why the member can
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug09.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug10.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to check empty field separately:
@@ -581,7 +581,7 @@ The incorrect validation message may confuse librarians about why the member can
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug10.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug11.png" width="700">
 
 **Suggested Fix:**
 Update the member creation validation logic to validate the phone number separately from the email:
@@ -638,7 +638,7 @@ This bug allows members to access other members’ borrow records without permis
 
 **Evidence:**
 
-- Screenshot:<br><img src="bug-evidence/bug11-1.png" width="700"><br><img src="bug-evidence/bug11-2.png" width="700">
+- Screenshot:<br><img src="bug-evidence/bug12-1.png" width="700"><br><img src="bug-evidence/bug12-2.png" width="700">
 
 **Suggested Fix:**
 Update the borrow record lookup logic to enforce role-based access control:
