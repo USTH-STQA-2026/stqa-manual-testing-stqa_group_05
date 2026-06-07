@@ -11,7 +11,7 @@
 
 ---
 
-## BUG-01
+## BUG-01 - Login form displays an incorrect validation message when the email field is empty and the password field is filled
 
 | Attribute | Details |
 |-----------|---------|
@@ -22,9 +22,6 @@
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Login form displays an incorrect validation message when the email field is empty and the password field is filled
 
 **Environment:**
 - Browser: Chrome 
@@ -61,7 +58,7 @@ Update the login validation logic to check each empty field separately:
 - If only the password field is empty, display `Please enter password`.
 
 ---
-## BUG-02
+## BUG-02 - Login form displays an incorrect validation message when the password field is empty and the email field is filled
 
 | Attribute | Details |
 |-----------|---------|
@@ -72,9 +69,6 @@ Update the login validation logic to check each empty field separately:
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Login form displays an incorrect validation message when the password field is empty and the email field is filled
 
 **Environment:**
 - Browser: Chrome
@@ -111,7 +105,8 @@ Update the login validation logic to check each empty field separately:
 - If only the password field is empty, display `Please enter password`.
 
 ---
-## BUG-03
+## BUG-03 - The system displays an incorrect validation message when the suspended member borrows a book
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-03 |
@@ -121,9 +116,6 @@ Update the login validation logic to check each empty field separately:
 | **Reported by** | Nguyễn Hoàng Minh |
 | **Reported date** | 20/05/2026 |
 | **Status** | Open |
-
-**Title:**
-The system displays an incorrect validation message when the suspended member borrows a book 
 
 **Environment:**
 - Browser: Chrome 
@@ -160,7 +152,8 @@ Update the borrow book validation logic to check each member status separately:
 - If member is expired, reject borrowing book and display "Member expired"
 
 ---
-## BUG-04
+## BUG-04 - Overdue book is returned successfully without displaying an overdue warning
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-04  |
@@ -170,9 +163,6 @@ Update the borrow book validation logic to check each member status separately:
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Overdue book is returned successfully without displaying an overdue warning
 
 **Environment:**
 - Browser: Chrome
@@ -207,7 +197,8 @@ Users may not be informed that the returned book was overdue.
 Update the return book logic to check whether the return date is later than the due date. If `return date > due date`, the system should display an overdue warning after the book is returned.
 
 ---
-## BUG-05
+## BUG-05 - Member can return another member's borrowed book successfully
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-05  |
@@ -217,9 +208,6 @@ Update the return book logic to check whether the return date is later than the 
 | **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Member can return another member’s borrowed book successfully
 
 **Environment:**
 - Browser: Chrome
@@ -257,7 +245,8 @@ Update the return book logic to validate record ownership before allowing the re
 - If the borrow record belongs to another member, reject the action and display an access-denied message.
 
 ---
-## BUG-06
+## BUG-06 - Add member failed although all input fields are valid
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-06  |
@@ -267,9 +256,6 @@ Update the return book logic to validate record ownership before allowing the re
 | **Reported by** | Vũ Minh Hoàng, Nguyễn Hoàng Minh |
 | **Reported date** | 18/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Add member failed although all input fields are valid
 
 **Environment:**
 - Browser: Chrome
@@ -304,7 +290,8 @@ Librarians cannot add a valid new member to the system.
 Update the member creation validation logic to correctly accept valid email formats. The email `testnewuser99@gmail.com` should be recognized as valid, and the system should allow the member to be added successfully.
 
 ---
-## BUG-07
+## BUG-07 - Adding a member successfully although email format is invalid
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-07  |
@@ -314,9 +301,6 @@ Update the member creation validation logic to correctly accept valid email form
 | **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Adding a member successfully although email format is invalid
 
 **Environment:**
 - Browser: Chrome
@@ -352,7 +336,8 @@ The system allows invalid member data to be stored
 Update the member creation validation logic to reject invalid email formats. The email `new@gmail` should be recognized as invalid because the domain part is incomplete, and the system should not allow the member to be added successfully.
 
 ---
-## BUG-08
+## BUG-08 - Adding member form displays an incorrect validation message when entering duplicate email in existing accounts
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-08 |
@@ -362,9 +347,6 @@ Update the member creation validation logic to reject invalid email formats. The
 | **Reported by** | Nguyễn Hoàng Minh |
 | **Reported date** | 20/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Adding member form displays an incorrect validation message when entering duplicate email in existing accounts
 
 **Environment:**
 - Browser: Chrome
@@ -403,7 +385,8 @@ Update the member creation validation logic to check email uniqueness separately
 - If the email already exists, display `Email already exists. Please enter another email`.
 
 ---
-## BUG-09
+## BUG-09 - Adding member form displays an incorrect validation message when leaving Phone number field empty
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-09 |
@@ -413,9 +396,6 @@ Update the member creation validation logic to check email uniqueness separately
 | **Reported by** | Vũ Minh Hoàng |
 | **Reported date** | 18/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Adding member form displays an incorrect validation message when leaving Phone number field empty
 
 **Environment:**
 - Browser: Chrome
@@ -456,7 +436,8 @@ Update the member creation validation logic to check empty field separately:
 - If only the Phone number field is empty, display `Phone number must not be blank`.
 
 ---
-## BUG-10
+## BUG-10 - Adding member form displays an incorrect validation message when Phone number format is invalid
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-10 |
@@ -466,9 +447,6 @@ Update the member creation validation logic to check empty field separately:
 | **Reported by** | Vũ Minh Hoàng |
 | **Reported date** | 18/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Adding member form displays an incorrect validation message when Phone number format is invalid
 
 **Environment:**
 - Browser: Chrome
@@ -507,7 +485,8 @@ Update the member creation validation logic to validate the phone number separat
 - If the phone number format is invalid, display `Invalid phone number`
 
 ---
-## BUG-11
+## BUG-11 - Member can view another's borrow records by using search function
+
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-11 |
@@ -517,9 +496,6 @@ Update the member creation validation logic to validate the phone number separat
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
 | **Reported date** | 19/05/2026 |
 | **Status** | Open |
-
-**Title:**
-Member can view another's borrow records by using search function
 
 **Environment:**
 - Browser: Chrome
