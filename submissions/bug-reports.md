@@ -11,6 +11,7 @@
 
 ---
 
+<a id="bug-01"></a>
 ## BUG-01 - Login form displays an incorrect validation message when the email field is empty and the password field is filled
 
 | **Attribute** | **Details** |
@@ -49,10 +50,9 @@ The system should display the validation message: `Please enter email`.
 The system displays the validation message: `Please enter email and password`.
 
 **Impact:**
-The incorrect validation message may confuse users, but the login function still works correctly.
+The incorrect validation message may confuse users, but the login function still works correctly. Same root cause as [BUG-02](#bug-02).
 
 **Evidence:**
-
 - Screenshot:<br><img src="bug-evidence/bug01.png" width="700">
 
 **Suggested Fix:**
@@ -64,6 +64,7 @@ Update the login validation logic to check each empty field separately:
 
 ---
 
+<a id="bug-02"></a>
 ## BUG-02 - Login form displays an incorrect validation message when the password field is empty and the email field is filled
 
 | **Attribute** | **Details** |
@@ -102,7 +103,7 @@ The system should display the validation message: `Please enter password`.
 The system displays the validation message: `Please enter email and password`.
 
 **Impact:**
-The incorrect validation message may confuse users, but the login function still works correctly.
+The incorrect validation message may confuse users, but the login function still works correctly. Same root cause as [BUG-01](#bug-01).
 
 **Evidence:**
 
@@ -117,6 +118,7 @@ Update the login validation logic to check each empty field separately:
 
 ---
 
+<a id="bug-03"></a>
 ## BUG-03 - Member Can Borrow More Than the 3-Book Limit at the Same Time
 
 | **Attribute** | **Details** |
@@ -167,6 +169,7 @@ The control logic should implement a `currentBorrowedBooksCount >= 3` check befo
 
 ---
 
+<a id="bug-04"></a>
 ## BUG-04 - The system displays an incorrect validation message when the suspended member borrows a book
 
 | **Attribute** | **Details** |
@@ -220,6 +223,7 @@ Update the borrow book validation logic to check each member status separately:
 
 ---
 
+<a id="bug-05"></a>
 ## BUG-05 - Overdue book is returned successfully without displaying an overdue warning
 
 | **Attribute** | **Details** |
@@ -270,6 +274,7 @@ Update the return book logic to check whether the return date is later than the 
 
 ---
 
+<a id="bug-06"></a>
 ## BUG-06 - Member can return another member's borrowed book successfully
 
 | **Attribute** | **Details** |
@@ -310,7 +315,7 @@ The system rejects the return action, and borrow record `BR003` remains in `Borr
 The system displays `Book returned successfully`, and the book status changes to `Available`.
 
 **Impact:**
-This bug allows a member to access and return another member’s borrow records, which violates user privacy and access control rules.
+This bug allows a member to access and return another member’s borrow records, which violates user privacy and access control rules. See also [BUG-12](#bug-12) for a similar access control issue.
 
 **Evidence:**
 
@@ -324,6 +329,7 @@ Update the return book logic to validate record ownership before allowing the re
 
 ---
 
+<a id="bug-07"></a>
 ## BUG-07 - Add member failed although all input fields are valid
 
 | **Attribute** | **Details** |
@@ -363,7 +369,7 @@ New member added successfully, member code is generated and displayed
 Add member failed and system displayed "Invalid email"
 
 **Impact:**
-Librarians cannot add a valid new member to the system.
+Librarians cannot add a valid new member to the system. This is the core validation issue; see also [BUG-08](#bug-08), [BUG-09](#bug-09), [BUG-10](#bug-10), and [BUG-11](#bug-11) for related side effects.
 
 **Evidence:**
 
@@ -374,6 +380,7 @@ Update the member creation validation logic to correctly accept valid email form
 
 ---
 
+<a id="bug-08"></a>
 ## BUG-08 - Adding a member successfully although email format is invalid
 
 | **Attribute** | **Details** |
@@ -414,7 +421,7 @@ The system rejects member creation and displays email format error message
 The system creates member successfully and displays message: `Member added successfully! ID: MEM007`
 
 **Impact:**
-The system allows invalid member data to be stored
+The system allows invalid member data to be stored. Opposite case of [BUG-07](#bug-07) — the email validation regex is incorrect.
 
 **Evidence:**
 
@@ -425,6 +432,7 @@ Update the member creation validation logic to reject invalid email formats. The
 
 ---
 
+<a id="bug-09"></a>
 ## BUG-09 - Adding member form displays an incorrect validation message when entering duplicate email in existing accounts
 
 | **Attribute** | **Details** |
@@ -465,7 +473,7 @@ The system rejects member creation and displays a duplicate email error message.
 Member creation fails, but the system displays `Invalid email`
 
 **Impact:**
-The incorrect validation message may confuse librarians about why the member cannot be added.
+The incorrect validation message may confuse librarians about why the member cannot be added. Side effect of the same validation short-circuit in [BUG-07](#bug-07).
 _This does not affect the duplicate email checking logic (tested by creating two `newuser@email` accounts and the checking logic works correctly)._
 
 **Evidence:**
@@ -480,6 +488,7 @@ Update the member creation validation logic to check email uniqueness separately
 
 ---
 
+<a id="bug-10"></a>
 ## BUG-10 - Adding member form displays an incorrect validation message when leaving Phone number field empty
 
 | **Attribute** | **Details** |
@@ -521,7 +530,7 @@ The system rejects member creation and displays `Phone number must not be blank`
 Member creation fails, but the system displays `Invalid email`
 
 **Impact:**
-The incorrect validation message may confuse librarians about why the member cannot be added.
+The incorrect validation message may confuse librarians about why the member cannot be added. Side effect of the same validation short-circuit in [BUG-07](#bug-07).
 
 **Evidence:**
 
@@ -536,6 +545,7 @@ Update the member creation validation logic to check empty field separately:
 
 ---
 
+<a id="bug-11"></a>
 ## BUG-11 - Adding member form displays an incorrect validation message when Phone number format is invalid
 
 | **Attribute** | **Details** |
@@ -577,7 +587,7 @@ The system rejects member creation and displays `Invalid phone number`
 Member creation fails, but the system displays `Invalid email`
 
 **Impact:**
-The incorrect validation message may confuse librarians about why the member cannot be added.
+The incorrect validation message may confuse librarians about why the member cannot be added. Side effect of the same validation short-circuit in [BUG-07](#bug-07).
 
 **Evidence:**
 
@@ -591,6 +601,7 @@ Update the member creation validation logic to validate the phone number separat
 
 ---
 
+<a id="bug-12"></a>
 ## BUG-12 - Member can view another's borrow records by using search function
 
 | **Attribute** | **Details** |
@@ -634,7 +645,7 @@ The system should reject the lookup or hide the records of `MEM006`. Member `MEM
 The system displays borrow records belonging to `MEM006` after member `MEM002` searches for member ID `MEM006`.
 
 **Impact:**
-This bug allows members to access other members’ borrow records without permission, violating access control and user privacy.
+This bug allows members to access other members’ borrow records without permission, violating access control and user privacy. See also [BUG-06](#bug-06) for a similar access control issue.
 
 **Evidence:**
 
