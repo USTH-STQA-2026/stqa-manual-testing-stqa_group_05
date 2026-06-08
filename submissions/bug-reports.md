@@ -124,17 +124,16 @@ Update the login validation logic to check each empty field separately:
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-03 |
-| **Related TC** | [Placeholder] |
+| **Related TC** | TC-23 |
 | **Related Requirement** | REQ-04 |
 | **Severity** | High |
-| **Reported by** | [Placeholder] |
-| **Reported date** | [Placeholder] |
+| **Reported by** | Nguyễn Hoàng Minh |
+| **Reported date** | 20/05/2026 |
 | **Status** | Open |
 
 **Environment:**
-
 - Browser: Chrome
-- Operating System: [Placeholder]
+- Operating System: Windows
 - Interface Language: Vietnamese, English
 - System: <https://stqa.rbc.vn>
 
@@ -162,7 +161,7 @@ This bug directly violates the core business flow, allowing members to hoard all
 
 **Evidence:**
 
-- Screenshot:<br><img src="[Placeholder: screenshot evidence]" width="700">
+- Screenshot:<br><img src="bug-evidence/bug03.png" width="700">
 
 **Suggested Fix:**
 The control logic should implement a `currentBorrowedBooksCount >= 3` check before executing the borrow function. The Borrow button should also be disabled if the user has already reached the limit.
@@ -175,7 +174,7 @@ The control logic should implement a `currentBorrowedBooksCount >= 3` check befo
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-04 |
-| **Related TC** | TC-18 |
+| **Related TC** | TC-21 |
 | **Related Requirement** | REQ-04 |
 | **Severity** | Medium |
 | **Reported by** | Nguyễn Hoàng Minh |
@@ -229,7 +228,7 @@ Update the borrow book validation logic to check each member status separately:
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-05  |
-| **Related TC** | TC-22  |
+| **Related TC** | TC-25, TC-26 |
 | **Related Requirement** | REQ-05  |
 | **Severity** | Medium |
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
@@ -280,7 +279,7 @@ Update the return book logic to check whether the return date is later than the 
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-06  |
-| **Related TC** | TC-23  |
+| **Related TC** | TC-27 |
 | **Related Requirement** | REQ-05, REQ-08  |
 | **Severity** | High |
 | **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
@@ -335,7 +334,7 @@ Update the return book logic to validate record ownership before allowing the re
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-07  |
-| **Related TC** | TC-25  |
+| **Related TC** | TC-31  |
 | **Related Requirement** | REQ-07  |
 | **Severity** | Medium |
 | **Reported by** | Vũ Minh Hoàng, Nguyễn Hoàng Minh |
@@ -386,7 +385,7 @@ Update the member creation validation logic to correctly accept valid email form
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-08  |
-| **Related TC** | TC-26 |
+| **Related TC** | TC-32 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
 | **Reported by** | Nguyễn Quang Vũ Hoàng, Nguyễn Hoàng Minh |
@@ -438,7 +437,7 @@ Update the member creation validation logic to reject invalid email formats. The
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-09 |
-| **Related TC** | TC-27 |
+| **Related TC** | TC-33 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
 | **Reported by** | Nguyễn Hoàng Minh |
@@ -494,7 +493,7 @@ Update the member creation validation logic to check email uniqueness separately
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-10 |
-| **Related TC** | TC-29 |
+| **Related TC** | TC-35 |
 | **Related Requirement** | REQ-07  |
 | **Severity** | Medium |
 | **Reported by** | Vũ Minh Hoàng |
@@ -551,7 +550,7 @@ Update the member creation validation logic to check empty field separately:
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-11 |
-| **Related TC** | TC-30 |
+| **Related TC** | TC-36 |
 | **Related Requirement** | REQ-07 |
 | **Severity** | Medium |
 | **Reported by** | Vũ Minh Hoàng |
@@ -607,7 +606,7 @@ Update the member creation validation logic to validate the phone number separat
 | **Attribute** | **Details** |
 | --- | --- |
 | **Bug ID** | BUG-12 |
-| **Related TC** | TC-31, TC-33 |
+| **Related TC** | TC-37, TC-39 |
 | **Related Requirement** | REQ-08 |
 | **Severity** | High |
 | **Reported by** | Nguyễn Quang Vũ Hoàng |
