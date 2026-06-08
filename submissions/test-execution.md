@@ -48,7 +48,7 @@
 | TC-20 | Borrow button is hidden or rejection message shown | Borrow button is hidden, user cannot borrow the book | Pass | | |
 | TC-21 | Borrow rejected, displays distinct error message for **suspended account** | Borrow rejected<br>Display warning `Expired member. Cannot borrow books!` | Fail | [BUG-04](bug-evidence/bug04.png) | BUG-04 |
 | TC-22 | Borrow rejected, displays distinct error message for **expired** account | Borrow rejected<br>Display warning `Expired member. Cannot borrow books!` | Pass | | |
-| TC-23 | Reject borrowing the 4th book, display borrow limit exceeded error message | System accept the 4th borrow, borrow successfully, member’s borrow records display 4 books | Fail | [BUG-03]([Placeholder: screenshot evidence]) | BUG-03 |
+| TC-23 | Reject borrowing the 4th book, display borrow limit exceeded error message | System accept the 4th borrow, borrow successfully, member’s borrow records display 4 books | Fail | [BUG-03](bug-evidence/bug03.png) | BUG-03 |
 
 ### REQ-05: Return Book
 | TC ID | Expected result (summary) | Actual result | Status | Reference | Bug |
