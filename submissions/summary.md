@@ -38,7 +38,7 @@
 | REQ-05 Return book | 4 | 1 | 3 | 2 | Return handling needs improvement due to warning and permission issues. |
 | REQ-06 Overdue handling | 2 | 2 | 0 | 0 | This feature works correctly with no bug found. |
 | REQ-07 Member management | 7 | 2 | 5 | 5 | This feature has many validation problems and needs major improvement. |
-| REQ-08 Borrow record lookup | 4 | 2 | 2 | 2 | This feature has a serious access control issue. |
+| REQ-08 Borrow record lookup | 4 | 2 | 2 | 1 | This feature has a serious access control issue. |
 | **Total** | **40** | **26** | **14** | **12** | **The system has basic functionality, but several validation and access control issues must be fixed.** |
 
 
@@ -56,9 +56,9 @@
 
 | Technique | Applied to which REQ? | Number of TCs used | Explanation of how it was applied |
 |----------|------------------------|--------------------|-----------------------------------|
-| EP | All 8 REQs | 28 | Applied to **discrete partitions** such as `existing/non-existing` email, `correct/incorrect` password, `empty/non-empty` fields, `Librarian/Member` roles, `Available/Borrowed/Lost` book status, `Active/Suspended/Expired` member status, search `result/no result`, `valid/invalid` member information, and `own/other` borrow records. |
-| BVA | REQ-04, REQ-05 | 2 | Applied to **boundary-related rules**: the maximum borrowing `limit of 3 books`, `return date` compared with `due date`, and `overdue checking` based on whether due date is `before/on/after` the current date. |
-| Decision Table | REQ-04, REQ-05 | 9 | Applied where **multiple conditions** determine the system action. For REQ-04, it combines `book status`, `member status`, and `borrow count` to decide whether borrowing is `accepted` or `rejected`. For REQ-05, it combines `book ownership` and `return date` to decide whether returning is `accepted`, `rejected`, or `accepted with an overdue warning`. |
+| EP | All 8 REQs | 33 | Applied to **discrete partitions** such as `existing/non-existing` email, `correct/incorrect` password, `empty/non-empty` fields, `Librarian/Member` roles, `Available/Borrowed/Lost` book status, `Active/Suspended/Expired` member status, search `result/no result`, `valid/invalid` member information, and `own/other` borrow records. |
+| BVA | REQ-04, REQ-05, REQ-06 | 5 | Applied to **boundary-related rules**: the maximum borrowing `limit of 3 books` (TC-23), `return date` compared with `due date` (TC-24, TC-25, TC-26), and `overdue checking` based on whether due date is `before/on/after` the current date (TC-28). |
+| Decision Table | REQ-04, REQ-05 | 10 | Applied where **multiple conditions** determine the system action. For REQ-04, it combines `book status`, `member status`, and `borrow count` to decide whether borrowing is `accepted` or `rejected`. For REQ-05, it combines `book ownership` and `return date` to decide whether returning is `accepted`, `rejected`, or `accepted with an overdue warning`. |
 
 ---
 
