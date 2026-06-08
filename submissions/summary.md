@@ -38,7 +38,7 @@
 | REQ-05 Return book | 4 | 1 | 3 | 2 | Return handling needs improvement due to warning and permission issues. |
 | REQ-06 Overdue handling | 2 | 2 | 0 | 0 | This feature works correctly with no bug found. |
 | REQ-07 Member management | 7 | 2 | 5 | 5 | This feature has many validation problems and needs major improvement. |
-| REQ-08 Borrow record lookup | 4 | 2 | 2 | 2 | This feature has a serious access control issue. |
+| REQ-08 Borrow record lookup | 4 | 2 | 2 | 1 | This feature has a serious access control issue. |
 | **Total** | **40** | **26** | **14** | **12** | **The system has basic functionality, but several validation and access control issues must be fixed.** |
 
 
