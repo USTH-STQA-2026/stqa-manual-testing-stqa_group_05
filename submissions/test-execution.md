@@ -54,9 +54,11 @@
 | TC ID | Expected result (summary) | Actual result | Status | Reference | Bug |
 |------- |---------------------------|-----------------|---------|-----------|----|
 | TC-24 | Book returned successfully, status reverts to "Available". No warning shown | Book returned successfully, status reverts to "Available" without any warning | Pass | | |
-| TC-25 | Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
-| TC-26 | Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
+| TC-25*| Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
+| TC-26*| Book returned successfully but with an overdue warning notification | Book returned successfully, status reverts to "Available", displays return date but **no overdue warning displayed** | Fail | [BUG-05](bug-evidence/bug05.png) | BUG-05 |
 | TC-27 | System rejects the return action; borrow record remains in "Borrowed" status | System displays "Book returned successfully", book's status returned to "Available" | Fail | [BUG-06](bug-evidence/bug06.png) | BUG-06 |
+
+_* TC-25 and TC-26 check boundary conditions on `dueDate` and overdue. According to [REQ-06](../docs/SRS-library-system.md#req-06-x%E1%BB%AD-l%C3%BD-s%C3%A1ch-qu%C3%A1-h%E1%BA%A1n--overdue-handling), these two TCs can produce the same result, which is one of the expected results._
 
 ### REQ-06: Overdue Handling
 | TC ID | Expected result (summary) | Actual result | Status | Reference | Bug |
