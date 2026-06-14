@@ -46,8 +46,9 @@
 
 | Severity | Quantity | Bug IDs |
 |---|---|---|
+| Critical | 1 | BUG-07 |
 | High | 3 | BUG-03, BUG-06, BUG-12 |
-| Medium | 7 | BUG-04, BUG-05, BUG-07, BUG-08, BUG-09, BUG-10, BUG-11 |
+| Medium | 6 | BUG-04, BUG-05, BUG-08, BUG-09, BUG-10, BUG-11 |
 | Low | 2 | BUG-01, BUG-02 |
 
 ---
@@ -86,11 +87,11 @@
 
 | Order | Bug | Severity | Reason for Priority |
 |-------|-----|----------|---------------------|
-| 1 | BUG-12 | High | this affects privacy and business rule |
-| 2 | BUG-06 | High | this affects privacy and business rule |
-| 3 | BUG-03 | High | this allows members to bypass the 3-book borrowing limit |
-| 4 | BUG-08 | Medium | this forces system store invalid member data |
-| 5 | BUG-07 | Medium | Librarian cannot add valid member |
+| 1 | BUG-07 | Critical | completely blocks librarian from adding new members — a core feature |
+| 2 | BUG-12 | High | this affects privacy and business rule |
+| 3 | BUG-06 | High | this affects privacy and business rule |
+| 4 | BUG-03 | High | this allows members to bypass the 3-book borrowing limit |
+| 5 | BUG-08 | Medium | this forces system store invalid member data |
 | 6 | BUG-05 | Medium | this forces system miss Overdue warning displayed |
 | 7 | BUG-04 | Medium | this rejects borrow action but incorrect warning message |
 | 8 | BUG-09 | Medium | this affects UI, user feedback |

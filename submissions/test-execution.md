@@ -36,7 +36,7 @@
 | TC-12 | Displays book(s) containing `Flutter` in title | Search result displays book `BOOK001` | Pass | | |
 | TC-13 | Displays book(s) belonging to `Nguyễn Minh Đức` | Search result displays book `BOOK001`, `BOOK009` | Pass | | |
 | TC-14 | Empty list, displays "No books found" | System displays message "No books found" | Pass | | |
-| TC-15 | Displays book(s) containing `flutter` in title | Search result displays book `BOOK001` | Pass | | |
+| TC-15 | Displays book(s) containing `flutter` in title | Search result displays book `BOOK001` | Pass | [Evidence](bug-evidence/TC-15.png)<br>[Evidence-1](bug-evidence/TC-15-1.png) | |
 | TC-16 | List displays books belonging `Kinh tế` category | Filtered list displays `BOOK007`, `BOOK014`, `BOOK015` | Pass | | |
 | TC-17 | Empty list, displays "No books found" | System displays message "No books found" | Pass | | |
 
