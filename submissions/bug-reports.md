@@ -336,7 +336,7 @@ Update the return book logic to validate record ownership before allowing the re
 | **Bug ID** | BUG-07  |
 | **Related TC** | TC-31  |
 | **Related Requirement** | REQ-07  |
-| **Severity** | Medium |
+| **Severity** | Critical |
 | **Reported by** | Vũ Minh Hoàng, Nguyễn Hoàng Minh |
 | **Reported date** | 18/05/2026 |
 | **Status** | Open |
@@ -368,7 +368,7 @@ New member added successfully, member code is generated and displayed
 Add member failed and system displayed "Invalid email"
 
 **Impact:**
-Librarians cannot add a valid new member to the system. This is the core validation issue; see also [BUG-08](#bug-08), [BUG-09](#bug-09), [BUG-10](#bug-10), and [BUG-11](#bug-11) for related side effects.
+Librarians cannot add a valid new member to the system. This completely blocks a core librarian feature, making it impossible for the library to expand its member list. This is the core validation issue; see also [BUG-08](#bug-08), [BUG-09](#bug-09), [BUG-10](#bug-10), and [BUG-11](#bug-11) for related side effects.
 
 **Evidence:**
 
